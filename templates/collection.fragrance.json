@@ -66,7 +66,7 @@
         "disruptor_4"
       ],
       "settings": {
-        "columns_desktop": 2,
+        "columns_desktop": 3,
         "columns_mobile": 2,
         "products_per_page": 12,
         "enable_filtering": false,
