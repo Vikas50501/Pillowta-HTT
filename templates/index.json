@@ -106,9 +106,9 @@
         "eyebrow": "",
         "heading": "Kylie'ssummer faves",
         "subtext": "<p>discover her go-tos this summer – including the new watermelon lip butter and hydrating lip essentials.</p>",
-        "heading_color": "#b3848f",
-        "text_color": "#393939",
-        "text_align_h": "left",
+        "heading_color": "#F8F1F4",
+        "text_color": "#F8F1F4",
+        "text_align_h": "right",
         "text_align_v": "center",
         "link": "/collections/summer-essentials",
         "button_text": "Shop Now",
@@ -117,6 +117,16 @@
         "button2_text": "",
         "link2": "",
         "button2_style": "secondary",
+        "font_override": "inherit"
+      }
+    },
+    "fireworks_cosmic": {
+      "type": "fireworks",
+      "settings": {
+        "title": "LOVE FOR COSMIC",
+        "channel": "us_kylie_cosmetics",
+        "playlist": "5ndJV2",
+        "mode": "grid",
         "font_override": "inherit"
       }
     },
@@ -185,16 +195,6 @@
         "button2_text": "",
         "link2": "",
         "button2_style": "secondary",
-        "font_override": "inherit"
-      }
-    },
-    "fireworks_cosmic": {
-      "type": "fireworks",
-      "settings": {
-        "title": "LOVE FOR COSMIC",
-        "channel": "us_kylie_cosmetics",
-        "playlist": "5ndJV2",
-        "mode": "grid",
         "font_override": "inherit"
       }
     },

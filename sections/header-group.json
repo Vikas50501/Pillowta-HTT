@@ -92,6 +92,7 @@
           "type": "menu_promo",
           "settings": {
             "menu_handle": "discover",
+            "image": "shopify://shop_images/neroli-flower-realistic.png",
             "title": "current offers",
             "link": "/pages/offers"
           }
@@ -111,7 +112,7 @@
         "transparent_on_home": true,
         "mobile_extra_link_title": "Pillowta",
         "mobile_extra_link": "/pages/kylie-rewards",
-        "font_override": "inherit"
+        "font_override": "heading"
       }
     }
   },
