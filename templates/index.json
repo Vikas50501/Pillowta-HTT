@@ -14,6 +14,7 @@
       "settings": {
         "height": "tall",
         "desktop_image": "shopify://shop_images/pexels-alice-c-70978593-8761243.jpg",
+        "desktop_video": "shopify://files/videos/Pillowta-1.mp4",
         "mobile_layout": "below-image",
         "overlay_color": "#000000",
         "overlay_opacity": 0,
@@ -22,7 +23,7 @@
         "subtext": "<p>the new fragrance trio from kylie jenner.</p>",
         "heading_color": "#b3848f",
         "text_color": "#393939",
-        "text_align_h": "left",
+        "text_align_h": "center",
         "text_align_v": "center",
         "link": "https://kyliecosmetics.attn.tv/p/29F/mood-stones",
         "button_text": "get notified",
@@ -288,12 +289,13 @@
       "type": "hero",
       "settings": {
         "height": "medium",
+        "desktop_video": "shopify://files/videos/Pillowta-1.mp4",
         "mobile_layout": "over-image",
         "overlay_color": "#000000",
         "overlay_opacity": 0,
         "eyebrow": "",
         "heading": "Virtual Try-On",
-        "subtext": "<p>try on lipsticks, blushes, &amp; more to discover your new fave shade.</p>",
+        "subtext": "<p>try on lipsticks, blushes, & more to discover your new fave shade.</p>",
         "heading_color": "#b3848f",
         "text_color": "#393939",
         "text_align_h": "center",
@@ -312,7 +314,7 @@
       "type": "foursixty",
       "settings": {
         "title": "SHOP OUR IG",
-        "feed_id": "kylie_1",
+        "feed_id": "pillowta",
         "page_size": 14,
         "font_override": "inherit"
       }
