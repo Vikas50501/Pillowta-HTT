@@ -28,9 +28,7 @@
 
           {%- if section.settings.enable_hover_media -%}
             {%- if block.settings.hover_video != blank -%}
-              <video class="multicolumn__hover-media" muted loop playsinline preload="none">
-                <source src="{{ block.settings.hover_video }}" type="video/mp4">
-              </video>
+              {{ block.settings.hover_video | video_tag: image_size: '600x', autoplay: true, loop: true, muted: true, controls: false, class: 'multicolumn__hover-media' }}
             {%- elsif block.settings.hover_image != blank -%}
               {{ block.settings.hover_image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: '', class: 'multicolumn__hover-media', loading: 'lazy' }}
             {%- endif -%}
@@ -178,9 +176,8 @@
           "label": "t:sections.multicolumn.blocks.tile.image.label"
         },
         {
-          "type": "video_url",
+          "type": "video",
           "id": "hover_video",
-          "accept": ["mp4"],
           "label": "t:sections.multicolumn.blocks.tile.hover_video.label"
         },
         {

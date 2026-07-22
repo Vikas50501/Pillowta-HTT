@@ -3,9 +3,7 @@
     "name": "theme_info",
     "theme_name": "Pilllowta",
     "theme_version": "1.0.0",
-    "theme_author": "Custom Build",
-    "theme_documentation_url": "",
-    "theme_support_url": ""
+    "theme_author": "Custom Build"
   },
   {
     "name": "t:settings.typography.name",
@@ -106,7 +104,7 @@
       {
         "type": "font_picker",
         "id": "font_accent_shopify",
-        "default": "cormorant_garamond_n4",
+        "default": "helvetica_n4",
         "label": "t:settings.typography.font_shopify_override.label",
         "info": "t:settings.typography.font_shopify_override.info"
       },

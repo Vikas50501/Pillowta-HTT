@@ -12,9 +12,7 @@
   <div class="featured-content__tile page-width">
     <div class="featured-content__media">
       {%- if section.settings.video != blank -%}
-        <video class="featured-content__video" autoplay muted loop playsinline poster="{{ section.settings.poster | image_url: width: 1200 }}">
-          <source src="{{ section.settings.video }}" type="video/mp4">
-        </video>
+        {{ section.settings.video | video_tag: image_size: '1200x', autoplay: true, loop: true, muted: true, controls: false, class: 'featured-content__video' }}
       {%- elsif section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 1200 | image_tag: widths: '600,900,1200', alt: section.settings.heading | default: '', loading: 'lazy' }}
       {%- endif -%}
@@ -167,9 +165,8 @@
       "label": "t:sections.featured-content.image.label"
     },
     {
-      "type": "video_url",
+      "type": "video",
       "id": "video",
-      "accept": ["mp4"],
       "label": "t:sections.featured-content.video.label"
     },
     {

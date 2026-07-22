@@ -21,11 +21,12 @@
         {%- liquid
           assign threshold_cents = block.settings.threshold | times: 100
           assign remaining_cents = threshold_cents | minus: cart.total_price
+          assign remaining_money = remaining_cents | money
           assign progress = cart.total_price | times: 100.0 | divided_by: threshold_cents | at_most: 100
         -%}
         <div class="cart-drawer__block free-shipping" {{ block.shopify_attributes }}>
           {%- if remaining_cents > 0 -%}
-            <p>{{ 'cart.general.free_shipping' | t: n: remaining_cents | money, default: 'You are {{ n }} away from free shipping!' }}</p>
+            <p>{{ 'cart.general.free_shipping' | t: n: remaining_money }}</p>
           {%- else -%}
             <p>{{ 'cart.general.free_shipping_qualified' | t: default: 'Your order qualifies for free shipping' }}</p>
           {%- endif -%}
@@ -35,20 +36,25 @@
         </div>
 
       {%- when 'gift_with_purchase' -%}
+        {%- liquid
+          assign gift_threshold_cents = block.settings.cart_total_tier1 | times: 100
+          assign gift_threshold_money = block.settings.cart_total_tier1 | times: 100 | money
+        -%}
         <div class="cart-drawer__block gift-with-purchase" {{ block.shopify_attributes }}>
-          {%- if cart.total_price >= block.settings.cart_total_tier1 | times: 100 -%}
+          {%- if cart.total_price >= gift_threshold_cents -%}
             <p class="gift-with-purchase__title">{{ block.settings.title }}</p>
             {%- if block.settings.description != blank -%}
               <p class="gift-with-purchase__description">{{ block.settings.description }}</p>
             {%- endif -%}
           {%- else -%}
-            <p>{{ 'cart.gifts.qualified_at' | t: f: block.settings.cart_total_tier1 | money, n: block.settings.item_limit_tier1, default: 'Spend another {{ f }} and select {{ n }} free gift(s)' }}</p>
+            <p>{{ 'cart.gifts.qualified_at' | t: f: gift_threshold_money, n: block.settings.item_limit_tier1 }}</p>
           {%- endif -%}
         </div>
 
       {%- when 'free_samples' -%}
+        {%- assign samples_threshold_cents = block.settings.cart_total_tier1 | times: 100 -%}
         <div class="cart-drawer__block free-samples" {{ block.shopify_attributes }}>
-          {%- if cart.total_price >= block.settings.cart_total_tier1 | times: 100 -%}
+          {%- if cart.total_price >= samples_threshold_cents -%}
             <p class="free-samples__title">{{ block.settings.title }}</p>
           {%- else -%}
             <p>{{ block.settings.title }}</p>
@@ -60,10 +66,10 @@
           {%- assign estimated_points = cart.total_price | divided_by: 100 -%}
           <p>
             {%- if customer -%}
-              {{ 'cart.general.loyalty_points' | t: points: estimated_points, default: 'earn {{ points }} points with this purchase' }}
+              {{ 'cart.general.loyalty_points' | t: points: estimated_points }}
             {%- else -%}
               <a href="{{ routes.account_login_url }}">{{ 'general.log_in' | t: default: 'log in' }}</a>
-              {{ 'cart.general.loyalty_points' | t: points: estimated_points, default: 'to earn {{ points }} points with this purchase' }}
+              {{ 'cart.general.loyalty_points' | t: points: estimated_points }}
             {%- endif -%}
           </p>
         </div>

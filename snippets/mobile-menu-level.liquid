@@ -12,8 +12,9 @@
       {%- if link.url != blank and link.url != '#' -%}
         <li><a href="{{ link.url }}" class="mobile-menu__sublink mobile-menu__sublink--view-all">{{ link.title }}</a></li>
       {%- endif -%}
+      {%- assign next_depth = depth | plus: 1 -%}
       {%- for child in link.links -%}
-        {%- render 'mobile-menu-level', link: child, depth: depth | plus: 1 -%}
+        {%- render 'mobile-menu-level', link: child, depth: next_depth -%}
       {%- endfor -%}
     </ul>
   {%- else -%}

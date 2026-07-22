@@ -190,7 +190,8 @@
           <span>{{ section.settings.engraving_terms_text }}</span>
         </label>
         {%- if section.settings.engraving_fee_variant != blank -%}
-          <p class="engraving-drawer__fee">{{ 'products.engraving.fee_note' | t: price: section.settings.engraving_fee_variant.price | money, default: 'Engraving adds {{ price }} to your order' }}</p>
+          {%- assign engraving_fee_money = section.settings.engraving_fee_variant.price | money -%}
+          <p class="engraving-drawer__fee">{{ 'products.engraving.fee_note' | t: price: engraving_fee_money }}</p>
         {%- endif -%}
         <button type="button" class="action action--primary action--full" data-engraving-confirm>
           {{ 'products.engraving.confirm' | t: default: 'Add engraving' }}

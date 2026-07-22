@@ -41,7 +41,8 @@
       <div class="form__field">
         <label for="ContactFormTopic">{{ 'contact.form.topic' | t: default: 'How can we help?' }}</label>
         <select id="ContactFormTopic" name="contact[How can we help?]">
-          {%- for option in section.settings.topics | split: '|' -%}
+          {%- assign topic_options = section.settings.topics | split: '|' -%}
+          {%- for option in topic_options -%}
             <option value="{{ option | strip }}">{{ option | strip }}</option>
           {%- endfor -%}
         </select>

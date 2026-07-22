@@ -19,17 +19,13 @@
   >
     <div class="hero__media">
       {%- if section.settings.desktop_video != blank -%}
-        <video class="hero__video hero__video--desktop" autoplay muted loop playsinline poster="{{ section.settings.desktop_image | image_url: width: 1728 }}">
-          <source src="{{ section.settings.desktop_video }}" type="video/mp4">
-        </video>
+        {{ section.settings.desktop_video | video_tag: image_size: '1728x', autoplay: true, loop: true, muted: true, controls: false, class: 'hero__video hero__video--desktop' }}
       {%- elsif section.settings.desktop_image != blank -%}
         {{ section.settings.desktop_image | image_url: width: 1728 | image_tag: widths: '750,1100,1500,1728', class: 'hero__image hero__image--desktop', alt: section.settings.heading | default: '', loading: 'lazy' }}
       {%- endif -%}
 
       {%- if section.settings.mobile_video != blank -%}
-        <video class="hero__video hero__video--mobile" autoplay muted loop playsinline poster="{{ section.settings.mobile_image | image_url: width: 750 }}">
-          <source src="{{ section.settings.mobile_video }}" type="video/mp4">
-        </video>
+        {{ section.settings.mobile_video | video_tag: image_size: '750x', autoplay: true, loop: true, muted: true, controls: false, class: 'hero__video hero__video--mobile' }}
       {%- elsif section.settings.mobile_image != blank -%}
         {{ section.settings.mobile_image | image_url: width: 750 | image_tag: widths: '390,540,750', class: 'hero__image hero__image--mobile', alt: section.settings.heading | default: '', loading: 'lazy' }}
       {%- endif -%}
@@ -215,9 +211,8 @@
       "label": "t:sections.hero.desktop_image.label"
     },
     {
-      "type": "video_url",
+      "type": "video",
       "id": "desktop_video",
-      "accept": ["mp4"],
       "label": "t:sections.hero.desktop_video.label"
     },
     {
@@ -230,9 +225,8 @@
       "label": "t:sections.hero.mobile_image.label"
     },
     {
-      "type": "video_url",
+      "type": "video",
       "id": "mobile_video",
-      "accept": ["mp4"],
       "label": "t:sections.hero.mobile_video.label"
     },
     {

@@ -2,7 +2,7 @@
   Maps to: source site's <announcement-bar data-vue="announcement-bar"> component
   (autoplay 4s, session-dismissible close button, rotating messages).
 {% endcomment %}
-<div
+<announcement-bar
   id="shopify-section-{{ section.id }}"
   class="announcement-bar{% if section.settings.font_override != 'inherit' %} announcement-bar--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
@@ -49,10 +49,9 @@
       </button>
     {%- endif -%}
   </div>
-</div>
+</announcement-bar>
 
 {% stylesheet %}
-  #shopify-section-{{ section.id }} .announcement-bar,
   .announcement-bar {
     position: relative;
     background-color: rgb(var(--announcement-bg, var(--color-border-accent)));
@@ -175,8 +174,6 @@
 {% schema %}
 {
   "name": "t:sections.announcement-bar.name",
-  "tag": "announcement-bar",
-  "class": "announcement-bar-container",
   "settings": [
     {
       "type": "range",
