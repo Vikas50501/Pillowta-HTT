@@ -114,7 +114,7 @@
         "logo": "shopify://shop_images/Pillowta_logo_1-removebg-preview.png",
         "logo_width": 130,
         "sticky": true,
-        "transparent_on_home": true,
+        "transparent_on_home": false,
         "show_localization": false,
         "mobile_extra_link_title": "Pillowta",
         "mobile_extra_link": "/pages/kylie-rewards",
