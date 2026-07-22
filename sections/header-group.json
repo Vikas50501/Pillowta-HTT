@@ -130,7 +130,7 @@
         "mega_menu_bg_color": "#ffffff",
         "mega_menu_text_color": "#393939",
         "sticky": true,
-        "transparent_on_home": true,
+        "transparent_on_home": false,
         "transparent_text_color": "#FFFFFF",
         "show_localization": true,
         "mobile_extra_link_title": "Pillowta",
