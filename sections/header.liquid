@@ -49,7 +49,7 @@
       {%- endif -%}
     </div>
 
-    <h1 class="site-logo" style="--logo-max-height: {{ section.settings.logo_max_height }}px;">
+    <h1 class="site-logo" style="--logo-width: {{ section.settings.logo_width }}px; --logo-max-height: {{ section.settings.logo_max_height }}px;">
       <a href="{{ routes.root_url }}" title="{{ shop.name }} {{ 'general.home_page' | t: default: 'home page' }}">
         {%- if section.settings.transparent_logo != blank -%}
           {{ section.settings.transparent_logo | image_url: width: section.settings.logo_width | image_tag: widths: '100,200,300', alt: shop.name, class: 'site-logo__image site-logo__image--transparent' }}
@@ -162,6 +162,14 @@
     transition: background-color .3s ease, color .3s ease;
   }
 
+  /* Once scrolled past the hero, respect Sticky = off: turn solid like
+     normal but let it scroll away with the page instead of forcing it to
+     stick, which previously happened unconditionally regardless of the
+     Sticky toggle. */
+  .site-header--transparent.site-header--active[data-sticky='false'] {
+    position: relative;
+  }
+
   /* ---- Top bar: 3-column grid so the logo is always perfectly centered
      regardless of how much content sits in the start/end slots ---- */
   .site-header__topbar {
@@ -204,8 +212,13 @@
   }
 
   .site-logo__image {
-    max-height: var(--logo-max-height, 48px);
+    /* Both settings act as caps on the same bounding box (like object-fit:
+       contain) so "Logo image width" actually has a visible effect instead
+       of being silently capped out by max-height alone. */
     width: auto;
+    height: auto;
+    max-width: var(--logo-width, 130px);
+    max-height: var(--logo-max-height, 48px);
   }
 
   /* Swap to a dedicated light/white logo while floating transparently over

@@ -8,6 +8,13 @@
   data-section-id="{{ section.id }}"
   data-section-type="announcement-bar"
   data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  style="
+    --announcement-bg: {{ section.settings.color_background }};
+    --announcement-text: {{ section.settings.color_text }};
+    --announcement-link: {{ section.settings.color_link }};
+    --announcement-font-size: {{ section.settings.font_size }}px;
+    --announcement-padding-y: {{ section.settings.padding_y }}px;
+  "
   {% if section.blocks.size == 0 %}hidden{% endif %}
 >
   <div class="announcement-bar__wrapper">
@@ -54,10 +61,10 @@
 {% stylesheet %}
   .announcement-bar {
     position: relative;
-    background-color: rgb(var(--announcement-bg, var(--color-border-accent)));
-    color: rgb(var(--announcement-text, var(--color-text)));
+    background-color: var(--announcement-bg, rgb(var(--color-border-accent)));
+    color: var(--announcement-text, rgb(var(--color-text)));
     font-family: var(--font-body);
-    font-size: var(--font-size-small);
+    font-size: var(--announcement-font-size, var(--font-size-small));
     text-align: center;
   }
 
@@ -68,8 +75,12 @@
     gap: .5rem;
     max-width: 57.5rem;
     margin: 0 auto;
-    padding: .625rem var(--container-padding);
+    padding: var(--announcement-padding-y, .625rem) var(--container-padding);
     position: relative;
+  }
+
+  .announcement-bar__message b u {
+    color: var(--announcement-link, inherit);
   }
 
   .announcement-bar__messages {
@@ -176,6 +187,53 @@
 {
   "name": "t:sections.announcement-bar.name",
   "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.colors_header"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "default": "#efd7e5",
+      "label": "t:sections.announcement-bar.color_background.label"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "default": "#393939",
+      "label": "t:sections.announcement-bar.color_text.label"
+    },
+    {
+      "type": "color",
+      "id": "color_link",
+      "default": "#393939",
+      "label": "t:sections.announcement-bar.color_link.label",
+      "info": "t:sections.announcement-bar.color_link.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.layout_header"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "label": "t:sections.announcement-bar.font_size.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 10,
+      "label": "t:sections.announcement-bar.padding_y.label"
+    },
     {
       "type": "range",
       "id": "autoplay_speed",

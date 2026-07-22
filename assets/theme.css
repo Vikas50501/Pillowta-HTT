@@ -3,6 +3,31 @@
    Section-specific CSS must live inside each section's own .liquid file.
    ========================================================================== */
 
+/* ---- Per-section font override (§4.2 of the build brief) ----
+   Every section adds a class like "sectionname--font-heading" when a
+   merchant picks a font override, but each section's own scoped CSS never
+   had a rule that actually consumed it - the setting existed in 27 section
+   schemas and did nothing anywhere. Fixed centrally here instead of adding
+   the same 3 rules to every section file, since the class suffix pattern
+   (--font-heading / --font-body / --font-accent) is consistent everywhere.
+   !important is intentional: "override" means every text element in that
+   section should adopt the chosen font, including headings/body copy that
+   normally have their own explicit font-family declaration. */
+[class*="--font-heading"],
+[class*="--font-heading"] * {
+  font-family: var(--font-heading) !important;
+}
+
+[class*="--font-body"],
+[class*="--font-body"] * {
+  font-family: var(--font-body) !important;
+}
+
+[class*="--font-accent"],
+[class*="--font-accent"] * {
+  font-family: var(--font-accent) !important;
+}
+
 /* ---- Layout containers ---- */
 .page-width,
 .container {

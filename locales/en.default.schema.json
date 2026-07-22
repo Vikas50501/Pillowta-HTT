@@ -209,6 +209,13 @@
     },
     "announcement-bar": {
       "name": "Announcement bar",
+      "colors_header": "Colors",
+      "color_background": { "label": "Background" },
+      "color_text": { "label": "Text" },
+      "color_link": { "label": "Link text color", "info": "Color of the underlined call-to-action text within a message (e.g. \"shop now\")." },
+      "layout_header": "Layout",
+      "font_size": { "label": "Font size" },
+      "padding_y": { "label": "Vertical padding" },
       "autoplay_speed": { "label": "Autoplay speed" },
       "show_close": { "label": "Show close button" },
       "enable_play_pause": { "label": "Show play/pause control" },
@@ -233,8 +240,8 @@
       "main_menu": { "label": "Main menu" },
       "logo_header": "Logo",
       "logo": { "label": "Logo" },
-      "logo_width": { "label": "Logo image width" },
-      "logo_max_height": { "label": "Logo max height", "info": "Caps how tall the logo renders, so a wide logo image doesn't overflow the header." },
+      "logo_width": { "label": "Logo max width", "info": "The logo scales to fit within both this width and the max height below, whichever is more restrictive." },
+      "logo_max_height": { "label": "Logo max height", "info": "The logo scales to fit within both this height and the max width above, whichever is more restrictive." },
       "transparent_logo": {
         "label": "Logo for transparent state",
         "info": "A light/white version of your logo to show while the header floats transparently over the hero (a raster image can't be recolored the way text can). Falls back to your regular logo if left blank."
