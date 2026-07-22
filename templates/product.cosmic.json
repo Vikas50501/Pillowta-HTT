@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "gradient": {
@@ -10,10 +19,43 @@
       }
     },
     "hero": {
-      "type": "product-hero"
+      "type": "product-hero",
+      "settings": {}
     },
     "main": {
       "type": "main-product",
+      "blocks": {
+        "description": {
+          "type": "accordion",
+          "settings": {
+            "title": "description"
+          }
+        },
+        "ingredients": {
+          "type": "accordion",
+          "settings": {
+            "title": "ingredients"
+          }
+        },
+        "how_to_use": {
+          "type": "accordion",
+          "settings": {
+            "title": "how to use"
+          }
+        },
+        "shipping": {
+          "type": "accordion",
+          "settings": {
+            "title": "shipping & returns"
+          }
+        }
+      },
+      "block_order": [
+        "description",
+        "ingredients",
+        "how_to_use",
+        "shipping"
+      ],
       "settings": {
         "max_quantity": 10,
         "show_reviews_summary": true,
@@ -21,29 +63,65 @@
         "enable_engraving": true,
         "engraving_button_text": "Engrave your bottle",
         "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing."
-      },
-      "blocks": {
-        "description": { "type": "accordion", "settings": { "title": "description" } },
-        "ingredients": { "type": "accordion", "settings": { "title": "ingredients" } },
-        "how_to_use": { "type": "accordion", "settings": { "title": "how to use" } },
-        "shipping": { "type": "accordion", "settings": { "title": "shipping & returns" } }
-      },
-      "block_order": ["description", "ingredients", "how_to_use", "shipping"]
+      }
     },
     "ingredient_tiles": {
       "type": "ingredient-tiles",
+      "blocks": {
+        "opening_1": {
+          "type": "note",
+          "settings": {
+            "group_label": "OPENING NOTES",
+            "name": "star jasmine"
+          }
+        },
+        "opening_2": {
+          "type": "note",
+          "settings": {
+            "group_label": "OPENING NOTES",
+            "name": "blood orange"
+          }
+        },
+        "heart_1": {
+          "type": "note",
+          "settings": {
+            "group_label": "HEART NOTES",
+            "name": "golden amber accord"
+          }
+        },
+        "heart_2": {
+          "type": "note",
+          "settings": {
+            "group_label": "HEART NOTES",
+            "name": "benzoin"
+          }
+        },
+        "base_1": {
+          "type": "note",
+          "settings": {
+            "group_label": "BASE NOTES",
+            "name": "vanilla"
+          }
+        },
+        "base_2": {
+          "type": "note",
+          "settings": {
+            "group_label": "BASE NOTES",
+            "name": "musk accord"
+          }
+        }
+      },
+      "block_order": [
+        "opening_1",
+        "opening_2",
+        "heart_1",
+        "heart_2",
+        "base_1",
+        "base_2"
+      ],
       "settings": {
         "title": "the ingredients"
-      },
-      "blocks": {
-        "opening_1": { "type": "note", "settings": { "group_label": "OPENING NOTES", "name": "star jasmine" } },
-        "opening_2": { "type": "note", "settings": { "group_label": "OPENING NOTES", "name": "blood orange" } },
-        "heart_1": { "type": "note", "settings": { "group_label": "HEART NOTES", "name": "golden amber accord" } },
-        "heart_2": { "type": "note", "settings": { "group_label": "HEART NOTES", "name": "benzoin" } },
-        "base_1": { "type": "note", "settings": { "group_label": "BASE NOTES", "name": "vanilla" } },
-        "base_2": { "type": "note", "settings": { "group_label": "BASE NOTES", "name": "musk accord" } }
-      },
-      "block_order": ["opening_1", "opening_2", "heart_1", "heart_2", "base_1", "base_2"]
+      }
     },
     "marketing_tiles": {
       "type": "marketing-tiles",
@@ -72,13 +150,15 @@
           }
         }
       },
-      "block_order": ["from_kylie", "the_scent", "the_sizes"]
+      "block_order": [
+        "from_kylie",
+        "the_scent",
+        "the_sizes"
+      ],
+      "settings": {}
     },
     "cosmic_universe": {
       "type": "cosmic-universe",
-      "settings": {
-        "title": "THE COSMIC UNIVERSE"
-      },
       "blocks": {
         "fragrance_1": {
           "type": "fragrance_card",
@@ -108,7 +188,14 @@
           }
         }
       },
-      "block_order": ["fragrance_1", "fragrance_2", "fragrance_3"]
+      "block_order": [
+        "fragrance_1",
+        "fragrance_2",
+        "fragrance_3"
+      ],
+      "settings": {
+        "title": "THE COSMIC UNIVERSE"
+      }
     },
     "social": {
       "type": "foursixty",
@@ -125,6 +212,14 @@
       }
     }
   },
-  "order": ["gradient", "hero", "main", "ingredient_tiles", "marketing_tiles", "cosmic_universe", "social", "reviews"]
+  "order": [
+    "gradient",
+    "hero",
+    "main",
+    "ingredient_tiles",
+    "marketing_tiles",
+    "cosmic_universe",
+    "social",
+    "reviews"
+  ]
 }
-

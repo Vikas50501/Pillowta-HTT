@@ -1,87 +1,188 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_mood_stones": {
       "type": "hero",
       "settings": {
         "height": "tall",
+        "desktop_image": "shopify://shop_images/pexels-alice-c-70978593-8761243.jpg",
+        "mobile_layout": "below-image",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
         "eyebrow": "",
-        "heading": "coming july 30\nmood stones",
+        "heading": "coming july 30mood stones",
         "subtext": "<p>the new fragrance trio from kylie jenner.</p>",
-        "button_text": "get notified",
-        "link": "https://kyliecosmetics.attn.tv/p/29F/mood-stones",
         "heading_color": "#b3848f",
         "text_color": "#393939",
         "text_align_h": "left",
         "text_align_v": "center",
-        "mobile_layout": "below-image",
-        "overlay_opacity": 0
+        "link": "https://kyliecosmetics.attn.tv/p/29F/mood-stones",
+        "button_text": "get notified",
+        "mobile_button_text": "",
+        "button_style": "primary",
+        "button2_text": "",
+        "link2": "",
+        "button2_style": "secondary",
+        "font_override": "inherit"
       }
     },
     "featured_content_summer_look": {
       "type": "featured-content",
       "settings": {
+        "video": "shopify://files/videos/Pillowta vi.mp4",
+        "reverse": true,
         "heading": "kylie's summer look",
         "subtext": "<p>recreate this flushed and contoured summer look featuring our best-selling hybrid blush and precision pout lip liner.</p>",
+        "text_align": "center",
         "button_text": "shop now",
         "link": "/products/kylie-s-summer-look-bundle",
-        "reverse": true,
-        "text_align": "center",
+        "button_style": "secondary",
         "show_product_rail": true,
-        "product_limit": 12
+        "collection": "",
+        "product_limit": 12,
+        "font_override": "inherit"
       }
     },
     "featured_products_1": {
       "type": "featured-products",
       "blocks": {
-        "p1": { "type": "product", "settings": { "product": "hybrid-blush" } },
-        "p2": { "type": "product", "settings": { "product": "precision-pout-lip-liner" } },
-        "p3": { "type": "product", "settings": { "product": "skin-tint-blurring-elixir" } },
-        "p4": { "type": "product", "settings": { "product": "kylash-volume-mascara" } }
+        "p1": {
+          "type": "product",
+          "settings": {
+            "product": "hybrid-blush"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "product": "precision-pout-lip-liner"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "product": "skin-tint-blurring-elixir"
+          }
+        },
+        "p4": {
+          "type": "product",
+          "settings": {
+            "product": "kylash-volume-mascara"
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3", "p4"]
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "title": "",
+        "view_all_text": "",
+        "view_all_link": "",
+        "collection": "frontpage",
+        "font_override": "inherit"
+      }
     },
     "hero_summer_faves": {
       "type": "hero",
       "settings": {
         "height": "medium",
-        "heading": "Kylie's\nsummer faves",
+        "desktop_image": "shopify://shop_images/pexels-amaria-11259997.jpg",
+        "mobile_layout": "below-image",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "eyebrow": "",
+        "heading": "Kylie'ssummer faves",
         "subtext": "<p>discover her go-tos this summer – including the new watermelon lip butter and hydrating lip essentials.</p>",
-        "button_text": "shop now",
-        "link": "/collections/summer-essentials",
         "heading_color": "#b3848f",
         "text_color": "#393939",
         "text_align_h": "left",
         "text_align_v": "center",
-        "overlay_opacity": 0
+        "link": "/collections/summer-essentials",
+        "button_text": "Shop Now",
+        "mobile_button_text": "",
+        "button_style": "primary",
+        "button2_text": "",
+        "link2": "",
+        "button2_style": "secondary",
+        "font_override": "inherit"
       }
     },
     "featured_products_2": {
       "type": "featured-products",
-      "settings": {
-        "view_all_text": "shop now",
-        "view_all_link": "/collections/summer-essentials"
-      },
       "blocks": {
-        "p1": { "type": "product", "settings": { "product": "lip-butter" } },
-        "p2": { "type": "product", "settings": { "product": "coconut-water-lip-stain" } },
-        "p3": { "type": "product", "settings": { "product": "cloud-balm" } },
-        "p4": { "type": "product", "settings": { "product": "lip-and-cheek-glow-balm" } }
+        "p1": {
+          "type": "product",
+          "settings": {
+            "product": "lip-butter"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "product": "coconut-water-lip-stain"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "product": "cloud-balm"
+          }
+        },
+        "p4": {
+          "type": "product",
+          "settings": {
+            "product": "lip-and-cheek-glow-balm"
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3", "p4"]
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "title": "",
+        "view_all_text": "shop now",
+        "view_all_link": "/collections/summer-essentials",
+        "collection": "frontpage",
+        "font_override": "inherit"
+      }
     },
     "hero_scent_of_summer": {
       "type": "hero",
       "settings": {
         "height": "short",
+        "desktop_image": "shopify://shop_images/we-vibe-toys-nyMfwv7LBPw-unsplash.jpg",
+        "mobile_layout": "below-image",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "eyebrow": "",
         "heading": "the scent of the summer",
         "subtext": "<p>a warm floral scent, our debut fragrance cosmic kylie jenner is perfect for summer.</p>",
-        "button_text": "shop now",
-        "link": "/collections/kylie-fragrance",
         "heading_color": "#ffffff",
         "text_color": "#b3848f",
         "text_align_h": "left",
         "text_align_v": "center",
-        "overlay_opacity": 0
+        "link": "/collections/kylie-fragrance",
+        "button_text": "shop now",
+        "mobile_button_text": "",
+        "button_style": "primary",
+        "button2_text": "",
+        "link2": "",
+        "button2_style": "secondary",
+        "font_override": "inherit"
       }
     },
     "fireworks_cosmic": {
@@ -90,40 +191,121 @@
         "title": "LOVE FOR COSMIC",
         "channel": "us_kylie_cosmetics",
         "playlist": "5ndJV2",
-        "mode": "row"
+        "mode": "grid",
+        "font_override": "inherit"
       }
     },
     "shop_by_category": {
       "type": "multicolumn",
+      "blocks": {
+        "lips": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
+        "tile_zYDV8z": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
+        "tile_Jidgg4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
+        "fragrance": {
+          "type": "tile",
+          "disabled": true,
+          "settings": {
+            "title": "fragrance",
+            "link": "/collections/kylie-fragrance"
+          }
+        },
+        "face": {
+          "type": "tile",
+          "disabled": true,
+          "settings": {
+            "title": "face",
+            "link": "/collections/kylie-cosmetics-face"
+          }
+        },
+        "blush": {
+          "type": "tile",
+          "disabled": true,
+          "settings": {
+            "title": "blush",
+            "link": "/collections/kylie-cosmetics-face-blushes"
+          }
+        },
+        "lip_care": {
+          "type": "tile",
+          "disabled": true,
+          "settings": {
+            "title": "Lip Care",
+            "link": "/collections/kylie-skin-treatment-lip-care"
+          }
+        },
+        "eyes": {
+          "type": "tile",
+          "disabled": true,
+          "settings": {
+            "title": "eyes",
+            "link": "/collections/kylie-cosmetics-eyes-eyebrows"
+          }
+        }
+      },
+      "block_order": [
+        "lips",
+        "tile_zYDV8z",
+        "tile_Jidgg4",
+        "fragrance",
+        "face",
+        "blush",
+        "lip_care",
+        "eyes"
+      ],
       "settings": {
         "title": "shop by category",
-        "columns_desktop": 6,
+        "columns_desktop": 3,
         "columns_mobile": 2,
-        "enable_hover_media": true
-      },
-      "blocks": {
-        "lips": { "type": "tile", "settings": { "title": "lips", "link": "/collections/kylie-cosmetics-lips" } },
-        "fragrance": { "type": "tile", "settings": { "title": "fragrance", "link": "/collections/kylie-fragrance" } },
-        "face": { "type": "tile", "settings": { "title": "face", "link": "/collections/kylie-cosmetics-face" } },
-        "blush": { "type": "tile", "settings": { "title": "blush", "link": "/collections/kylie-cosmetics-face-blushes" } },
-        "lip_care": { "type": "tile", "settings": { "title": "Lip Care", "link": "/collections/kylie-skin-treatment-lip-care" } },
-        "eyes": { "type": "tile", "settings": { "title": "eyes", "link": "/collections/kylie-cosmetics-eyes-eyebrows" } }
-      },
-      "block_order": ["lips", "fragrance", "face", "blush", "lip_care", "eyes"]
+        "enable_hover_media": true,
+        "font_override": "inherit"
+      }
     },
     "hero_vto": {
       "type": "hero",
       "settings": {
         "height": "medium",
+        "mobile_layout": "over-image",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "eyebrow": "",
         "heading": "Virtual Try-On",
         "subtext": "<p>try on lipsticks, blushes, &amp; more to discover your new fave shade.</p>",
-        "button_text": "discover now",
-        "link": "#vto://home",
         "heading_color": "#b3848f",
+        "text_color": "#393939",
         "text_align_h": "center",
         "text_align_v": "center",
-        "mobile_layout": "over-image",
-        "overlay_opacity": 0
+        "link": "#vto://home",
+        "button_text": "discover now",
+        "mobile_button_text": "",
+        "button_style": "primary",
+        "button2_text": "",
+        "link2": "",
+        "button2_style": "secondary",
+        "font_override": "inherit"
       }
     },
     "shop_our_ig": {
@@ -131,11 +313,15 @@
       "settings": {
         "title": "SHOP OUR IG",
         "feed_id": "kylie_1",
-        "page_size": 14
+        "page_size": 14,
+        "font_override": "inherit"
       }
     },
     "brand_principles": {
-      "type": "brand-principles"
+      "type": "brand-principles",
+      "settings": {
+        "font_override": "inherit"
+      }
     }
   },
   "order": [
@@ -152,4 +338,3 @@
     "brand_principles"
   ]
 }
-
