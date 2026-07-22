@@ -1,0 +1,132 @@
+{% comment %}
+  Maps to: source site's per-category `accordion-faq` Vue sections — real category
+  structure recovered: Orders, Payment, Accounts, Products, Shipping, Contact (6
+  categories, one section per category on the real FAQ page). Rebuilt as native
+  Liquid <details> accordions (same open/close feel, no Vue dependency needed).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="faq-accordion{% if section.settings.font_override != 'inherit' %} faq-accordion--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="faq-accordion"
+>
+  <div class="faq-accordion__inner page-width">
+    {%- if section.settings.category_title != blank -%}
+      <h2 class="faq-accordion__category">{{ section.settings.category_title }}</h2>
+    {%- endif -%}
+
+    <div class="faq-accordion__list">
+      {%- for block in section.blocks -%}
+        <details class="accordion faq-accordion__item" {{ block.shopify_attributes }}>
+          <summary class="accordion__button">
+            {{ block.settings.question }}
+            {%- render 'icon', name: 'plus' -%}
+          </summary>
+          <div class="accordion__content">
+            {{ block.settings.answer }}
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq-accordion {
+    padding-block: 2rem;
+  }
+
+  .faq-accordion__inner {
+    max-width: 48rem;
+  }
+
+  .faq-accordion__category {
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1rem;
+  }
+
+  .faq-accordion__item {
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .faq-accordion__item .accordion__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-accordion__item .accordion__button::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-accordion__item[open] .accordion__button svg {
+    transform: rotate(45deg);
+  }
+
+  .faq-accordion__item .accordion__content {
+    padding-bottom: 1rem;
+    font-size: var(--font-size-small);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.faq-accordion.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "category_title",
+      "label": "t:sections.faq-accordion.category_title.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "t:sections.faq-accordion.blocks.qa.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq-accordion.blocks.qa.question.label"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.faq-accordion.blocks.qa.answer.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 24,
+  "presets": [
+    {
+      "name": "t:sections.faq-accordion.name",
+      "settings": {
+        "category_title": "ORDERS"
+      },
+      "blocks": [
+        { "type": "qa", "settings": { "question": "Can I cancel my order?" } },
+        { "type": "qa", "settings": { "question": "How can I track my package?" } },
+        { "type": "qa", "settings": { "question": "Do you offer returns?" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

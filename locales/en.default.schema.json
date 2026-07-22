@@ -1,0 +1,638 @@
+{
+  "settings": {
+    "typography": {
+      "name": "Typography",
+      "intro": "This theme uses 3 brand fonts (Tt-Chocolate, UniversLTStd-Bold, script412displayregular). Each role below can stay on the brand font or be swapped for a font from Shopify's library — the choice cascades to every section automatically.",
+      "headings": "Headings",
+      "body": "Body text",
+      "accent": "Accent / display",
+      "condensed": "Condensed (optional 4th role)",
+      "condensed_info": "Only used by third-party embeds (e.g. Klaviyo popups) in the source site — no brand font file exists for this role, so it falls back to the Shopify library font below.",
+      "source": {
+        "brand_univers": "Brand font (UniversLTStd-Bold)",
+        "brand_tt_chocolate": "Brand font (Tt-Chocolate)",
+        "brand_script_412": "Brand font (script412displayregular)",
+        "brand_univers_condensed": "Brand font (UniversLTCondensed)",
+        "shopify_library": "Choose from Shopify's font library instead"
+      },
+      "font_heading": {
+        "label": "Heading font",
+        "info": "Applied to all h1–h6 elements site-wide via --font-heading."
+      },
+      "font_body": {
+        "label": "Body font",
+        "info": "Applied to body text site-wide via --font-body."
+      },
+      "font_accent": {
+        "label": "Accent font",
+        "info": "Applied to display/script text site-wide via --font-accent."
+      },
+      "font_condensed": {
+        "label": "Condensed font"
+      },
+      "font_shopify_override": {
+        "label": "Shopify library font",
+        "info": "Only used when the source above is set to \"Choose from Shopify's font library instead\"."
+      },
+      "heading_scale": {
+        "label": "Heading size scale"
+      },
+      "body_scale": {
+        "label": "Body size scale"
+      },
+      "line_height": {
+        "label": "Body line height"
+      }
+    },
+    "colors": {
+      "name": "Colors",
+      "base": "Base",
+      "buttons": "Buttons",
+      "feedback": "Badges & feedback",
+      "links": "Links",
+      "background": { "label": "Background" },
+      "background_alt": { "label": "Section background (alt)" },
+      "text": { "label": "Text" },
+      "heading": { "label": "Headings" },
+      "accent": {
+        "label": "Accent / brand",
+        "info": "The primary brand mauve used for headings and key accents."
+      },
+      "border": { "label": "Border" },
+      "border_accent": { "label": "Border (accent / tinted panels)" },
+      "button_primary_bg": { "label": "Primary button background" },
+      "button_primary_text": { "label": "Primary button text" },
+      "button_primary_bg_hover": { "label": "Primary button background (hover)" },
+      "button_primary_text_hover": { "label": "Primary button text (hover)" },
+      "focus_outline": { "label": "Focus outline" },
+      "error": { "label": "Error / validation" },
+      "sale": { "label": "Sale price" },
+      "badge_bg": { "label": "Badge background" },
+      "badge_text": { "label": "Badge text" },
+      "link": { "label": "Link" },
+      "link_hover": { "label": "Link (hover)" }
+    },
+    "buttons": {
+      "name": "Buttons",
+      "style": {
+        "label": "Style",
+        "filled": "Filled",
+        "outline": "Outline"
+      },
+      "radius": { "label": "Corner radius" },
+      "uppercase": {
+        "label": "Uppercase text",
+        "info": "Source site uses lowercase button text by default."
+      },
+      "letter_spacing": { "label": "Letter spacing" },
+      "border_width": { "label": "Border width" }
+    },
+    "layout": {
+      "name": "Layout",
+      "container_max_width": { "label": "Page container max width" },
+      "container_padding": { "label": "Container side padding" },
+      "section_spacing": { "label": "Section vertical spacing" },
+      "grid_gutter": { "label": "Grid gutter" },
+      "radius": {
+        "label": "Corner radius style",
+        "sharp": "Sharp",
+        "soft": "Soft",
+        "round": "Round"
+      }
+    },
+    "product_cards": {
+      "name": "Product cards",
+      "ratio": {
+        "label": "Image ratio",
+        "portrait": "Portrait",
+        "square": "Square",
+        "landscape": "Landscape"
+      },
+      "show_vendor": { "label": "Show vendor" },
+      "show_swatches": { "label": "Show shade swatches" },
+      "quick_add": { "label": "Enable quick add" },
+      "show_badges": { "label": "Show badges" },
+      "hover_zoom": { "label": "Hover zoom effect" }
+    },
+    "cart": {
+      "name": "Cart",
+      "type": {
+        "label": "Cart type",
+        "drawer": "Drawer",
+        "page": "Page"
+      },
+      "free_shipping_bar": { "label": "Show free shipping progress bar" },
+      "free_shipping_threshold": { "label": "Free shipping threshold" },
+      "notes": { "label": "Enable order notes" },
+      "upsell": { "label": "Show upsell slot" }
+    },
+    "animations": {
+      "name": "Animations",
+      "enabled": {
+        "label": "Enable animations",
+        "info": "When on, motion matches the source site exactly (timing, easing, delay)."
+      },
+      "scroll_reveal": { "label": "Scroll reveal effects" },
+      "hover_zoom": { "label": "Hover zoom effects" },
+      "speed": {
+        "label": "Speed",
+        "slow": "Slow",
+        "normal": "Normal",
+        "fast": "Fast"
+      }
+    },
+    "social": {
+      "name": "Social & brand",
+      "logo": "Logo",
+      "links": "Social links",
+      "logo_image": { "label": "Logo" },
+      "logo_width": { "label": "Desktop logo width" },
+      "logo_mobile": { "label": "Mobile logo (optional)" },
+      "favicon": { "label": "Favicon" },
+      "instagram": { "label": "Instagram URL" },
+      "tiktok": { "label": "TikTok URL" },
+      "facebook": { "label": "Facebook URL" },
+      "twitter": { "label": "X / Twitter URL" },
+      "youtube": { "label": "YouTube URL" }
+    },
+    "reviews": {
+      "name": "Reviews",
+      "bazaarvoice_client_name": {
+        "label": "Bazaarvoice client name",
+        "info": "Found in your Bazaarvoice account settings. Leave blank to hide reviews and show a setup notice instead."
+      }
+    }
+  },
+  "sections": {
+    "common": {
+      "font": {
+        "label": "Font override",
+        "inherit": "Inherit from theme",
+        "heading": "Heading font",
+        "body": "Body font",
+        "accent": "Accent font"
+      },
+      "align": {
+        "label": "Text alignment",
+        "left": "Left",
+        "center": "Center",
+        "right": "Right",
+        "top": "Top",
+        "bottom": "Bottom"
+      },
+      "button_style": {
+        "label": "Button style",
+        "primary": "Primary",
+        "secondary": "Secondary"
+      }
+    },
+    "header-group": {
+      "name": "Header"
+    },
+    "footer-group": {
+      "name": "Footer"
+    },
+    "announcement-bar": {
+      "name": "Announcement bar",
+      "autoplay_speed": { "label": "Autoplay speed" },
+      "show_close": { "label": "Show close button" },
+      "enable_play_pause": { "label": "Show play/pause control" },
+      "show_arrows": { "label": "Show prev/next arrows" },
+      "blocks": {
+        "message": {
+          "name": "Message",
+          "text": { "label": "Message text" },
+          "link": { "label": "Link" },
+          "link_text": { "label": "Link text" }
+        }
+      }
+    },
+    "header": {
+      "name": "Header",
+      "main_menu": { "label": "Main menu" },
+      "logo": { "label": "Logo" },
+      "logo_width": { "label": "Logo width" },
+      "sticky": { "label": "Sticky header" },
+      "transparent_on_home": {
+        "label": "Transparent over homepage hero",
+        "info": "Header is transparent until the visitor scrolls, then becomes solid — matches the source site's site-header--transparent behavior."
+      },
+      "mobile_extra": {
+        "header": "Mobile-only menu item",
+        "title_label": "Title",
+        "link_label": "Link",
+        "info": "The source site shows a 5th nav item (\"rewards\") only in the mobile drawer, not the desktop mega-menu."
+      },
+      "blocks": {
+        "menu_promo": {
+          "name": "Mega-menu banner",
+          "menu_handle": { "label": "Menu item handle", "info": "The handle of the top-level menu item this banner appears next to (e.g. \"cosmetics\")." },
+          "image": { "label": "Image" },
+          "title": { "label": "Title" },
+          "link": { "label": "Link" }
+        }
+      }
+    },
+    "footer": {
+      "name": "Footer",
+      "newsletter_header": "Newsletter",
+      "show_newsletter": { "label": "Show newsletter signup" },
+      "newsletter_title": { "label": "Heading" },
+      "newsletter_subtext": { "label": "Subtext" },
+      "newsletter_button_text": { "label": "Button text" },
+      "copyright_header": "Copyright",
+      "copyright_text": { "label": "Copyright text", "info": "Defaults to your shop name if left blank." },
+      "blocks": {
+        "link_list": {
+          "name": "Link list column",
+          "menu": { "label": "Menu" }
+        }
+      }
+    },
+    "cart-drawer": {
+      "name": "Cart drawer",
+      "blocks": {
+        "free_shipping_bar": {
+          "name": "Free shipping progress bar",
+          "threshold": { "label": "Free shipping threshold" }
+        },
+        "gift_with_purchase": {
+          "name": "Gift with purchase",
+          "title": { "label": "Title" },
+          "description": { "label": "Description" },
+          "cart_total": { "label": "Cart total required" },
+          "item_limit": { "label": "Gift item limit" }
+        },
+        "free_samples": {
+          "name": "Free samples",
+          "title": { "label": "Title" },
+          "cart_total": { "label": "Cart total required" }
+        },
+        "loyalty_points": {
+          "name": "Loyalty points"
+        },
+        "line_items": {
+          "name": "Cart line items"
+        },
+        "featured_product": {
+          "name": "Featured product upsell",
+          "title": { "label": "Title" },
+          "subtitle": { "label": "Subtitle" },
+          "product": { "label": "Product" }
+        }
+      }
+    },
+    "brand-principles": {
+      "name": "Brand principles",
+      "blocks": {
+        "principle": {
+          "name": "Principle",
+          "image": { "label": "Icon", "info": "Overrides the bundled icon below if set." },
+          "icon_asset": { "label": "Bundled icon filename", "info": "e.g. icon-vegan.png — one of the icons already included in assets/." },
+          "title": { "label": "Title" }
+        }
+      }
+    },
+    "promotions": {
+      "name": "Promotions banner",
+      "blocks": {
+        "banner": {
+          "name": "Banner",
+          "title": { "label": "Title" },
+          "description": { "label": "Description" },
+          "threshold": { "label": "Cart total threshold (reference only)" }
+        }
+      }
+    },
+    "hero": {
+      "name": "Hero",
+      "height": {
+        "label": "Height",
+        "short": "Short",
+        "medium": "Medium",
+        "tall": "Tall",
+        "auto": "Auto (fit content)"
+      },
+      "desktop_media_header": "Desktop media",
+      "desktop_image": { "label": "Desktop image" },
+      "desktop_video": { "label": "Desktop video (MP4)" },
+      "mobile_media_header": "Mobile media",
+      "mobile_image": { "label": "Mobile image" },
+      "mobile_video": { "label": "Mobile video (MP4)" },
+      "mobile_layout": {
+        "label": "Mobile text position",
+        "below_image": "Below image",
+        "over_image": "Over image"
+      },
+      "overlay_header": "Overlay",
+      "overlay_color": { "label": "Overlay color" },
+      "overlay_opacity": { "label": "Overlay opacity" },
+      "content_header": "Content",
+      "eyebrow": { "label": "Eyebrow text" },
+      "heading": { "label": "Heading" },
+      "subtext": { "label": "Subtext" },
+      "heading_color": { "label": "Heading color" },
+      "text_color": { "label": "Text color" },
+      "text_align_h": { "label": "Horizontal position" },
+      "text_align_v": { "label": "Vertical position" },
+      "link": { "label": "Link", "info": "Applies to the button and, if no button text is set, the whole hero becomes clickable." },
+      "buttons_header": "Buttons",
+      "button_text": { "label": "Button text" },
+      "mobile_button_text": { "label": "Mobile button text override", "info": "Leave blank to reuse the desktop button text (e.g. source site uses \"SHOP NOW\" on desktop, \"shop now\" on mobile)." },
+      "button2_text": { "label": "Second button text" },
+      "link2": { "label": "Second button link" }
+    },
+    "featured-content": {
+      "name": "Featured content",
+      "image": { "label": "Image" },
+      "video": { "label": "Video (MP4)" },
+      "poster": { "label": "Video poster image" },
+      "reverse": { "label": "Reverse layout (media on right)" },
+      "heading": { "label": "Heading" },
+      "subtext": { "label": "Subtext" },
+      "button_text": { "label": "Button text" },
+      "link": { "label": "Link" },
+      "rail_header": "Product rail",
+      "show_product_rail": { "label": "Show product rail" },
+      "collection": { "label": "Collection", "info": "Leave blank to pull from all products, matching the source site's generic recommendation rail." },
+      "product_limit": { "label": "Number of products" }
+    },
+    "featured-products": {
+      "name": "Featured products",
+      "title": { "label": "Heading" },
+      "view_all_text": { "label": "\"View all\" link text" },
+      "view_all_link": { "label": "\"View all\" link" },
+      "collection": { "label": "Collection (fallback if no product blocks added)" },
+      "blocks": {
+        "product": {
+          "name": "Product",
+          "product": { "label": "Product" }
+        }
+      }
+    },
+    "fireworks": {
+      "name": "Fireworks (shoppable video)",
+      "title": { "label": "Title" },
+      "channel": { "label": "Firework channel", "info": "e.g. us_kylie_cosmetics — provided by your Firework (fw.tv) account." },
+      "playlist": { "label": "Playlist ID" },
+      "mode": {
+        "label": "Layout",
+        "row": "Row",
+        "grid": "Grid"
+      }
+    },
+    "multicolumn": {
+      "name": "Multicolumn",
+      "title": { "label": "Heading" },
+      "columns_desktop": { "label": "Columns (desktop)" },
+      "columns_mobile": { "label": "Columns (mobile)" },
+      "enable_hover_media": { "label": "Enable hover video/GIF crossfade", "info": "On touch devices the hover media always shows, matching the source site's mobile behavior." },
+      "blocks": {
+        "tile": {
+          "name": "Tile",
+          "image": { "label": "Image" },
+          "hover_video": { "label": "Hover video (MP4)" },
+          "hover_image": { "label": "Hover image/GIF", "info": "Used only if no hover video is set." },
+          "title": { "label": "Title" },
+          "link": { "label": "Link" }
+        }
+      }
+    },
+    "image-with-text-overlay": {
+      "name": "Image with text overlay",
+      "desktop_image": { "label": "Desktop image" },
+      "mobile_image": { "label": "Mobile image" },
+      "heading": { "label": "Heading" },
+      "subtext": { "label": "Subtext" },
+      "text_color": { "label": "Text color" },
+      "text_align_h": { "label": "Horizontal position" },
+      "text_align_v": { "label": "Vertical position" },
+      "link": { "label": "Link", "info": "Makes the whole image clickable." },
+      "button_text": { "label": "Button text (visual only, whole image is the link)" }
+    },
+    "foursixty": {
+      "name": "Instagram feed (Foursixty)",
+      "title": { "label": "Title" },
+      "feed_id": { "label": "Foursixty feed ID", "info": "Provided by your Foursixty account." },
+      "page_size": { "label": "Number of tiles" }
+    },
+    "collection-banner": {
+      "name": "Collection banner",
+      "banner_style": {
+        "label": "Banner style",
+        "image": "Image",
+        "gradient": "Gradient (no image)"
+      },
+      "title": { "label": "Title", "info": "Defaults to the collection's own title if left blank." },
+      "description": { "label": "Description", "info": "Defaults to the collection's own description if left blank." },
+      "image_header": "Image banner",
+      "desktop_image": { "label": "Desktop image" },
+      "mobile_image": { "label": "Mobile image" },
+      "gradient_header": "Gradient banner",
+      "gradient_from": { "label": "Gradient color (top)" },
+      "gradient_to": { "label": "Gradient color (bottom)" },
+      "gradient_stop_desktop": { "label": "Gradient stop position (desktop)" },
+      "gradient_stop_mobile": { "label": "Gradient stop position (mobile)" },
+      "blocks": {
+        "category_link": {
+          "name": "Category shortcut",
+          "image": { "label": "Image" },
+          "title": { "label": "Title" },
+          "link": { "label": "Link" }
+        }
+      }
+    },
+    "main-collection": {
+      "name": "Collection grid",
+      "columns_desktop": { "label": "Columns (desktop)" },
+      "columns_mobile": { "label": "Columns (mobile)" },
+      "products_per_page": { "label": "Products per page" },
+      "enable_filtering": { "label": "Enable filtering" },
+      "enable_sorting": { "label": "Enable sorting" },
+      "blocks": {
+        "disruptor": {
+          "name": "Promotional tile",
+          "image": { "label": "Image" },
+          "link": { "label": "Link" },
+          "grid_position": { "label": "Grid position", "info": "Which position in the product grid this tile is inserted at (1 = first)." },
+          "size": {
+            "label": "Size",
+            "normal": "Normal (1x1)",
+            "large": "Large (2x2)"
+          }
+        }
+      }
+    },
+    "main-product": {
+      "name": "Product information",
+      "max_quantity": { "label": "Maximum quantity per order" },
+      "show_reviews_summary": { "label": "Show star rating summary near title" },
+      "enable_shade_finder": { "label": "Enable \"find my shade\" popup", "info": "Only shows if the product has a Shade option." },
+      "engraving_header": "Engraving",
+      "enable_engraving": { "label": "Enable custom engraving", "info": "Only shows if the product is tagged \"engravable\"." },
+      "engraving_button_text": { "label": "Engraving button text" },
+      "engraving_terms_text": { "label": "Engraving terms text" },
+      "engraving_fee_variant": { "label": "Engraving fee product", "info": "A separate product/variant representing the engraving fee line item." },
+      "blocks": {
+        "accordion": {
+          "name": "Accordion",
+          "title": { "label": "Title" },
+          "content": { "label": "Content" },
+          "page": { "label": "Or use a page's content", "info": "Overrides the content field above if set." }
+        },
+        "product_tip": {
+          "name": "Cross-sell tip",
+          "title": { "label": "Title" },
+          "text": { "label": "Text" },
+          "tip_product": { "label": "Product" }
+        }
+      }
+    },
+    "reviews": {
+      "name": "Reviews",
+      "background_color": { "label": "Background color" }
+    },
+    "product-hero": {
+      "name": "Product hero",
+      "desktop_image": { "label": "Desktop image" },
+      "desktop_video": { "label": "Desktop video (MP4)" },
+      "mobile_image": { "label": "Mobile image" },
+      "mobile_video": { "label": "Mobile video (MP4)" },
+      "poster": { "label": "Video poster image" },
+      "heading": { "label": "Heading" },
+      "button_text": { "label": "Button text" },
+      "link": { "label": "Link" }
+    },
+    "ingredient-tiles": {
+      "name": "Ingredient tiles",
+      "title": { "label": "Heading" },
+      "blocks": {
+        "note": {
+          "name": "Item",
+          "group_label": { "label": "Group label", "info": "Items with the same group label are grouped under one column, e.g. \"OPENING NOTES\"." },
+          "image": { "label": "Image" },
+          "name_field": { "label": "Name" }
+        }
+      }
+    },
+    "marketing-tiles": {
+      "name": "Marketing tiles",
+      "blocks": {
+        "tile": {
+          "name": "Tile",
+          "width": {
+            "label": "Width",
+            "full": "Full width",
+            "half": "Half width"
+          },
+          "image": { "label": "Image" },
+          "title": { "label": "Title" },
+          "text": { "label": "Text" },
+          "background_color": { "label": "Background color" },
+          "text_color": { "label": "Text color" }
+        }
+      }
+    },
+    "cosmic-universe": {
+      "name": "Related fragrances carousel",
+      "title": { "label": "Heading" },
+      "blocks": {
+        "fragrance_card": {
+          "name": "Fragrance",
+          "product": { "label": "Product" },
+          "image": { "label": "Image" },
+          "title": { "label": "Title" },
+          "fragrance_family": { "label": "Fragrance family" },
+          "about_the_scent": { "label": "About the scent" },
+          "key_notes": { "label": "Key notes" }
+        }
+      }
+    },
+    "gradient-background": {
+      "name": "Gradient background",
+      "color_from": { "label": "Color (top)" },
+      "color_to": { "label": "Color (bottom)" },
+      "stop_desktop": { "label": "Gradient stop (desktop)" },
+      "stop_mobile": { "label": "Gradient stop (mobile)" }
+    },
+    "contact-form": {
+      "name": "Contact form",
+      "heading": { "label": "Heading" },
+      "topics": { "label": "\"How can we help?\" options", "info": "One option per line or separated by |." }
+    },
+    "page-content": {
+      "name": "Page content",
+      "show_title": { "label": "Show page title" }
+    },
+    "faq-accordion": {
+      "name": "FAQ category",
+      "category_title": { "label": "Category title" },
+      "blocks": {
+        "qa": {
+          "name": "Question",
+          "question": { "label": "Question" },
+          "answer": { "label": "Answer" }
+        }
+      }
+    },
+    "rewards-hero": {
+      "name": "Rewards hero",
+      "image": { "label": "Image" },
+      "title": { "label": "Title" },
+      "subtext": { "label": "Subtext" },
+      "join_button_text": { "label": "\"Join\" button text" },
+      "signin_button_text": { "label": "\"Sign in\" button text" },
+      "account_button_text": { "label": "Logged-in button text" },
+      "background_color": { "label": "Background color" }
+    },
+    "rewards-steps": {
+      "name": "Rewards steps/points list",
+      "title": { "label": "Heading" },
+      "columns": { "label": "Columns" },
+      "blocks": {
+        "item": {
+          "name": "Item",
+          "points_value": { "label": "Points value", "info": "Leave blank for a plain step (no points)." },
+          "title": { "label": "Title" },
+          "text": { "label": "Text" }
+        }
+      }
+    },
+    "rewards-tiers": {
+      "name": "Rewards VIP tiers",
+      "title": { "label": "Heading" },
+      "blocks": {
+        "tier": {
+          "name": "Tier",
+          "tier_name": { "label": "Tier name" },
+          "threshold": { "label": "Spend threshold" },
+          "points_rate": { "label": "Points rate" },
+          "perks": { "label": "Perks" }
+        }
+      }
+    },
+    "rewards-redeem": {
+      "name": "Rewards redeem catalog",
+      "title": { "label": "Heading" },
+      "blocks": {
+        "reward_item": {
+          "name": "Reward",
+          "product": { "label": "Product" },
+          "points_cost": { "label": "Points cost" }
+        }
+      }
+    },
+    "shipping-tabs": {
+      "name": "Shipping info tabs",
+      "title": { "label": "Banner title" },
+      "banner_image": { "label": "Banner image" },
+      "blocks": {
+        "tab": {
+          "name": "Tab",
+          "title": { "label": "Tab title" },
+          "content": { "label": "Content" }
+        }
+      }
+    }
+  }
+}

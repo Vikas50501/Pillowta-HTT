@@ -1,0 +1,131 @@
+{% comment %}
+  Maps to: source site's "fireworks" section — despite the name this is NOT a
+  countdown/sale banner, it embeds the Firework (fw.tv) shoppable-video platform,
+  lazy-loaded on scroll into view. Real instance: title "LOVE FOR COSMIC",
+  channel "us_kylie_cosmetics", playlist "5ndJV2", row layout.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="fireworks{% if section.settings.font_override != 'inherit' %} fireworks--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="fireworks"
+  data-channel="{{ section.settings.channel }}"
+  data-playlist="{{ section.settings.playlist }}"
+  data-mode="{{ section.settings.mode }}"
+>
+  {%- if section.settings.title != blank -%}
+    <h2 class="fireworks__title page-width">{{ section.settings.title }}</h2>
+  {%- endif -%}
+  <div class="fireworks__embed page-width" data-fireworks-embed></div>
+</div>
+
+{% stylesheet %}
+  .fireworks {
+    padding-block: var(--section-spacing);
+  }
+
+  .fireworks__title {
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(var(--color-accent));
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .fireworks__embed {
+    min-height: 12rem;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    document.querySelectorAll('[data-section-type="fireworks"]').forEach((section) => {
+      if (!('IntersectionObserver' in window)) return loadFirework(section);
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadFirework(section);
+            obs.disconnect();
+          }
+        });
+      });
+      observer.observe(section);
+    });
+
+    function loadFirework(section) {
+      if (section.dataset.loaded) return;
+      section.dataset.loaded = 'true';
+      const script = document.createElement('script');
+      script.src = 'https://asset.fwcdn3.com/js/embed/fw-embed-feed.js';
+      script.async = true;
+      script.onload = () => {
+        if (window.fwn && window.fwn.embedFeed) {
+          window.fwn.embedFeed(section.querySelector('[data-fireworks-embed]'), {
+            channel: section.dataset.channel,
+            playlist: section.dataset.playlist,
+            mode: section.dataset.mode,
+          });
+        }
+      };
+      document.body.appendChild(script);
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.fireworks.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "LOVE FOR COSMIC",
+      "label": "t:sections.fireworks.title.label"
+    },
+    {
+      "type": "text",
+      "id": "channel",
+      "label": "t:sections.fireworks.channel.label",
+      "info": "t:sections.fireworks.channel.info"
+    },
+    {
+      "type": "text",
+      "id": "playlist",
+      "label": "t:sections.fireworks.playlist.label"
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "options": [
+        { "value": "row", "label": "t:sections.fireworks.mode.row" },
+        { "value": "grid", "label": "t:sections.fireworks.mode.grid" }
+      ],
+      "default": "row",
+      "label": "t:sections.fireworks.mode.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.fireworks.name",
+      "settings": {
+        "title": "LOVE FOR COSMIC",
+        "channel": "us_kylie_cosmetics",
+        "playlist": "5ndJV2"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,153 @@
+{% comment %}
+  Maps to: source site's Yotpo "How it Works" widget — real 3-step copy: "create an
+  account start here first" -> "EARN POINTS $1 = 1 point earned" -> "REDEEM POINTS
+  redeem points for exclusive discounts". Reused for the "Ways to earn points" list
+  too (real point values: create account 25pts, follow Instagram 20pts, share on
+  Facebook 20pts, follow TikTok 20pts, write review 35pts, review w/ photo 50pts,
+  review w/ video 75pts, sign up for texts 35pts, sign up for email 25pts, spend
+  $100+ bonus 25pts, birthday gift) — one flexible numbered/point-value list section.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="rewards-steps{% if section.settings.font_override != 'inherit' %} rewards-steps--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="rewards-steps"
+>
+  <div class="rewards-steps__inner page-width">
+    {%- if section.settings.title != blank -%}
+      <h2 class="rewards-steps__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    <div class="rewards-steps__grid" style="--columns: {{ section.settings.columns }};">
+      {%- for block in section.blocks -%}
+        <div class="rewards-steps__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.points_value != blank -%}
+            <span class="rewards-steps__points">{{ block.settings.points_value }}</span>
+          {%- endif -%}
+          <p class="rewards-steps__item-title">{{ block.settings.title }}</p>
+          {%- if block.settings.text != blank -%}
+            <p class="rewards-steps__item-text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .rewards-steps {
+    padding-block: var(--section-spacing);
+  }
+
+  .rewards-steps__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .rewards-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns, 3), 1fr);
+    gap: var(--grid-gutter);
+  }
+
+  .rewards-steps__item {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgb(var(--color-background-alt));
+    border-radius: var(--radius-lg);
+  }
+
+  .rewards-steps__points {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h2);
+    color: rgb(var(--color-accent));
+  }
+
+  .rewards-steps__item-title {
+    text-transform: uppercase;
+    font-weight: var(--font-body-weight-demibold);
+    margin-top: .5rem;
+  }
+
+  @media screen and (max-width: 44.99em) {
+    .rewards-steps__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rewards-steps.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.rewards-steps.title.label"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.rewards-steps.columns.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.rewards-steps.blocks.item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "points_value",
+          "label": "t:sections.rewards-steps.blocks.item.points_value.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.rewards-steps.blocks.item.title.label"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.rewards-steps.blocks.item.text.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "t:sections.rewards-steps.name",
+      "settings": {
+        "title": "how it works",
+        "columns": 3
+      },
+      "blocks": [
+        { "type": "item", "settings": { "title": "create an account", "text": "start here first" } },
+        { "type": "item", "settings": { "title": "earn points", "text": "$1 = 1 point earned" } },
+        { "type": "item", "settings": { "title": "redeem points", "text": "redeem points for exclusive discounts" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

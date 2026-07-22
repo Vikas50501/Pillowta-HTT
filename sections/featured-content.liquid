@@ -1,0 +1,277 @@
+{% comment %}
+  Maps to: source site's "featured_content" section (e.g. "Kylie's Summer Look" —
+  video/image tile + text, reversible layout, followed by a generic recommended-
+  products rail with no fixed collection, matching the source's empty-handle slider).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="featured-content{% if section.settings.reverse %} featured-content--reverse{% endif %}{% if section.settings.font_override != 'inherit' %} featured-content--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-content"
+>
+  <div class="featured-content__tile page-width">
+    <div class="featured-content__media">
+      {%- if section.settings.video != blank -%}
+        <video class="featured-content__video" autoplay muted loop playsinline poster="{{ section.settings.poster | image_url: width: 1200 }}">
+          <source src="{{ section.settings.video }}" type="video/mp4">
+        </video>
+      {%- elsif section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: widths: '600,900,1200', alt: section.settings.heading | default: '', loading: 'lazy' }}
+      {%- endif -%}
+    </div>
+
+    <div class="featured-content__text featured-content__text--{{ section.settings.text_align }}" data-scroll-reveal>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="featured-content__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <div class="featured-content__subtext">{{ section.settings.subtext }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_text != blank -%}
+        <a href="{{ section.settings.link }}" class="action action--{{ section.settings.button_style }}">
+          {{ section.settings.button_text }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_product_rail -%}
+    {%- liquid
+      if section.settings.collection != blank
+        assign rail_products = section.settings.collection.products
+      else
+        assign rail_products = collections.all.products
+      endif
+    -%}
+    <product-carousel class="featured-content__rail page-width">
+      <div class="carousel__track" data-carousel-track>
+        {%- for product in rail_products limit: section.settings.product_limit -%}
+          <div class="carousel__slide" data-carousel-slide>
+            {%- render 'product-card', product: product -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <button type="button" class="carousel__nav carousel__nav--prev" data-carousel-prev aria-label="{{ 'accessibility.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+      <button type="button" class="carousel__nav carousel__nav--next" data-carousel-next aria-label="{{ 'accessibility.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+    </product-carousel>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .featured-content {
+    padding-block: var(--section-spacing);
+  }
+
+  .featured-content__tile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--grid-gutter);
+    align-items: center;
+  }
+
+  .featured-content--reverse .featured-content__tile {
+    direction: rtl;
+  }
+
+  .featured-content--reverse .featured-content__text {
+    direction: ltr;
+  }
+
+  .featured-content__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+  }
+
+  .featured-content__media img,
+  .featured-content__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .featured-content__text--center {
+    text-align: center;
+  }
+
+  .featured-content__heading {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+  }
+
+  .featured-content__rail {
+    margin-top: var(--section-spacing);
+    position: relative;
+  }
+
+  .carousel__track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel__slide {
+    flex: 0 0 41.6%;
+    scroll-snap-align: start;
+  }
+
+  .carousel__nav {
+    position: absolute;
+    top: 40%;
+    background: rgb(var(--color-background));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+  }
+
+  .carousel__nav--prev { left: -1.25rem; }
+  .carousel__nav--next { right: -1.25rem; }
+
+  @media screen and (min-width: 30em) {
+    .carousel__slide { flex-basis: 43.5%; }
+  }
+
+  @media screen and (min-width: 45em) {
+    .carousel__slide { flex-basis: 37%; }
+  }
+
+  @media screen and (min-width: 60em) {
+    .carousel__slide { flex-basis: 25%; }
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .featured-content__tile {
+      grid-template-columns: 1fr;
+    }
+    .featured-content--reverse .featured-content__tile {
+      direction: ltr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.featured-content.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.featured-content.image.label"
+    },
+    {
+      "type": "video_url",
+      "id": "video",
+      "accept": ["mp4"],
+      "label": "t:sections.featured-content.video.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "t:sections.featured-content.poster.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse",
+      "default": false,
+      "label": "t:sections.featured-content.reverse.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.featured-content.heading.label"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "t:sections.featured-content.subtext.label"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "options": [
+        { "value": "left", "label": "t:sections.common.align.left" },
+        { "value": "center", "label": "t:sections.common.align.center" }
+      ],
+      "default": "left",
+      "label": "t:sections.common.align.label"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.featured-content.button_text.label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:sections.featured-content.link.label"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "options": [
+        { "value": "primary", "label": "t:sections.common.button_style.primary" },
+        { "value": "secondary", "label": "t:sections.common.button_style.secondary" }
+      ],
+      "default": "secondary",
+      "label": "t:sections.common.button_style.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.featured-content.rail_header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_rail",
+      "default": true,
+      "label": "t:sections.featured-content.show_product_rail.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.featured-content.collection.label",
+      "info": "t:sections.featured-content.collection.info"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 12,
+      "label": "t:sections.featured-content.product_limit.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured-content.name",
+      "settings": {
+        "heading": "kylie's summer look",
+        "subtext": "<p>recreate this flushed and contoured summer look featuring our best-selling hybrid blush and precision pout lip liner.</p>",
+        "button_text": "shop now",
+        "reverse": true,
+        "text_align": "center"
+      }
+    }
+  ]
+}
+{% endschema %}

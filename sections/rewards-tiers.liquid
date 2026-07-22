@@ -1,0 +1,181 @@
+{% comment %}
+  Maps to: source site's Yotpo VIP Tiers widget — real 4-tier structure recovered:
+  Silver ($0-$99, 1pt/$, free ship $40+), Gold ($100+, 1pt/$, +early access/
+  anniversary gift), Platinum ($250+, 1.25pt/$, free ship $30+), Diamond ($500+,
+  1.5pt/$, free ship any order, invite-only events).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="rewards-tiers{% if section.settings.font_override != 'inherit' %} rewards-tiers--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="rewards-tiers"
+>
+  <div class="rewards-tiers__inner page-width">
+    {%- if section.settings.title != blank -%}
+      <h2 class="rewards-tiers__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    <div class="rewards-tiers__grid">
+      {%- for block in section.blocks -%}
+        <div class="rewards-tiers__card" {{ block.shopify_attributes }}>
+          <p class="rewards-tiers__name">{{ block.settings.tier_name }}</p>
+          <p class="rewards-tiers__threshold">{{ block.settings.threshold }}</p>
+          <p class="rewards-tiers__rate">{{ block.settings.points_rate }}</p>
+          <div class="rewards-tiers__perks">{{ block.settings.perks }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .rewards-tiers {
+    padding-block: var(--section-spacing);
+  }
+
+  .rewards-tiers__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .rewards-tiers__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gutter);
+  }
+
+  .rewards-tiers__card {
+    padding: 1.5rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .rewards-tiers__name {
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+  }
+
+  .rewards-tiers__threshold {
+    font-size: var(--font-size-small);
+    color: rgba(var(--color-text), .7);
+    margin-bottom: .5rem;
+  }
+
+  .rewards-tiers__rate {
+    font-weight: var(--font-body-weight-demibold);
+    margin-bottom: .75rem;
+  }
+
+  .rewards-tiers__perks {
+    font-size: var(--font-size-caption);
+    text-align: left;
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .rewards-tiers__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rewards-tiers.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "VIP Tiers",
+      "label": "t:sections.rewards-tiers.title.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "t:sections.rewards-tiers.blocks.tier.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tier_name",
+          "label": "t:sections.rewards-tiers.blocks.tier.tier_name.label"
+        },
+        {
+          "type": "text",
+          "id": "threshold",
+          "label": "t:sections.rewards-tiers.blocks.tier.threshold.label"
+        },
+        {
+          "type": "text",
+          "id": "points_rate",
+          "label": "t:sections.rewards-tiers.blocks.tier.points_rate.label"
+        },
+        {
+          "type": "richtext",
+          "id": "perks",
+          "label": "t:sections.rewards-tiers.blocks.tier.perks.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "t:sections.rewards-tiers.name",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Silver",
+            "threshold": "$0 – $99",
+            "points_rate": "1 pt per $1",
+            "perks": "<ul><li>Free standard shipping on $40+ orders</li><li>Exclusive discounts</li><li>Member-only events</li><li>Rewards catalogue</li><li>Birthday gift</li></ul>"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Gold",
+            "threshold": "Spend $100",
+            "points_rate": "1 pt per $1",
+            "perks": "<ul><li>Free shipping $40+</li><li>Early access to sales</li><li>Anniversary gift</li><li>Tier welcome points</li></ul>"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Platinum",
+            "threshold": "Spend $250",
+            "points_rate": "1.25 pts per $1",
+            "perks": "<ul><li>Free shipping $30+</li><li>All Gold perks</li></ul>"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Diamond",
+            "threshold": "Spend $500",
+            "points_rate": "1.5 pts per $1",
+            "perks": "<ul><li>Free shipping on any order</li><li>Invite-only events</li><li>All Platinum perks</li></ul>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

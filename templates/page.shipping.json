@@ -1,0 +1,56 @@
+{
+  "sections": {
+    "main": {
+      "type": "shipping-tabs",
+      "settings": {
+        "title": "Shipping"
+      },
+      "blocks": {
+        "countries": {
+          "type": "tab",
+          "settings": {
+            "title": "Countries",
+            "content": "<p>We currently ship to: the United States, Canada, Mexico, and select countries across Asia (Armenia, Bahrain, Bhutan, Brunei, India, Jordan, Lebanon, Saudi Arabia, Singapore, UAE), Europe (Greenland, Isle of Man), Oceania (Australia, New Zealand), Africa (Ethiopia), and Central America/Caribbean (Anguilla, Bahamas, British Virgin Islands, Costa Rica, Dominican Republic, Panama, St. Barthelemy, St. Martin, St. Vincent & Grenadines, Trinidad & Tobago, Turks & Caicos).</p>"
+          }
+        },
+        "exclusion": {
+          "type": "tab",
+          "settings": {
+            "title": "Exclusion",
+            "content": "<p>UK and EU customers are served by our dedicated regional storefronts and are not fulfilled from this site.</p>"
+          }
+        },
+        "time": {
+          "type": "tab",
+          "settings": {
+            "title": "Time",
+            "content": "<p>Orders are processed within 48 hours (business days). Domestic: Standard shipping arrives in 7–10 business days, Ground shipping in 3–5 business days. International: 3–7 business days after fulfillment.</p>"
+          }
+        },
+        "handling": {
+          "type": "tab",
+          "settings": {
+            "title": "Handling",
+            "content": "<p>Domestic: Standard shipping is $8.95 flat, free on orders over $40. Ground shipping is $10.95 flat.</p><p>Canada & Mexico: $12.00 flat, free on orders over $125.</p><p>Other countries: $20.00 flat under $125, $10.00 flat over $125.</p>"
+          }
+        },
+        "tracking": {
+          "type": "tab",
+          "settings": {
+            "title": "Tracking",
+            "content": "<p>Track your order any time on our <a href=\"/pages/order-tracking\">order tracking page</a>.</p>"
+          }
+        },
+        "notices": {
+          "type": "tab",
+          "settings": {
+            "title": "Notices",
+            "content": "<p>If a carrier (FedEx, USPS, or DHL) is unable to deliver a package, it will be returned and your order refunded.</p>"
+          }
+        }
+      },
+      "block_order": ["countries", "exclusion", "time", "handling", "tracking", "notices"]
+    }
+  },
+  "order": ["main"]
+}

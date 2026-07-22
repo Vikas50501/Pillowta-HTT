@@ -1,0 +1,257 @@
+/* ==========================================================================
+   theme.css — GLOBAL LAYER ONLY (shared utility classes + base button styles)
+   Section-specific CSS must live inside each section's own .liquid file.
+   ========================================================================== */
+
+/* ---- Layout containers ---- */
+.page-width,
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--container-max-width);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+.section-spacing {
+  padding-top: var(--section-spacing);
+  padding-bottom: var(--section-spacing);
+}
+
+.grid {
+  display: grid;
+  gap: var(--grid-gutter);
+}
+
+/* ---- Aspect-ratio media wrapper (matches source site's padding-bottom trick) ---- */
+.aspect-ratio {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding-bottom: var(--aspect-ratio, 100%);
+}
+
+.aspect-ratio > img,
+.aspect-ratio > video,
+.aspect-ratio > picture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--object-fit, cover);
+  object-position: var(--object-position, center);
+}
+
+/* ---- Accessibility utilities ---- */
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.skip-to-content-link {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: .75rem 1.25rem;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-text));
+}
+
+.skip-to-content-link:focus {
+  top: 0;
+}
+
+/* ---- Buttons (base .action, matches source's lowercase/soft-hover pattern) ---- */
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 15px;
+  border: var(--button-border-width) solid transparent;
+  border-radius: var(--button-radius);
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: var(--button-text-transform);
+  text-align: center;
+  text-decoration: none;
+  line-height: normal;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.action:focus-visible:not(:disabled) {
+  outline: none;
+  box-shadow: inset 0 0 0 2px rgb(var(--color-accent)), inset 0 0 0 3px rgb(var(--color-text));
+}
+
+.action:disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
+
+.action--primary {
+  background-color: rgb(var(--color-button-primary-bg));
+  border-color: rgb(var(--color-button-primary-bg));
+  color: rgb(var(--color-button-primary-text));
+}
+
+.action--primary:hover,
+.action--primary:focus {
+  background-color: rgb(var(--color-button-primary-bg-hover));
+  border-color: rgb(var(--color-button-primary-bg-hover));
+  color: rgb(var(--color-button-primary-text-hover));
+}
+
+.action--secondary {
+  background-color: transparent;
+  border-color: rgb(var(--color-text));
+  color: rgb(var(--color-text));
+}
+
+.action--secondary:hover,
+.action--secondary:focus {
+  background-color: rgb(var(--color-text));
+  border-color: rgb(var(--color-text));
+  color: rgb(var(--color-background));
+}
+
+.action--full {
+  width: 100%;
+}
+
+/* ---- Badges ---- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: .25rem .625rem;
+  border-radius: var(--radius-sm);
+  background-color: rgb(var(--color-badge-bg));
+  color: rgb(var(--color-badge-text));
+  font-size: var(--font-size-caption);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.badge--sale {
+  background-color: rgb(var(--color-sale));
+}
+
+/* ---- Price ---- */
+.price {
+  font-family: var(--font-body);
+  font-weight: var(--font-body-weight-demibold);
+}
+
+.price--compare-at {
+  text-decoration: line-through;
+  color: rgba(var(--color-text), .6);
+  transition: text-decoration-color var(--transition-fast);
+}
+
+.price--sale {
+  color: rgb(var(--color-sale));
+}
+
+/* ---- Scroll-reveal (opt-in via data attribute, toggled by settings.animations_scroll_reveal) ---- */
+[data-scroll-reveal] {
+  opacity: 0;
+  transform: translateY(1em);
+}
+
+[data-scroll-reveal].is-revealed {
+  animation: fadeup var(--transition-medium) forwards;
+}
+
+:root[data-animations-disabled] [data-scroll-reveal] {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+/* ---- Product tile (snippets/product-card.liquid — shared across many sections) ---- */
+.product-tile {
+  position: relative;
+}
+
+.product-tile__image {
+  background-color: rgb(var(--color-background-alt));
+  border-radius: var(--radius-sm);
+}
+
+.product-tile__image-secondary {
+  opacity: 0;
+  transition: opacity var(--transition-medium);
+}
+
+.product-tile--hover-zoom .product-tile__image img {
+  transition: transform var(--transition-medium);
+}
+
+.product-tile--hover-zoom:hover .product-tile__image img:first-child {
+  transform: scale(1.04);
+}
+
+.product-tile:hover .product-tile__image-secondary {
+  opacity: 1;
+}
+
+.product-tile__badges {
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.product-tile__info {
+  padding-top: .75rem;
+  text-align: center;
+}
+
+.product-tile__vendor {
+  font-size: var(--font-size-caption);
+  color: rgba(var(--color-text), .6);
+}
+
+.product-tile__title {
+  display: block;
+  color: rgb(var(--color-text));
+  font-weight: var(--font-body-weight-demibold);
+}
+
+.product-tile__price {
+  margin-top: .25rem;
+}
+
+.product-tile__swatches {
+  display: flex;
+  justify-content: center;
+  gap: .375rem;
+  margin-top: .5rem;
+}
+
+.product-tile__quick-add {
+  margin-top: .75rem;
+  width: 100%;
+}
+
+/* ---- Loading spinner ---- */
+.spinner {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgba(var(--color-text), .2);
+  border-top-color: rgb(var(--color-text));
+  border-radius: 50%;
+  animation: rotating 2s linear infinite;
+}

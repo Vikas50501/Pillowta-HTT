@@ -1,0 +1,171 @@
+{% comment %}
+  Maps to: source site's "cosmic_universe" section — real heading "THE COSMIC
+  UNIVERSE", a cross-sell carousel of the whole fragrance family (3 real cards:
+  Cosmic Kylie Jenner, Cosmic Kylie Jenner 2.0, Cosmic Kylie Jenner Intense), each
+  with a fragrance family, a short "about the scent" line, and key notes.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="cosmic-universe{% if section.settings.font_override != 'inherit' %} cosmic-universe--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="cosmic-universe"
+>
+  {%- if section.settings.title != blank -%}
+    <h2 class="cosmic-universe__title page-width">{{ section.settings.title }}</h2>
+  {%- endif -%}
+
+  <product-carousel class="cosmic-universe__carousel page-width">
+    <div class="carousel__track" data-carousel-track>
+      {%- for block in section.blocks -%}
+        <div class="cosmic-universe__card" data-carousel-slide {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.product.url | default: '#' }}">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag: widths: '250,375,500', alt: block.settings.title, loading: 'lazy' }}
+            {%- endif -%}
+            <p class="cosmic-universe__card-title">{{ block.settings.title }}</p>
+            <p class="cosmic-universe__card-family">{{ block.settings.fragrance_family }}</p>
+            <p class="cosmic-universe__card-about">{{ block.settings.about_the_scent }}</p>
+            {%- if block.settings.key_notes != blank -%}
+              <p class="cosmic-universe__card-notes">{{ block.settings.key_notes }}</p>
+            {%- endif -%}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="carousel__dots" role="tablist">
+      {%- for block in section.blocks -%}
+        <button type="button" class="carousel__dot" data-carousel-dot aria-label="{{ 'general.slide' | t }} {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+  </product-carousel>
+</div>
+
+{% stylesheet %}
+  .cosmic-universe {
+    padding-block: var(--section-spacing);
+    background-color: rgb(var(--color-background-alt));
+  }
+
+  .cosmic-universe__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .cosmic-universe__carousel .carousel__track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .cosmic-universe__card {
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+    text-align: center;
+    color: rgb(var(--color-text));
+  }
+
+  .cosmic-universe__card-title {
+    font-weight: var(--font-body-weight-demibold);
+    margin-top: .75rem;
+    text-transform: lowercase;
+  }
+
+  .cosmic-universe__card-family {
+    font-size: var(--font-size-caption);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: rgba(var(--color-text), .7);
+  }
+
+  .cosmic-universe__card-about,
+  .cosmic-universe__card-notes {
+    font-size: var(--font-size-small);
+    margin-top: .25rem;
+  }
+
+  @media screen and (min-width: 45em) {
+    .cosmic-universe__card {
+      flex-basis: 30%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.cosmic-universe.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "THE COSMIC UNIVERSE",
+      "label": "t:sections.cosmic-universe.title.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "fragrance_card",
+      "name": "t:sections.cosmic-universe.blocks.fragrance_card.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.cosmic-universe.blocks.fragrance_card.product.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.cosmic-universe.blocks.fragrance_card.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.cosmic-universe.blocks.fragrance_card.title.label"
+        },
+        {
+          "type": "text",
+          "id": "fragrance_family",
+          "label": "t:sections.cosmic-universe.blocks.fragrance_card.fragrance_family.label"
+        },
+        {
+          "type": "text",
+          "id": "about_the_scent",
+          "label": "t:sections.cosmic-universe.blocks.fragrance_card.about_the_scent.label"
+        },
+        {
+          "type": "text",
+          "id": "key_notes",
+          "label": "t:sections.cosmic-universe.blocks.fragrance_card.key_notes.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "t:sections.cosmic-universe.name",
+      "blocks": [
+        { "type": "fragrance_card", "settings": { "title": "cosmic kylie jenner", "fragrance_family": "ambery floral", "about_the_scent": "warm, comforting, enveloping", "key_notes": "star jasmine, golden amber accord, vanilla musk accord" } },
+        { "type": "fragrance_card", "settings": { "title": "cosmic kylie jenner 2.0", "fragrance_family": "floral amber", "about_the_scent": "fresh, bright, sweet", "key_notes": "pear accord, lavender essence, amber accord" } },
+        { "type": "fragrance_card", "settings": { "title": "cosmic kylie jenner intense", "fragrance_family": "ambery gourmand", "about_the_scent": "creamy, warm, rich", "key_notes": "star jasmine, benzoin, vanilla" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

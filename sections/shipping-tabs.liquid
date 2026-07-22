@@ -1,0 +1,178 @@
+{% comment %}
+  Maps to: source site's shipping-policy section — banner heading "Shipping" over
+  an image, then a vanilla-JS tab widget (not Vue) with 6 real tabs: Countries,
+  Exclusion, Time, Handling, Tracking, Notices. Rebuilt as native tabs (no inline
+  onclick handlers). Real rates recovered: domestic standard $8.95 (free over $40,
+  matching the site-wide $40 threshold), Ground $10.95; Canada/Mexico $12 (free
+  over $125); other countries $20 under $125 / $10 over $125.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="shipping-tabs{% if section.settings.font_override != 'inherit' %} shipping-tabs--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="shipping-tabs"
+>
+  <div class="shipping-tabs__banner" style="background-image: url({{ section.settings.banner_image | image_url: width: 1728 }});">
+    <h1 class="shipping-tabs__title">{{ section.settings.title }}</h1>
+  </div>
+
+  <div class="shipping-tabs__content page-width">
+    <div class="shipping-tabs__tablist" role="tablist">
+      {%- for block in section.blocks -%}
+        <button
+          type="button"
+          class="shipping-tabs__tab{% if forloop.first %} is-active{% endif %}"
+          role="tab"
+          data-tab-button
+          data-tab-target="tab-{{ block.id }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+        >
+          {{ block.settings.title }}
+        </button>
+      {%- endfor -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      <div
+        id="tab-{{ block.id }}"
+        class="shipping-tabs__panel{% if forloop.first %} is-active{% endif %}"
+        role="tabpanel"
+        data-tab-panel
+        {{ block.shopify_attributes }}
+      >
+        {{ block.settings.content }}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .shipping-tabs__banner {
+    background-size: cover;
+    background-position: center;
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+
+  .shipping-tabs__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    text-transform: uppercase;
+  }
+
+  .shipping-tabs__content {
+    padding-block: var(--section-spacing);
+    max-width: 48rem;
+  }
+
+  .shipping-tabs__tablist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+    margin-bottom: 1.5rem;
+  }
+
+  .shipping-tabs__tab {
+    padding: .625rem 1rem;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    text-transform: lowercase;
+  }
+
+  .shipping-tabs__tab.is-active {
+    border-bottom-color: rgb(var(--color-text));
+    font-weight: var(--font-body-weight-demibold);
+  }
+
+  .shipping-tabs__panel {
+    display: none;
+    font-size: var(--font-size-small);
+  }
+
+  .shipping-tabs__panel.is-active {
+    display: block;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('[data-section-type="shipping-tabs"]').forEach((section) => {
+    section.querySelectorAll('[data-tab-button]').forEach((button) => {
+      button.addEventListener('click', () => {
+        section.querySelectorAll('[data-tab-button]').forEach((b) => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        section.querySelectorAll('[data-tab-panel]').forEach((p) => p.classList.remove('is-active'));
+        button.classList.add('is-active');
+        button.setAttribute('aria-selected', 'true');
+        document.getElementById(button.dataset.tabTarget)?.classList.add('is-active');
+      });
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.shipping-tabs.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Shipping",
+      "label": "t:sections.shipping-tabs.title.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "t:sections.shipping-tabs.banner_image.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "t:sections.shipping-tabs.blocks.tab.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.shipping-tabs.blocks.tab.title.label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.shipping-tabs.blocks.tab.content.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.shipping-tabs.name",
+      "blocks": [
+        { "type": "tab", "settings": { "title": "Countries" } },
+        { "type": "tab", "settings": { "title": "Exclusion" } },
+        { "type": "tab", "settings": { "title": "Time" } },
+        { "type": "tab", "settings": { "title": "Handling" } },
+        { "type": "tab", "settings": { "title": "Tracking" } },
+        { "type": "tab", "settings": { "title": "Notices" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

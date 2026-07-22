@@ -1,0 +1,240 @@
+{% comment %}
+  Maps to: source site's <div class="site-footer"> — Klaviyo newsletter embed,
+  Facebook/Instagram/Twitter/TikTok social icons, a single flat footer nav
+  (contact/faq/shipping/order-tracking/gift-card-balance/legal), copyright line.
+  Rebuilt with Shopify's native customer form (no 3rd-party embed dependency) and
+  repeatable link-list blocks so merchants can add more columns than the source had.
+{% endcomment %}
+<footer
+  id="shopify-section-{{ section.id }}"
+  class="site-footer{% if section.settings.font_override != 'inherit' %} site-footer--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="footer"
+>
+  <div class="site-footer__container page-width">
+    {%- if section.settings.show_newsletter -%}
+      <div class="site-footer__newsletter">
+        <h2 class="site-footer__newsletter-title">{{ section.settings.newsletter_title }}</h2>
+        {%- if section.settings.newsletter_subtext != blank -%}
+          <p class="site-footer__newsletter-subtext">{{ section.settings.newsletter_subtext }}</p>
+        {%- endif -%}
+        {%- form 'customer', id: 'FooterNewsletterForm', class: 'site-footer__newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="FooterNewsletterEmail">{{ 'general.email' | t: default: 'Email' }}</label>
+          <input
+            type="email"
+            id="FooterNewsletterEmail"
+            name="contact[email]"
+            placeholder="{{ 'general.email_placeholder' | t: default: 'Email address' }}"
+            required
+          >
+          <button type="submit" class="action action--primary">
+            {{ section.settings.newsletter_button_text }}
+          </button>
+          {%- if form.posted_successfully? -%}
+            <p class="form__message form__message--success">{{ 'general.newsletter_success' | t: default: 'Thanks for subscribing!' }}</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    <div class="site-footer__menus">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'link_list' -%}
+            <nav class="site-footer__menu-column" {{ block.shopify_attributes }}>
+              {%- if block.settings.menu != blank -%}
+                <ul class="linklist linklist--footer">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </nav>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <ul class="site-footer__social-icons">
+      {%- if settings.social_instagram != blank -%}
+        <li class="social-icon"><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a></li>
+      {%- endif -%}
+      {%- if settings.social_facebook != blank -%}
+        <li class="social-icon"><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a></li>
+      {%- endif -%}
+      {%- if settings.social_twitter != blank -%}
+        <li class="social-icon"><a href="{{ settings.social_twitter }}" target="_blank" rel="noopener" aria-label="Twitter">{% render 'icon', name: 'twitter' %}</a></li>
+      {%- endif -%}
+      {%- if settings.social_tiktok != blank -%}
+        <li class="social-icon"><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a></li>
+      {%- endif -%}
+      {%- if settings.social_youtube != blank -%}
+        <li class="social-icon"><a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a></li>
+      {%- endif -%}
+    </ul>
+
+    <div class="site-footer__copyright">
+      <p class="site-footer__copyright-text">
+        &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text | default: shop.name }}
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .site-footer {
+    background-color: rgb(var(--color-background-alt));
+    color: rgb(var(--color-text));
+    font-family: var(--font-body);
+    padding-top: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+  }
+
+  .site-footer__newsletter {
+    text-align: center;
+    max-width: 30rem;
+    margin: 0 auto var(--section-spacing);
+  }
+
+  .site-footer__newsletter-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+  }
+
+  .site-footer__newsletter-form {
+    display: flex;
+    gap: .5rem;
+    margin-top: 1rem;
+  }
+
+  .site-footer__newsletter-form input[type='email'] {
+    flex: 1;
+    padding: 0 1rem;
+    height: 2.5rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-sm);
+    background: rgb(var(--color-background));
+  }
+
+  .site-footer__menus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--grid-gutter);
+    justify-content: center;
+    padding-block: 2rem;
+    border-top: 1px solid rgb(var(--color-border));
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .linklist--footer li {
+    margin-bottom: .5rem;
+  }
+
+  .linklist--footer a {
+    font-size: var(--font-size-small);
+    text-transform: lowercase;
+  }
+
+  .site-footer__social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+  }
+
+  .social-icon a {
+    display: inline-flex;
+    color: rgb(var(--color-text));
+  }
+
+  .site-footer__copyright {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: var(--font-size-caption);
+    color: rgba(var(--color-text), .7);
+  }
+
+  @media screen and (max-width: 44.99em) {
+    .site-footer__newsletter-form {
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.footer.newsletter_header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "default": true,
+      "label": "t:sections.footer.show_newsletter.label"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "default": "Join the club",
+      "label": "t:sections.footer.newsletter_title.label"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subtext",
+      "label": "t:sections.footer.newsletter_subtext.label"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_text",
+      "default": "Sign up",
+      "label": "t:sections.footer.newsletter_button_text.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.copyright_header"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "t:sections.footer.copyright_text.label",
+      "info": "t:sections.footer.copyright_text.info"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "t:sections.footer.blocks.link_list.name",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "default": "footer",
+          "label": "t:sections.footer.blocks.link_list.menu.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "t:sections.footer.name",
+      "blocks": [{ "type": "link_list" }]
+    }
+  ]
+}
+{% endschema %}

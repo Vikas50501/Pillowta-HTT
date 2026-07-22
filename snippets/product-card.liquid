@@ -1,0 +1,74 @@
+{%- comment -%}
+  Shared product tile used by featured-products, collection grids, and search
+  results. Usage: {% render 'product-card', product: product %}
+  Reads global Theme Settings for image ratio / vendor / swatches / quick-add /
+  badges / hover zoom so every grid stays visually consistent.
+{%- endcomment -%}
+{%- liquid
+  assign ratio = settings.card_image_ratio | default: 'square'
+  case ratio
+    when 'portrait'
+      assign aspect = '125%'
+    when 'landscape'
+      assign aspect = '75%'
+    else
+      assign aspect = '100%'
+  endcase
+
+  assign shade_option = null
+  for option in product.options_with_values
+    if option.name == 'Color' or option.name == 'Shade'
+      assign shade_option = option
+    endif
+  endfor
+-%}
+<div class="product-tile{% if settings.card_hover_zoom %} product-tile--hover-zoom{% endif %}" data-scroll-reveal>
+  <a href="{{ product.url }}" class="product-tile__image-link">
+    <div class="aspect-ratio product-tile__image" style="--aspect-ratio: {{ aspect }};">
+      {{ product.featured_image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: product.featured_image.alt | default: product.title, loading: 'lazy' }}
+      {%- if product.media.size > 1 -%}
+        {{ product.media[1].preview_image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: '', class: 'product-tile__image-secondary', loading: 'lazy' }}
+      {%- endif -%}
+    </div>
+    {%- if settings.card_show_badges -%}
+      <div class="product-tile__badges">{%- render 'badge', product: product -%}</div>
+    {%- endif -%}
+  </a>
+
+  <div class="product-tile__info">
+    {%- if settings.card_show_vendor -%}
+      <p class="product-tile__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+    <a href="{{ product.url }}" class="product-tile__title">{{ product.title }}</a>
+    <div class="product-tile__price price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="price--compare-at">{{ product.compare_at_price | money }}</span>
+        <span class="price--sale">{{ product.price | money }}</span>
+      {%- else -%}
+        <span>{{ product.price | money }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if settings.card_show_swatches and shade_option -%}
+      <div class="product-tile__swatches">
+        {%- for value in shade_option.values limit: 6 -%}
+          {%- render 'shades-swatch', value: value, size: 'small' -%}
+        {%- endfor -%}
+        {%- if shade_option.values.size > 6 -%}
+          <span class="product-tile__swatches-more">+{{ shade_option.values.size | minus: 6 }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if settings.card_quick_add and product.selected_or_first_available_variant.available -%}
+      <button
+        type="button"
+        class="action action--secondary product-tile__quick-add"
+        data-cart-add
+        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+      >
+        {{ 'products.quick_add' | t: default: 'quick add' }}
+      </button>
+    {%- endif -%}
+  </div>
+</div>

@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "hero_mood_stones": {
+      "type": "hero",
+      "settings": {
+        "height": "tall",
+        "eyebrow": "",
+        "heading": "coming july 30\nmood stones",
+        "subtext": "<p>the new fragrance trio from kylie jenner.</p>",
+        "button_text": "get notified",
+        "link": "https://kyliecosmetics.attn.tv/p/29F/mood-stones",
+        "heading_color": "#b3848f",
+        "text_color": "#393939",
+        "text_align_h": "left",
+        "text_align_v": "center",
+        "mobile_layout": "below-image",
+        "overlay_opacity": 0
+      }
+    },
+    "featured_content_summer_look": {
+      "type": "featured-content",
+      "settings": {
+        "heading": "kylie's summer look",
+        "subtext": "<p>recreate this flushed and contoured summer look featuring our best-selling hybrid blush and precision pout lip liner.</p>",
+        "button_text": "shop now",
+        "link": "/products/kylie-s-summer-look-bundle",
+        "reverse": true,
+        "text_align": "center",
+        "show_product_rail": true,
+        "product_limit": 12
+      }
+    },
+    "featured_products_1": {
+      "type": "featured-products",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "hybrid-blush" } },
+        "p2": { "type": "product", "settings": { "product": "precision-pout-lip-liner" } },
+        "p3": { "type": "product", "settings": { "product": "skin-tint-blurring-elixir" } },
+        "p4": { "type": "product", "settings": { "product": "kylash-volume-mascara" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
+    },
+    "hero_summer_faves": {
+      "type": "hero",
+      "settings": {
+        "height": "medium",
+        "heading": "Kylie's\nsummer faves",
+        "subtext": "<p>discover her go-tos this summer – including the new watermelon lip butter and hydrating lip essentials.</p>",
+        "button_text": "shop now",
+        "link": "/collections/summer-essentials",
+        "heading_color": "#b3848f",
+        "text_color": "#393939",
+        "text_align_h": "left",
+        "text_align_v": "center",
+        "overlay_opacity": 0
+      }
+    },
+    "featured_products_2": {
+      "type": "featured-products",
+      "settings": {
+        "view_all_text": "shop now",
+        "view_all_link": "/collections/summer-essentials"
+      },
+      "blocks": {
+        "p1": { "type": "product", "settings": { "product": "lip-butter" } },
+        "p2": { "type": "product", "settings": { "product": "coconut-water-lip-stain" } },
+        "p3": { "type": "product", "settings": { "product": "cloud-balm" } },
+        "p4": { "type": "product", "settings": { "product": "lip-and-cheek-glow-balm" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
+    },
+    "hero_scent_of_summer": {
+      "type": "hero",
+      "settings": {
+        "height": "short",
+        "heading": "the scent of the summer",
+        "subtext": "<p>a warm floral scent, our debut fragrance cosmic kylie jenner is perfect for summer.</p>",
+        "button_text": "shop now",
+        "link": "/collections/kylie-fragrance",
+        "heading_color": "#ffffff",
+        "text_color": "#b3848f",
+        "text_align_h": "left",
+        "text_align_v": "center",
+        "overlay_opacity": 0
+      }
+    },
+    "fireworks_cosmic": {
+      "type": "fireworks",
+      "settings": {
+        "title": "LOVE FOR COSMIC",
+        "channel": "us_kylie_cosmetics",
+        "playlist": "5ndJV2",
+        "mode": "row"
+      }
+    },
+    "shop_by_category": {
+      "type": "multicolumn",
+      "settings": {
+        "title": "shop by category",
+        "columns_desktop": 6,
+        "columns_mobile": 2,
+        "enable_hover_media": true
+      },
+      "blocks": {
+        "lips": { "type": "tile", "settings": { "title": "lips", "link": "/collections/kylie-cosmetics-lips" } },
+        "fragrance": { "type": "tile", "settings": { "title": "fragrance", "link": "/collections/kylie-fragrance" } },
+        "face": { "type": "tile", "settings": { "title": "face", "link": "/collections/kylie-cosmetics-face" } },
+        "blush": { "type": "tile", "settings": { "title": "blush", "link": "/collections/kylie-cosmetics-face-blushes" } },
+        "lip_care": { "type": "tile", "settings": { "title": "Lip Care", "link": "/collections/kylie-skin-treatment-lip-care" } },
+        "eyes": { "type": "tile", "settings": { "title": "eyes", "link": "/collections/kylie-cosmetics-eyes-eyebrows" } }
+      },
+      "block_order": ["lips", "fragrance", "face", "blush", "lip_care", "eyes"]
+    },
+    "hero_vto": {
+      "type": "hero",
+      "settings": {
+        "height": "medium",
+        "heading": "Virtual Try-On",
+        "subtext": "<p>try on lipsticks, blushes, &amp; more to discover your new fave shade.</p>",
+        "button_text": "discover now",
+        "link": "#vto://home",
+        "heading_color": "#b3848f",
+        "text_align_h": "center",
+        "text_align_v": "center",
+        "mobile_layout": "over-image",
+        "overlay_opacity": 0
+      }
+    },
+    "shop_our_ig": {
+      "type": "foursixty",
+      "settings": {
+        "title": "SHOP OUR IG",
+        "feed_id": "kylie_1",
+        "page_size": 14
+      }
+    },
+    "brand_principles": {
+      "type": "brand-principles"
+    }
+  },
+  "order": [
+    "hero_mood_stones",
+    "featured_content_summer_look",
+    "featured_products_1",
+    "hero_summer_faves",
+    "featured_products_2",
+    "hero_scent_of_summer",
+    "fireworks_cosmic",
+    "shop_by_category",
+    "hero_vto",
+    "shop_our_ig",
+    "brand_principles"
+  ]
+}

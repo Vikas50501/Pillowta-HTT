@@ -1,0 +1,169 @@
+{% comment %}
+  Maps to: source site's marketing tiles on the cosmic fragrance product — real
+  content resolved to 3 unique tiles after removing desktop/mobile duplicates:
+  "from kylie" (full-width, white text over lifestyle image), "the scent"
+  (half-width), "the sizes" (half-width, brand-red themed, image only).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="marketing-tiles{% if section.settings.font_override != 'inherit' %} marketing-tiles--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="marketing-tiles"
+>
+  <div class="marketing-tiles__grid page-width">
+    {%- for block in section.blocks -%}
+      <div
+        class="marketing-tile marketing-tile--{{ block.settings.width }}"
+        style="--tile-bg-color: {{ block.settings.background_color }}; --tile-text-color: {{ block.settings.text_color }};"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 1200 | image_tag: widths: '600,900,1200', class: 'marketing-tile__image', alt: block.settings.title | default: '', loading: 'lazy' }}
+        {%- endif -%}
+        {%- if block.settings.title != blank or block.settings.text != blank -%}
+          <div class="marketing-tile__content">
+            {%- if block.settings.title != blank -%}
+              <h3 class="marketing-tile__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="marketing-tile__text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .marketing-tiles {
+    padding-block: var(--section-spacing);
+  }
+
+  .marketing-tiles__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--grid-gutter);
+  }
+
+  .marketing-tile {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    min-height: 20rem;
+    background-color: var(--tile-bg-color, transparent);
+  }
+
+  .marketing-tile--full {
+    grid-column: 1 / -1;
+  }
+
+  .marketing-tile__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .marketing-tile__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 2rem;
+    text-align: center;
+    color: var(--tile-text-color, #fff);
+  }
+
+  .marketing-tile__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    text-transform: lowercase;
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .marketing-tiles__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.marketing-tiles.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "t:sections.marketing-tiles.blocks.tile.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "options": [
+            { "value": "full", "label": "t:sections.marketing-tiles.blocks.tile.width.full" },
+            { "value": "half", "label": "t:sections.marketing-tiles.blocks.tile.width.half" }
+          ],
+          "default": "half",
+          "label": "t:sections.marketing-tiles.blocks.tile.width.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.marketing-tiles.blocks.tile.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.marketing-tiles.blocks.tile.title.label"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.marketing-tiles.blocks.tile.text.label"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "default": "#C53627",
+          "label": "t:sections.marketing-tiles.blocks.tile.background_color.label"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "default": "#ffffff",
+          "label": "t:sections.marketing-tiles.blocks.tile.text_color.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "t:sections.marketing-tiles.name",
+      "blocks": [
+        { "type": "tile", "settings": { "width": "full", "title": "from kylie", "text": "intense is my favorite parts of cosmic amplified" } },
+        { "type": "tile", "settings": { "width": "half", "title": "the scent", "text": "a warm blend of creamy softness and rich vanilla for an irresistible finish" } },
+        { "type": "tile", "settings": { "width": "half", "title": "the sizes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

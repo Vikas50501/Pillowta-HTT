@@ -1,0 +1,260 @@
+{% comment %}
+  Maps to: source site's <announcement-bar data-vue="announcement-bar"> component
+  (autoplay 4s, session-dismissible close button, rotating messages).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="announcement-bar{% if section.settings.font_override != 'inherit' %} announcement-bar--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="announcement-bar"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  {% if section.blocks.size == 0 %}hidden{% endif %}
+>
+  <div class="announcement-bar__wrapper">
+    <div class="announcement-bar__messages" role="list">
+      {%- for block in section.blocks -%}
+        <div
+          class="announcement-bar__message{% if forloop.first %} is-active{% endif %}"
+          role="listitem"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.link -%}<a href="{{ block.settings.link }}">{%- endif -%}
+          <span>{{ block.settings.text }}</span>
+          {%- if block.settings.link_text != blank -%}
+            <b><u>{{ block.settings.link_text }}</u></b>
+          {%- endif -%}
+          {%- if block.settings.link -%}</a>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_arrows and section.blocks.size > 1 -%}
+      <button type="button" class="announcement-bar__control announcement-bar__control--prev" aria-label="{{ 'accessibility.previous' | t: default: 'Previous message' }}">
+        {%- render 'icon', name: 'chevron-left' -%}
+      </button>
+      <button type="button" class="announcement-bar__control announcement-bar__control--next" aria-label="{{ 'accessibility.next' | t: default: 'Next message' }}">
+        {%- render 'icon', name: 'chevron-right' -%}
+      </button>
+    {%- endif -%}
+
+    {%- if section.settings.enable_play_pause and section.blocks.size > 1 -%}
+      <button type="button" class="announcement-bar__control announcement-bar__control--pause" aria-label="{{ 'accessibility.pause' | t: default: 'Pause' }}">
+        {%- render 'icon', name: 'pause' -%}
+      </button>
+    {%- endif -%}
+
+    {%- if section.settings.show_close -%}
+      <button type="button" class="announcement-bar__control announcement-bar__control--close" aria-label="{{ 'accessibility.close' | t }}">
+        {%- render 'icon', name: 'close' -%}
+      </button>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  #shopify-section-{{ section.id }} .announcement-bar,
+  .announcement-bar {
+    position: relative;
+    background-color: rgb(var(--announcement-bg, var(--color-border-accent)));
+    color: rgb(var(--announcement-text, var(--color-text)));
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    text-align: center;
+  }
+
+  .announcement-bar__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    max-width: 57.5rem;
+    margin: 0 auto;
+    padding: .625rem var(--container-padding);
+    position: relative;
+  }
+
+  .announcement-bar__messages {
+    position: relative;
+    flex: 1;
+    min-height: 1.5em;
+  }
+
+  .announcement-bar__message {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .5s ease;
+    pointer-events: none;
+  }
+
+  .announcement-bar__message.is-active {
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .announcement-bar__message a {
+    color: inherit;
+  }
+
+  .announcement-bar__control {
+    background: none;
+    border: 0;
+    padding: .25rem;
+    color: inherit;
+    cursor: pointer;
+    line-height: 0;
+  }
+
+  .announcement-bar__control--close:focus-within {
+    outline: .1rem solid rgb(var(--color-focus-outline));
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class AnnouncementBar extends HTMLElement {
+    connectedCallback() {
+      this.messages = Array.from(this.querySelectorAll('.announcement-bar__message'));
+      this.current = 0;
+      this.speed = parseInt(this.dataset.autoplaySpeed, 10) || 4000;
+      this.paused = false;
+
+      const closeBtn = this.querySelector('.announcement-bar__control--close');
+      if (closeBtn) closeBtn.addEventListener('click', () => this.dismiss());
+
+      const pauseBtn = this.querySelector('.announcement-bar__control--pause');
+      if (pauseBtn) pauseBtn.addEventListener('click', () => this.togglePause(pauseBtn));
+
+      const prevBtn = this.querySelector('.announcement-bar__control--prev');
+      const nextBtn = this.querySelector('.announcement-bar__control--next');
+      if (prevBtn) prevBtn.addEventListener('click', () => this.show(this.current - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => this.show(this.current + 1));
+
+      if (window.sessionStorage.getItem('hide-announcement-bar')) {
+        this.setAttribute('hidden', '');
+        return;
+      }
+
+      if (this.messages.length > 1) this.play();
+    }
+
+    show(index) {
+      if (!this.messages.length) return;
+      this.messages[this.current].classList.remove('is-active');
+      this.current = (index + this.messages.length) % this.messages.length;
+      this.messages[this.current].classList.add('is-active');
+    }
+
+    play() {
+      this.timer = setInterval(() => {
+        if (!this.paused) this.show(this.current + 1);
+      }, this.speed);
+    }
+
+    togglePause(btn) {
+      this.paused = !this.paused;
+      btn.setAttribute('aria-label', this.paused ? 'Play' : 'Pause');
+    }
+
+    dismiss() {
+      window.sessionStorage.setItem('hide-announcement-bar', 'true');
+      this.setAttribute('hidden', '');
+      clearInterval(this.timer);
+    }
+  }
+
+  if (!customElements.get('announcement-bar')) {
+    customElements.define('announcement-bar', AnnouncementBar);
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "tag": "announcement-bar",
+  "class": "announcement-bar-container",
+  "settings": [
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "label": "t:sections.announcement-bar.autoplay_speed.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_close",
+      "default": true,
+      "label": "t:sections.announcement-bar.show_close.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_play_pause",
+      "default": true,
+      "label": "t:sections.announcement-bar.enable_play_pause.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "default": false,
+      "label": "t:sections.announcement-bar.show_arrows.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "t:sections.announcement-bar.blocks.message.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Free U.S. Shipping with Orders Over $40",
+          "label": "t:sections.announcement-bar.blocks.message.text.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.announcement-bar.blocks.message.link.label"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "default": "shop now",
+          "label": "t:sections.announcement-bar.blocks.message.link_text.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.announcement-bar.name",
+      "blocks": [
+        { "type": "message", "settings": { "text": "free compact mirror and pouch 🩷 with any $55+ order 🩷", "link_text": "shop now" } },
+        { "type": "message", "settings": { "text": "💕 custom engraving on all cosmic bottles 💕", "link_text": "shop now" } },
+        { "type": "message", "settings": { "text": "Free U.S. Shipping with Orders Over $40" } },
+        { "type": "message", "settings": { "text": "💖 Join Kylie Cosmetics Rewards and enjoy exclusive perks 💖", "link_text": "" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "banner": {
+      "type": "collection-banner",
+      "settings": {
+        "banner_style": "gradient",
+        "gradient_from": "#C53627",
+        "gradient_to": "#F8EDEB",
+        "gradient_stop_desktop": 45,
+        "gradient_stop_mobile": 35
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "products_per_page": 12,
+        "enable_filtering": true,
+        "enable_sorting": true
+      },
+      "blocks": {
+        "disruptor_1": { "type": "disruptor", "settings": { "grid_position": 3, "size": "2" } },
+        "disruptor_2": { "type": "disruptor", "settings": { "grid_position": 9, "size": "1" } },
+        "disruptor_3": { "type": "disruptor", "settings": { "grid_position": 21, "size": "1" } },
+        "disruptor_4": { "type": "disruptor", "settings": { "grid_position": 25, "size": "1" } }
+      },
+      "block_order": ["disruptor_1", "disruptor_2", "disruptor_3", "disruptor_4"]
+    }
+  },
+  "order": ["banner", "main"]
+}

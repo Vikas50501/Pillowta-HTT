@@ -1,0 +1,22 @@
+{%- comment -%}
+  Recursive accordion level for mobile-menu.liquid. Matches the source site's 3-level
+  depth (top-level → column → item). Guards at depth 3 to avoid runaway recursion.
+{%- endcomment -%}
+<li class="mobile-menu__item">
+  {%- if link.links.size > 0 and depth < 3 -%}
+    <button type="button" class="mobile-menu__sublink-toggle" aria-expanded="false">
+      <span>{{ link.title }}</span>
+      {%- render 'icon', name: 'chevron-down' -%}
+    </button>
+    <ul class="mobile-menu__sublist">
+      {%- if link.url != blank and link.url != '#' -%}
+        <li><a href="{{ link.url }}" class="mobile-menu__sublink mobile-menu__sublink--view-all">{{ link.title }}</a></li>
+      {%- endif -%}
+      {%- for child in link.links -%}
+        {%- render 'mobile-menu-level', link: child, depth: depth | plus: 1 -%}
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <a href="{{ link.url }}" class="mobile-menu__link mobile-menu__sublink">{{ link.title }}</a>
+  {%- endif -%}
+</li>

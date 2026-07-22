@@ -1,0 +1,127 @@
+{% comment %}
+  Maps to: source site's section wrapped in class "bv-main-section" — that name is
+  a leftover/misleading label; the actual widget embedded is Foursixty (shoppable
+  Instagram feed), not Bazaarvoice reviews. Real instance: title "SHOP OUR IG",
+  feed "kylie_1", 14 tiles, hover shows a "shop now" pill.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="foursixty{% if section.settings.font_override != 'inherit' %} foursixty--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="foursixty"
+>
+  {%- if section.settings.title != blank -%}
+    <h2 class="foursixty__title page-width">{{ section.settings.title }}</h2>
+  {%- endif -%}
+
+  <div
+    class="foursixty__feed page-width"
+    data-feed-id="{{ section.settings.feed_id }}"
+    data-page-size="{{ section.settings.page_size }}"
+  ></div>
+</div>
+
+{% stylesheet %}
+  .foursixty {
+    padding-block: var(--section-spacing);
+  }
+
+  .foursixty__title {
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(var(--color-accent));
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .foursixty__feed {
+    min-height: 12rem;
+  }
+
+  .foursixty__feed .fs-has-links::after {
+    content: 'shop now';
+    display: block;
+    text-align: center;
+    text-transform: lowercase;
+    background-color: rgb(var(--color-text));
+    color: rgb(var(--color-background));
+    padding: .5rem;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    document.querySelectorAll('[data-section-type="foursixty"]').forEach((section) => {
+      if (!('IntersectionObserver' in window)) return loadFoursixty(section);
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadFoursixty(section);
+            obs.disconnect();
+          }
+        });
+      });
+      observer.observe(section);
+    });
+
+    function loadFoursixty(section) {
+      if (window.fsAsyncInit || section.dataset.loaded) return;
+      section.dataset.loaded = 'true';
+      const script = document.createElement('script');
+      script.src = 'https://foursixty.com/media/scripts/fs.embed.v2.5.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.foursixty.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "SHOP OUR IG",
+      "label": "t:sections.foursixty.title.label"
+    },
+    {
+      "type": "text",
+      "id": "feed_id",
+      "label": "t:sections.foursixty.feed_id.label",
+      "info": "t:sections.foursixty.feed_id.info"
+    },
+    {
+      "type": "range",
+      "id": "page_size",
+      "min": 6,
+      "max": 24,
+      "step": 2,
+      "default": 14,
+      "label": "t:sections.foursixty.page_size.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.foursixty.name",
+      "settings": {
+        "title": "SHOP OUR IG",
+        "feed_id": "kylie_1"
+      }
+    }
+  ]
+}
+{% endschema %}

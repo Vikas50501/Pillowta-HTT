@@ -1,0 +1,84 @@
+{% comment %}
+  Maps to: source site's generic `<article class="page"><h1 class="page__title">
+  {{ page.title }}</h1><div class="page__content">{{ page.content }}</div></article>`
+  pattern — used as-is by privacy-policy.html and shipping.html's exclusion notice;
+  used for the intro copy on contact.html (paired with sections/contact-form.liquid
+  below it).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="page-content{% if section.settings.font_override != 'inherit' %} page-content--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="page-content"
+>
+  <article class="page page--{{ page.handle }} page-width">
+    {%- if section.settings.show_title -%}
+      <h1 class="page__title">{{ page.title }}</h1>
+    {%- endif -%}
+    <div class="page__content static-content-block">
+      {{ page.content }}
+    </div>
+  </article>
+</div>
+
+{% stylesheet %}
+  .page-content {
+    padding-block: var(--section-spacing);
+  }
+
+  .page__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .page__content {
+    max-width: 48rem;
+    margin: 0 auto;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-base);
+  }
+
+  .page__content h2,
+  .page__content h3 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-top: 2rem;
+  }
+
+  .page__content a {
+    text-decoration: underline;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.page-content.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "default": true,
+      "label": "t:sections.page-content.show_title.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.page-content.name"
+    }
+  ]
+}
+{% endschema %}

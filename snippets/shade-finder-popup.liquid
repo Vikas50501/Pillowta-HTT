@@ -1,0 +1,34 @@
+{%- comment -%}
+  Maps to: source site's .pdp-navigation-popup triggered by .btn-find-my-shade —
+  real heading + 4 real options recovered: scan & match, try on virtually, match my
+  shade to another brand (Findation), take a quiz. CSS/JS live in
+  sections/main-product.liquid (snippets can't hold {% stylesheet %}/{% javascript %}).
+{%- endcomment -%}
+<theme-drawer id="ShadeFinderPopup" class="shade-finder-popup" role="dialog" aria-label="{{ 'products.shade_finder.heading' | t: default: 'how would you like to find your perfect match?' }}">
+  <div class="shade-finder-popup__header">
+    <h2>{{ 'products.shade_finder.heading' | t: default: 'how would you like to find your perfect match?' }}</h2>
+    <button type="button" data-drawer-close aria-label="{{ 'accessibility.close' | t }}">{%- render 'icon', name: 'close' -%}</button>
+  </div>
+  <ul class="shade-finder-popup__options">
+    <li>
+      <a href="{{ routes.root_url }}pages/shade-finder" class="shade-finder-popup__option">
+        {{ 'products.shade_finder.scan_and_match' | t: default: 'scan & match' }}
+      </a>
+    </li>
+    <li>
+      <a href="#vto://home" class="shade-finder-popup__option">
+        {{ 'products.shade_finder.try_on_virtually' | t: default: 'try on virtually' }}
+      </a>
+    </li>
+    <li>
+      <button type="button" class="shade-finder-popup__option" data-findation-open>
+        {{ 'products.shade_finder.match_another_brand' | t: default: 'match my shade to another brand' }}
+      </button>
+    </li>
+    <li>
+      <a href="{{ routes.root_url }}pages/complexion-shade-match-quiz" class="shade-finder-popup__option">
+        {{ 'products.shade_finder.take_a_quiz' | t: default: 'take a quiz' }}
+      </a>
+    </li>
+  </ul>
+</theme-drawer>

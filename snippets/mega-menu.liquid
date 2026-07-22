@@ -1,0 +1,48 @@
+{%- comment -%}
+  Maps to: source site's .mega-menu > .mega-menu__grid (columns of image-menu-blocks)
+  + .mega-menu__aside (single banner-block). Columns come from the menu's own 2nd/3rd
+  nav levels; the aside banner is an editable "menu_promo" block matched by handle.
+{%- endcomment -%}
+{%- liquid
+  assign promo = null
+  for block in section.blocks
+    if block.type == 'menu_promo' and block.settings.menu_handle == link.handle
+      assign promo = block
+    endif
+  endfor
+-%}
+<div class="mega-menu">
+  <div class="mega-menu__wrapper page-width">
+    <div class="mega-menu__grid">
+      <div class="mega-menu__main">
+        {%- for column in link.links -%}
+          <div class="mega-menu__column">
+            <a href="{{ column.url }}" class="mega-menu__column-title">{{ column.title }}</a>
+            {%- if column.links.size > 0 -%}
+              <ul class="mega-menu__column-list">
+                {%- for item in column.links -%}
+                  <li><a href="{{ item.url }}" class="mega-menu__column-link">{{ item.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if promo -%}
+        <div class="mega-menu__aside">
+          <a href="{{ promo.settings.link | default: link.url }}" class="banner-block">
+            {%- if promo.settings.image != blank -%}
+              <div class="aspect-ratio" style="--aspect-ratio: 131.25%;">
+                {{ promo.settings.image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: promo.settings.title }}
+              </div>
+            {%- endif -%}
+            {%- if promo.settings.title != blank -%}
+              <p class="banner-block__title">{{ promo.settings.title }}</p>
+            {%- endif -%}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

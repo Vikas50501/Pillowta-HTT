@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "max_quantity": 10,
+        "show_reviews_summary": true,
+        "enable_shade_finder": true,
+        "enable_engraving": false
+      },
+      "blocks": {
+        "description": { "type": "accordion", "settings": { "title": "description" } },
+        "ingredients": { "type": "accordion", "settings": { "title": "ingredients" } },
+        "how_to_use": { "type": "accordion", "settings": { "title": "how to use" } },
+        "shipping": { "type": "accordion", "settings": { "title": "shipping & returns" } },
+        "tip": {
+          "type": "product_tip",
+          "settings": {
+            "title": "pair it with",
+            "text": "effortlessly blends and builds liquid or cream formulas."
+          }
+        }
+      },
+      "block_order": ["description", "ingredients", "how_to_use", "shipping", "tip"]
+    },
+    "social": {
+      "type": "foursixty",
+      "settings": {
+        "title": "on social",
+        "feed_id": "kylie_1",
+        "page_size": 8
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "background_color": "#f8f1f4"
+      }
+    },
+    "brand_principles": {
+      "type": "brand-principles"
+    }
+  },
+  "order": ["main", "social", "reviews", "brand_principles"]
+}

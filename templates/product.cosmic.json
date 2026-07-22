@@ -1,0 +1,129 @@
+{
+  "sections": {
+    "gradient": {
+      "type": "gradient-background",
+      "settings": {
+        "color_from": "#CE3C2D",
+        "color_to": "#F4C4BF",
+        "stop_desktop": 78,
+        "stop_mobile": 80
+      }
+    },
+    "hero": {
+      "type": "product-hero"
+    },
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "max_quantity": 10,
+        "show_reviews_summary": true,
+        "enable_shade_finder": false,
+        "enable_engraving": true,
+        "engraving_button_text": "Engrave your bottle",
+        "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing."
+      },
+      "blocks": {
+        "description": { "type": "accordion", "settings": { "title": "description" } },
+        "ingredients": { "type": "accordion", "settings": { "title": "ingredients" } },
+        "how_to_use": { "type": "accordion", "settings": { "title": "how to use" } },
+        "shipping": { "type": "accordion", "settings": { "title": "shipping & returns" } }
+      },
+      "block_order": ["description", "ingredients", "how_to_use", "shipping"]
+    },
+    "ingredient_tiles": {
+      "type": "ingredient-tiles",
+      "settings": {
+        "title": "the ingredients"
+      },
+      "blocks": {
+        "opening_1": { "type": "note", "settings": { "group_label": "OPENING NOTES", "name": "star jasmine" } },
+        "opening_2": { "type": "note", "settings": { "group_label": "OPENING NOTES", "name": "blood orange" } },
+        "heart_1": { "type": "note", "settings": { "group_label": "HEART NOTES", "name": "golden amber accord" } },
+        "heart_2": { "type": "note", "settings": { "group_label": "HEART NOTES", "name": "benzoin" } },
+        "base_1": { "type": "note", "settings": { "group_label": "BASE NOTES", "name": "vanilla" } },
+        "base_2": { "type": "note", "settings": { "group_label": "BASE NOTES", "name": "musk accord" } }
+      },
+      "block_order": ["opening_1", "opening_2", "heart_1", "heart_2", "base_1", "base_2"]
+    },
+    "marketing_tiles": {
+      "type": "marketing-tiles",
+      "blocks": {
+        "from_kylie": {
+          "type": "tile",
+          "settings": {
+            "width": "full",
+            "title": "from kylie",
+            "text": "intense is my favorite parts of cosmic amplified"
+          }
+        },
+        "the_scent": {
+          "type": "tile",
+          "settings": {
+            "width": "half",
+            "title": "the scent",
+            "text": "a warm blend of creamy softness and rich vanilla for an irresistible finish"
+          }
+        },
+        "the_sizes": {
+          "type": "tile",
+          "settings": {
+            "width": "half",
+            "title": "the sizes"
+          }
+        }
+      },
+      "block_order": ["from_kylie", "the_scent", "the_sizes"]
+    },
+    "cosmic_universe": {
+      "type": "cosmic-universe",
+      "settings": {
+        "title": "THE COSMIC UNIVERSE"
+      },
+      "blocks": {
+        "fragrance_1": {
+          "type": "fragrance_card",
+          "settings": {
+            "title": "cosmic kylie jenner",
+            "fragrance_family": "ambery floral",
+            "about_the_scent": "warm, comforting, enveloping",
+            "key_notes": "star jasmine, golden amber accord, vanilla musk accord"
+          }
+        },
+        "fragrance_2": {
+          "type": "fragrance_card",
+          "settings": {
+            "title": "cosmic kylie jenner 2.0",
+            "fragrance_family": "floral amber",
+            "about_the_scent": "fresh, bright, sweet",
+            "key_notes": "pear accord, lavender essence, amber accord"
+          }
+        },
+        "fragrance_3": {
+          "type": "fragrance_card",
+          "settings": {
+            "title": "cosmic kylie jenner intense",
+            "fragrance_family": "ambery gourmand",
+            "about_the_scent": "creamy, warm, rich",
+            "key_notes": "star jasmine, benzoin, vanilla"
+          }
+        }
+      },
+      "block_order": ["fragrance_1", "fragrance_2", "fragrance_3"]
+    },
+    "social": {
+      "type": "foursixty",
+      "settings": {
+        "title": "on social",
+        "feed_id": "kylie_1",
+        "page_size": 8
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "background_color": "#f8f1f4"
+      }
+    }
+  },
+  "order": ["gradient", "hero", "main", "ingredient_tiles", "marketing_tiles", "cosmic_universe", "social", "reviews"]
+}

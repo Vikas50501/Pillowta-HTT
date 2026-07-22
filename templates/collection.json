@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "banner": {
+      "type": "collection-banner",
+      "settings": {
+        "banner_style": "image"
+      },
+      "blocks": {
+        "new": { "type": "category_link", "settings": { "title": "New", "link": "/collections/kylie-cosmetics-new" } },
+        "best_sellers": { "type": "category_link", "settings": { "title": "Best Sellers" } },
+        "lips": { "type": "category_link", "settings": { "title": "Lips" } },
+        "face": { "type": "category_link", "settings": { "title": "Face" } },
+        "eyes": { "type": "category_link", "settings": { "title": "Eyes & Brows" } },
+        "featured": { "type": "category_link", "settings": { "title": "Featured" } }
+      },
+      "block_order": ["new", "best_sellers", "lips", "face", "eyes", "featured"]
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "products_per_page": 12,
+        "enable_filtering": true,
+        "enable_sorting": true
+      }
+    }
+  },
+  "order": ["banner", "main"]
+}

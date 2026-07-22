@@ -1,0 +1,459 @@
+{% comment %}
+  Maps to: source site's theme.miniCart Vue config (shopify-section-mini-cart) — no
+  static markup existed there (100% client-rendered), so this is authored fresh in
+  Liquid/JS against Shopify's native cart object, preserving the real block order,
+  copy, and thresholds found in the source: free-shipping bar ($40), gift-with-purchase
+  ($55), free samples ($30), loyalty points, and a single featured-product upsell
+  ("before you go" / lip butter, "+$20 for free shipping").
+{% endcomment %}
+<theme-drawer id="CartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="{{ 'cart.general.title' | t: default: 'Cart' }}" data-section-id="{{ section.id }}" data-section-type="cart-drawer">
+  <div class="cart-drawer__header">
+    <h2>{{ 'cart.general.title' | t: default: 'cart' }} ({{ cart.item_count }})</h2>
+    <button type="button" data-drawer-close aria-label="{{ 'accessibility.close' | t }}">
+      {%- render 'icon', name: 'close' -%}
+    </button>
+  </div>
+
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when 'free_shipping_bar' -%}
+        {%- liquid
+          assign threshold_cents = block.settings.threshold | times: 100
+          assign remaining_cents = threshold_cents | minus: cart.total_price
+          assign progress = cart.total_price | times: 100.0 | divided_by: threshold_cents | at_most: 100
+        -%}
+        <div class="cart-drawer__block free-shipping" {{ block.shopify_attributes }}>
+          {%- if remaining_cents > 0 -%}
+            <p>{{ 'cart.general.free_shipping' | t: n: remaining_cents | money, default: 'You are {{ n }} away from free shipping!' }}</p>
+          {%- else -%}
+            <p>{{ 'cart.general.free_shipping_qualified' | t: default: 'Your order qualifies for free shipping' }}</p>
+          {%- endif -%}
+          <div class="free-shipping__track">
+            <div class="free-shipping__progress" style="width: {{ progress }}%;"></div>
+          </div>
+        </div>
+
+      {%- when 'gift_with_purchase' -%}
+        <div class="cart-drawer__block gift-with-purchase" {{ block.shopify_attributes }}>
+          {%- if cart.total_price >= block.settings.cart_total_tier1 | times: 100 -%}
+            <p class="gift-with-purchase__title">{{ block.settings.title }}</p>
+            {%- if block.settings.description != blank -%}
+              <p class="gift-with-purchase__description">{{ block.settings.description }}</p>
+            {%- endif -%}
+          {%- else -%}
+            <p>{{ 'cart.gifts.qualified_at' | t: f: block.settings.cart_total_tier1 | money, n: block.settings.item_limit_tier1, default: 'Spend another {{ f }} and select {{ n }} free gift(s)' }}</p>
+          {%- endif -%}
+        </div>
+
+      {%- when 'free_samples' -%}
+        <div class="cart-drawer__block free-samples" {{ block.shopify_attributes }}>
+          {%- if cart.total_price >= block.settings.cart_total_tier1 | times: 100 -%}
+            <p class="free-samples__title">{{ block.settings.title }}</p>
+          {%- else -%}
+            <p>{{ block.settings.title }}</p>
+          {%- endif -%}
+        </div>
+
+      {%- when 'loyalty_points' -%}
+        <div class="cart-drawer__block loyalty-points" {{ block.shopify_attributes }}>
+          {%- assign estimated_points = cart.total_price | divided_by: 100 -%}
+          <p>
+            {%- if customer -%}
+              {{ 'cart.general.loyalty_points' | t: points: estimated_points, default: 'earn {{ points }} points with this purchase' }}
+            {%- else -%}
+              <a href="{{ routes.account_login_url }}">{{ 'general.log_in' | t: default: 'log in' }}</a>
+              {{ 'cart.general.loyalty_points' | t: points: estimated_points, default: 'to earn {{ points }} points with this purchase' }}
+            {%- endif -%}
+          </p>
+        </div>
+
+      {%- when 'line_items' -%}
+        <div class="cart-drawer__block cart-drawer__items" {{ block.shopify_attributes }}>
+          {%- if cart.item_count == 0 -%}
+            <p class="cart-drawer__empty">
+              {{ 'cart.general.empty' | t: default: 'your cart is empty, get started with recommend products below or ' }}
+              <a href="{{ routes.all_products_collection_url }}">{{ 'cart.general.continue_shopping' | t }}</a>
+            </p>
+          {%- else -%}
+            <ul class="cart-drawer__list" role="list">
+              {%- for item in cart.items -%}
+                <li class="list-tile" data-cart-item-key="{{ item.key }}">
+                  <a href="{{ item.url }}" class="list-tile__image">
+                    {{ item.image | image_url: width: 200 | image_tag: widths: '100,200', alt: item.title }}
+                  </a>
+                  <div class="list-tile__info">
+                    <a href="{{ item.url }}" class="list-tile__title">{{ item.product.title }}</a>
+                    {%- unless item.product.has_only_default_variant -%}
+                      <p class="list-tile__variant">{{ item.variant.title }}</p>
+                    {%- endunless -%}
+                    <p class="list-tile__price price">{{ item.final_line_price | money }}</p>
+                    <div class="list-tile__actions">
+                      <div class="quantity-selector">
+                        <button type="button" class="quantity-selector__button" data-cart-qty-decrease aria-label="{{ 'cart.general.qty' | t }} -1">{%- render 'icon', name: 'minus' -%}</button>
+                        <span class="quantity-selector__value">{{ item.quantity }}</span>
+                        <button type="button" class="quantity-selector__button" data-cart-qty-increase aria-label="{{ 'cart.general.qty' | t }} +1">{%- render 'icon', name: 'plus' -%}</button>
+                      </div>
+                      <button type="button" class="list-tile__remove" data-cart-remove>{{ 'cart.general.remove' | t }}</button>
+                    </div>
+                  </div>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+      {%- when 'featured_product' -%}
+        {%- assign upsell_product = all_products[block.settings.product] -%}
+        {%- if upsell_product != blank and cart.item_count > 0 -%}
+          <div class="cart-drawer__block featured-product-upsell" {{ block.shopify_attributes }}>
+            <p class="featured-product-upsell__title">{{ block.settings.title }}</p>
+            <div class="featured-product-upsell__product">
+              <a href="{{ upsell_product.url }}" class="featured-product-upsell__image">
+                {{ upsell_product.featured_image | image_url: width: 160 | image_tag: widths: '80,160', alt: upsell_product.title }}
+              </a>
+              <div>
+                <p class="featured-product-upsell__name">{{ upsell_product.title }}</p>
+                <p class="featured-product-upsell__subtitle">{{ block.settings.subtitle }}</p>
+                <button type="button" class="action action--secondary" data-cart-add data-variant-id="{{ upsell_product.selected_or_first_available_variant.id }}">
+                  {{ 'cart.general.choose' | t }}
+                </button>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+    {%- endcase -%}
+  {%- endfor -%}
+
+  <div class="cart-drawer__footer">
+    <div class="cart-drawer__subtotal">
+      <span>{{ 'cart.general.subtotal' | t }}</span>
+      <span class="price">{{ cart.total_price | money }}</span>
+    </div>
+    <p class="cart-drawer__tax-note">{{ 'cart.general.taxes_and_shipping_at_checkout' | t }}</p>
+    <a href="{{ routes.cart_url }}" class="action action--primary action--full">{{ 'cart.general.checkout' | t }}</a>
+  </div>
+</theme-drawer>
+
+{% stylesheet %}
+  .cart-drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: clamp(24.375rem, 30vw, 30.625rem);
+    background: rgb(var(--color-background));
+    transform: translateX(100%);
+    transition: transform var(--transition-slow);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .cart-drawer[open] {
+    transform: translateX(0);
+  }
+
+  .cart-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .cart-drawer__header button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .cart-drawer__block {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+    font-size: var(--font-size-small);
+  }
+
+  .free-shipping__track {
+    height: 4px;
+    border-radius: 2px;
+    background: rgb(var(--color-border));
+    margin-top: .5rem;
+    overflow: hidden;
+  }
+
+  .free-shipping__progress {
+    height: 100%;
+    background: rgb(var(--color-accent));
+    transition: width var(--transition-fast);
+  }
+
+  .cart-drawer__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .list-tile {
+    display: flex;
+    gap: .75rem;
+  }
+
+  .list-tile__image {
+    flex-shrink: 0;
+    width: 5rem;
+  }
+
+  .list-tile__title {
+    color: rgb(var(--color-text));
+    font-weight: var(--font-body-weight-demibold);
+  }
+
+  .list-tile__variant {
+    color: rgba(var(--color-text), .7);
+    font-size: var(--font-size-caption);
+  }
+
+  .list-tile__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .5rem;
+    transition: max-height .35s linear;
+  }
+
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-sm);
+    padding: .125rem .5rem;
+  }
+
+  .quantity-selector__button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: rgb(var(--color-text));
+  }
+
+  .list-tile__remove {
+    background: none;
+    border: 0;
+    text-decoration: underline;
+    color: rgba(var(--color-text), .7);
+    cursor: pointer;
+    font-size: var(--font-size-caption);
+  }
+
+  .featured-product-upsell__product {
+    display: flex;
+    gap: .75rem;
+    margin-top: .5rem;
+  }
+
+  .featured-product-upsell__image {
+    width: 5rem;
+    flex-shrink: 0;
+  }
+
+  .cart-drawer__footer {
+    margin-top: auto;
+    padding: 1.25rem;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .cart-drawer__subtotal {
+    display: flex;
+    justify-content: space-between;
+    font-weight: var(--font-body-weight-demibold);
+    margin-bottom: .25rem;
+  }
+
+  .cart-drawer__tax-note {
+    font-size: var(--font-size-caption);
+    color: rgba(var(--color-text), .7);
+    margin-bottom: 1rem;
+  }
+
+  .cart-drawer__empty {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  @media screen and (max-width: 44.99em) {
+    .cart-drawer {
+      width: 100vw;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class CartDrawerActions {
+    constructor() {
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-cart-add]')) this.add(e.target.closest('[data-cart-add]'));
+        if (e.target.closest('[data-cart-remove]')) this.remove(e.target.closest('[data-cart-item-key]'));
+        if (e.target.closest('[data-cart-qty-increase]')) this.updateQty(e.target.closest('[data-cart-item-key]'), 1);
+        if (e.target.closest('[data-cart-qty-decrease]')) this.updateQty(e.target.closest('[data-cart-item-key]'), -1);
+      });
+    }
+
+    async add(button) {
+      const variantId = button.dataset.variantId;
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 }),
+      });
+      if (response.ok) this.refresh();
+    }
+
+    async remove(row) {
+      await this.changeQuantity(row.dataset.cartItemKey, 0);
+      this.refresh();
+    }
+
+    async updateQty(row, delta) {
+      const valueEl = row.querySelector('.quantity-selector__value');
+      const newQty = Math.max(0, parseInt(valueEl.textContent, 10) + delta);
+      await this.changeQuantity(row.dataset.cartItemKey, newQty);
+      this.refresh();
+    }
+
+    async changeQuantity(key, quantity) {
+      await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: key, quantity }),
+      });
+    }
+
+    async refresh() {
+      const response = await fetch('/cart.js');
+      const cart = await response.json();
+      document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
+      document.querySelector('cart-drawer, #CartDrawer')?.dispatchEvent(new CustomEvent('theme:cart:refresh'));
+      window.location.reload();
+    }
+  }
+
+  new CartDrawerActions();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.cart-drawer.name",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "free_shipping_bar",
+      "name": "t:sections.cart-drawer.blocks.free_shipping_bar.name",
+      "settings": [
+        {
+          "type": "number",
+          "id": "threshold",
+          "default": 40,
+          "label": "t:sections.cart-drawer.blocks.free_shipping_bar.threshold.label"
+        }
+      ]
+    },
+    {
+      "type": "gift_with_purchase",
+      "name": "t:sections.cart-drawer.blocks.gift_with_purchase.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "free compact mirror and pouch! 🩷",
+          "label": "t:sections.cart-drawer.blocks.gift_with_purchase.title.label"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "default": "online exclusive and limited time only.",
+          "label": "t:sections.cart-drawer.blocks.gift_with_purchase.description.label"
+        },
+        {
+          "type": "number",
+          "id": "cart_total_tier1",
+          "default": 55,
+          "label": "t:sections.cart-drawer.blocks.gift_with_purchase.cart_total.label"
+        },
+        {
+          "type": "number",
+          "id": "item_limit_tier1",
+          "default": 1,
+          "label": "t:sections.cart-drawer.blocks.gift_with_purchase.item_limit.label"
+        }
+      ]
+    },
+    {
+      "type": "free_samples",
+      "name": "t:sections.cart-drawer.blocks.free_samples.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "1 Free Mini Deluxe Sample with Any $30+ Order",
+          "label": "t:sections.cart-drawer.blocks.free_samples.title.label"
+        },
+        {
+          "type": "number",
+          "id": "cart_total_tier1",
+          "default": 30,
+          "label": "t:sections.cart-drawer.blocks.free_samples.cart_total.label"
+        }
+      ]
+    },
+    {
+      "type": "loyalty_points",
+      "name": "t:sections.cart-drawer.blocks.loyalty_points.name",
+      "settings": []
+    },
+    {
+      "type": "line_items",
+      "name": "t:sections.cart-drawer.blocks.line_items.name",
+      "settings": []
+    },
+    {
+      "type": "featured_product",
+      "name": "t:sections.cart-drawer.blocks.featured_product.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "before you go...",
+          "label": "t:sections.cart-drawer.blocks.featured_product.title.label"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "default": "instantly hydrate lips for up to 24 hours – now available in a new watermelon scent & shade!",
+          "label": "t:sections.cart-drawer.blocks.featured_product.subtitle.label"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.cart-drawer.blocks.featured_product.product.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.cart-drawer.name",
+      "blocks": [
+        { "type": "free_shipping_bar" },
+        { "type": "line_items" },
+        { "type": "gift_with_purchase" },
+        { "type": "free_samples" },
+        { "type": "loyalty_points" },
+        { "type": "featured_product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

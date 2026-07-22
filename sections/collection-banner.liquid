@@ -1,0 +1,309 @@
+{% comment %}
+  Maps to: source site's collection hero — Template A (kylie-cosmetics) uses an
+  image banner + a "visual nav" row of category shortcuts; Template B (kylie-
+  fragrance) uses NO image and instead a full-bleed gradient painted behind the
+  hero band only (real stops: #C53627 → #F8EDEB at 45% desktop / 35% mobile,
+  180deg), with white heading/breadcrumb text over it. One flexible section
+  covers both via `banner_style`.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="collection-banner collection-banner--{{ section.settings.banner_style }}{% if section.settings.font_override != 'inherit' %} collection-banner--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-banner"
+>
+  {%- if section.settings.banner_style == 'image' -%}
+    <div class="collection-banner__media">
+      {%- if section.settings.desktop_image != blank -%}
+        {{ section.settings.desktop_image | image_url: width: 1728 | image_tag: widths: '900,1300,1728', class: 'collection-banner__image collection-banner__image--desktop', alt: '', loading: 'eager' }}
+      {%- elsif collection.image != blank -%}
+        {{ collection.image | image_url: width: 1728 | image_tag: widths: '900,1300,1728', class: 'collection-banner__image collection-banner__image--desktop', alt: '', loading: 'eager' }}
+      {%- endif -%}
+      {%- if section.settings.mobile_image != blank -%}
+        {{ section.settings.mobile_image | image_url: width: 750 | image_tag: widths: '390,540,750', class: 'collection-banner__image collection-banner__image--mobile', alt: '', loading: 'eager' }}
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <div
+      class="collection-banner__gradient"
+      style="--gradient-from: {{ section.settings.gradient_from }}; --gradient-to: {{ section.settings.gradient_to }}; --gradient-stop-desktop: {{ section.settings.gradient_stop_desktop }}%; --gradient-stop-mobile: {{ section.settings.gradient_stop_mobile }}%;"
+    ></div>
+  {%- endif -%}
+
+  <div class="collection-banner__content page-width">
+    <nav class="breadcrumbs" aria-label="{{ 'accessibility.breadcrumbs' | t: default: 'Breadcrumbs' }}">
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item"><a href="{{ routes.root_url }}">{{ 'general.home' | t: default: 'Home' }}</a></li>
+        <li class="breadcrumbs__item" aria-current="page">{{ collection.title }}</li>
+      </ol>
+    </nav>
+    <h1 class="collection-banner__title">{{ section.settings.title | default: collection.title }}</h1>
+    {%- if section.settings.description != blank -%}
+      <div class="collection-banner__description">{{ section.settings.description }}</div>
+    {%- elsif collection.description != blank -%}
+      <div class="collection-banner__description">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.banner_style == 'image' and section.blocks.size > 0 -%}
+    <nav class="collection-banner__nav page-width" aria-label="{{ 'general.shop_by_category' | t: default: 'Shop by category' }}">
+      <ul class="collection-banner__nav-list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link }}" class="collection-banner__nav-link">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 160 | image_tag: widths: '80,160', alt: block.settings.title, loading: 'lazy' }}
+              {%- endif -%}
+              <span>{{ block.settings.title }}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .collection-banner {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .collection-banner--image {
+    min-height: 30rem;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .collection-banner--image .collection-banner__content {
+    position: relative;
+    z-index: 1;
+    padding-block: 2rem;
+    color: #fff;
+  }
+
+  .collection-banner__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .collection-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-banner__image--mobile {
+    display: none;
+  }
+
+  .collection-banner--gradient {
+    min-height: 15.3125rem;
+  }
+
+  .collection-banner--gradient .collection-banner__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--gradient-from) 0%, var(--gradient-to) var(--gradient-stop-desktop));
+    background-repeat: no-repeat;
+  }
+
+  .collection-banner--gradient .collection-banner__content {
+    position: relative;
+    z-index: 1;
+    padding-block: 2rem;
+    color: #fff;
+  }
+
+  .breadcrumbs__list {
+    display: flex;
+    gap: .375rem;
+    font-size: var(--font-size-caption);
+    text-transform: lowercase;
+    opacity: .85;
+  }
+
+  .breadcrumbs__item + .breadcrumbs__item::before {
+    content: '/';
+    margin-right: .375rem;
+  }
+
+  .collection-banner__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    text-transform: uppercase;
+    margin-top: .5rem;
+  }
+
+  .collection-banner__nav-list {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-block: 1rem;
+  }
+
+  .collection-banner__nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    color: rgb(var(--color-text));
+    text-transform: lowercase;
+    flex-shrink: 0;
+    width: 5rem;
+    text-align: center;
+  }
+
+  .collection-banner__nav-link img {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .collection-banner--image {
+      min-height: 22rem;
+    }
+    .collection-banner--gradient {
+      min-height: 15.3125rem;
+    }
+    .collection-banner--gradient .collection-banner__gradient {
+      background: linear-gradient(180deg, var(--gradient-from) 0%, var(--gradient-to) var(--gradient-stop-mobile));
+    }
+    .collection-banner__image--desktop {
+      display: none;
+    }
+    .collection-banner__image--mobile {
+      display: block;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.collection-banner.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "banner_style",
+      "options": [
+        { "value": "image", "label": "t:sections.collection-banner.banner_style.image" },
+        { "value": "gradient", "label": "t:sections.collection-banner.banner_style.gradient" }
+      ],
+      "default": "image",
+      "label": "t:sections.collection-banner.banner_style.label"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.collection-banner.title.label",
+      "info": "t:sections.collection-banner.title.info"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.collection-banner.description.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collection-banner.image_header"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "t:sections.collection-banner.desktop_image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:sections.collection-banner.mobile_image.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collection-banner.gradient_header"
+    },
+    {
+      "type": "color",
+      "id": "gradient_from",
+      "default": "#C53627",
+      "label": "t:sections.collection-banner.gradient_from.label"
+    },
+    {
+      "type": "color",
+      "id": "gradient_to",
+      "default": "#F8EDEB",
+      "label": "t:sections.collection-banner.gradient_to.label"
+    },
+    {
+      "type": "range",
+      "id": "gradient_stop_desktop",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 45,
+      "label": "t:sections.collection-banner.gradient_stop_desktop.label"
+    },
+    {
+      "type": "range",
+      "id": "gradient_stop_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 35,
+      "label": "t:sections.collection-banner.gradient_stop_mobile.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_link",
+      "name": "t:sections.collection-banner.blocks.category_link.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.collection-banner.blocks.category_link.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.collection-banner.blocks.category_link.title.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.collection-banner.blocks.category_link.link.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.collection-banner.name",
+      "blocks": [
+        { "type": "category_link", "settings": { "title": "New" } },
+        { "type": "category_link", "settings": { "title": "Best Sellers" } },
+        { "type": "category_link", "settings": { "title": "Lips" } },
+        { "type": "category_link", "settings": { "title": "Face" } },
+        { "type": "category_link", "settings": { "title": "Eyes & Brows" } },
+        { "type": "category_link", "settings": { "title": "Featured" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

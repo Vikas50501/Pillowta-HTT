@@ -1,0 +1,220 @@
+{% comment %}
+  Maps to: source site's "shop by category" tiles — on the real site this is split
+  across 3 separate sections (2 desktop halves + 1 combined mobile version) purely
+  because the hover-video/gif crossfade markup was only rendered for desktop;
+  rebuilt here as ONE responsive section (blocks = tiles) with hover media handled
+  by a plain CSS media query, since Shopify sections already reflow per breakpoint
+  without needing a duplicate instance. Each tile: static image, optional hover
+  video/gif crossfade, title, link — matches source tiles: lips, fragrance (gif),
+  face, blush, Lip Care (gif), eyes.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="multicolumn{% if section.settings.font_override != 'inherit' %} multicolumn--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="multicolumn"
+>
+  {%- if section.settings.title != blank -%}
+    <h2 class="multicolumn__title page-width">{{ section.settings.title }}</h2>
+  {%- endif -%}
+
+  <div class="multicolumn__grid page-width" style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: {{ section.settings.columns_mobile }};">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link }}" class="multicolumn__tile" {{ block.shopify_attributes }}>
+        <div class="multicolumn__media aspect-ratio" style="--aspect-ratio: 100%;">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: block.settings.title, class: 'multicolumn__image', loading: 'lazy' }}
+          {%- endif -%}
+
+          {%- if section.settings.enable_hover_media -%}
+            {%- if block.settings.hover_video != blank -%}
+              <video class="multicolumn__hover-media" muted loop playsinline preload="none">
+                <source src="{{ block.settings.hover_video }}" type="video/mp4">
+              </video>
+            {%- elsif block.settings.hover_image != blank -%}
+              {{ block.settings.hover_image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: '', class: 'multicolumn__hover-media', loading: 'lazy' }}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+        <span class="multicolumn__tile-title">{{ block.settings.title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .multicolumn {
+    padding-block: var(--section-spacing);
+  }
+
+  .multicolumn__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .multicolumn__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns-mobile, 2), 1fr);
+    gap: 1rem;
+  }
+
+  .multicolumn__tile {
+    display: block;
+    color: rgb(var(--color-text));
+    text-align: center;
+  }
+
+  .multicolumn__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: rgb(var(--color-background-alt));
+  }
+
+  .multicolumn__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .multicolumn__hover-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+  }
+
+  .multicolumn__tile:hover .multicolumn__hover-media {
+    opacity: 1;
+  }
+
+  .multicolumn__tile-title {
+    display: block;
+    margin-top: .625rem;
+    text-transform: lowercase;
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight-demibold);
+  }
+
+  @media screen and (min-width: 45em) {
+    .multicolumn__grid {
+      grid-template-columns: repeat(var(--columns-desktop, 6), 1fr);
+    }
+  }
+
+  /* Touch devices can't hover — always show hover media if present, matching
+     the source site's mobile behavior of never rendering the static-only state. */
+  @media (hover: none) {
+    .multicolumn__hover-media {
+      opacity: 1;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.multicolumn.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "shop by category",
+      "label": "t:sections.multicolumn.title.label"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 6,
+      "label": "t:sections.multicolumn.columns_desktop.label"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "label": "t:sections.multicolumn.columns_mobile.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_media",
+      "default": true,
+      "label": "t:sections.multicolumn.enable_hover_media.label",
+      "info": "t:sections.multicolumn.enable_hover_media.info"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "t:sections.multicolumn.blocks.tile.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.multicolumn.blocks.tile.image.label"
+        },
+        {
+          "type": "video_url",
+          "id": "hover_video",
+          "accept": ["mp4"],
+          "label": "t:sections.multicolumn.blocks.tile.hover_video.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "hover_image",
+          "label": "t:sections.multicolumn.blocks.tile.hover_image.label",
+          "info": "t:sections.multicolumn.blocks.tile.hover_image.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.multicolumn.blocks.tile.title.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.multicolumn.blocks.tile.link.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.multicolumn.name",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "lips" } },
+        { "type": "tile", "settings": { "title": "fragrance" } },
+        { "type": "tile", "settings": { "title": "face" } },
+        { "type": "tile", "settings": { "title": "blush" } },
+        { "type": "tile", "settings": { "title": "Lip Care" } },
+        { "type": "tile", "settings": { "title": "eyes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

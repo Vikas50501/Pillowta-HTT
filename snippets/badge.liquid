@@ -1,0 +1,23 @@
+{%- comment -%}
+  Maps to: source site's theme.badges config (best seller / new). Tag-driven rather
+  than a separate global section, since Liquid sections can't be queried from other
+  snippets — matches the source's own simple 2-entry behavior. Usage:
+  {% render 'badge', product: product %}
+  Add more tag → label pairs in settings.badge_rules (Theme Settings → Product cards)
+  or extend the case statement below for bespoke wording.
+{%- endcomment -%}
+{%- if product.tags contains 'best-seller' -%}
+  <span class="badge" style="background-color: rgb(var(--color-badge-bg)); color: rgb(var(--color-badge-text));">
+    {{- 'products.badges.best_seller' | t: default: 'best seller' -}}
+  </span>
+{%- endif -%}
+{%- if product.tags contains 'new' -%}
+  <span class="badge" style="background-color: rgb(var(--color-badge-bg)); color: rgb(var(--color-badge-text));">
+    {{- 'products.badges.new' | t: default: 'new' -}}
+  </span>
+{%- endif -%}
+{%- if product.compare_at_price > product.price -%}
+  <span class="badge badge--sale">
+    {{- 'products.badges.sale' | t: default: 'sale' -}}
+  </span>
+{%- endif -%}

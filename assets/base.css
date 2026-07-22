@@ -1,0 +1,180 @@
+/* ==========================================================================
+   base.css — GLOBAL LAYER ONLY (reset, design tokens, shared utilities)
+   No section-specific styling belongs in this file. See CLAUDE build brief §3.
+   Default token values below match the source site; theme.liquid's inline
+   {% style %} block overrides them with merchant Theme Settings at runtime.
+   ========================================================================== */
+
+/* ---- Reset / normalize ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-base);
+  color: rgb(var(--color-text));
+  background-color: rgb(var(--color-background));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0;
+  line-height: normal;
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  color: rgb(var(--color-heading));
+}
+
+img, svg, video, picture {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: rgb(var(--color-link));
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: rgb(var(--color-link-hover));
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--color-focus-outline));
+  outline-offset: 2px;
+}
+
+/* ---- Design tokens (fallback defaults — overridden inline per Theme Settings) ---- */
+:root {
+  /* Fonts */
+  --font-heading: 'UniversLTStd-Bold', Arial, sans-serif;
+  --font-heading-weight: 700;
+  --font-body: 'Tt-Chocolate', Arial, sans-serif;
+  --font-body-weight: 400;
+  --font-body-weight-demibold: 600;
+  --font-accent: 'script412displayregular', cursive;
+  --font-condensed: 'UniversLTCondensed', Arial, sans-serif;
+
+  /* Type scale (desktop; component queries adjust at --breakpoint-md) */
+  --font-size-body: 1.0625rem;      /* 17px */
+  --font-size-small: 0.9375rem;     /* 15px */
+  --font-size-caption: 0.625rem;    /* 10px */
+  --font-size-h1: 2.125rem;         /* 34px */
+  --font-size-h2: 1.75rem;          /* 28px */
+  --font-size-h3: 1.25rem;          /* 20px */
+  --font-size-h4: 1.125rem;         /* 18px */
+  --font-size-h1-mobile: 1.75rem;   /* 28px */
+  --font-size-h2-mobile: 1.25rem;   /* 20px */
+  --font-size-h3-mobile: 1.125rem;  /* 18px */
+  --line-height-base: 1.5;
+  --line-height-heading: normal;
+  --line-height-tight: 1.1;
+
+  /* Colors — stored as "r, g, b" triples so rgba(var(--x), .5) works */
+  --color-background: 255, 255, 255;
+  --color-background-alt: 248, 241, 244;      /* #f8f1f4 */
+  --color-text: 57, 57, 57;                   /* #393939 */
+  --color-heading: 57, 57, 57;
+  --color-accent: 179, 132, 143;              /* #b3848f brand mauve */
+  --color-border: 231, 218, 226;              /* #e7dae2 */
+  --color-border-accent: 239, 215, 229;       /* #efd7e5 */
+  --color-button-primary-bg: 255, 255, 255;
+  --color-button-primary-text: 57, 57, 57;
+  --color-button-primary-bg-hover: 57, 57, 57;
+  --color-button-primary-text-hover: 255, 255, 255;
+  --color-focus-outline: 144, 93, 93;          /* #905d5d */
+  --color-error: 183, 1, 1;                    /* #b70101 */
+  --color-sale: 255, 184, 184;                 /* #ffb8b8 */
+  --color-badge-bg: 239, 215, 229;
+  --color-badge-text: 57, 57, 57;
+  --color-link: 57, 57, 57;
+  --color-link-hover: 179, 132, 143;
+
+  /* Layout */
+  --container-max-width: 108rem;   /* 1728px */
+  --container-padding: 1rem;       /* 16px */
+  --section-spacing: 3rem;         /* 48px */
+  --grid-gutter: 2rem;             /* 32px */
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-full: 50%;
+
+  /* Buttons */
+  --button-radius: 4px;
+  --button-border-width: 1px;
+  --button-letter-spacing: 0;
+  --button-text-transform: lowercase;
+
+  /* Breakpoints (documented — used directly in media queries, not as var()) */
+  /* xs: 20em (320px)  sm: 30em (480px)  md: 45em (720px)  lg: 60em (960px)  xl: 75em (1200px)  2xl: 108em (1728px) */
+
+  /* Motion */
+  --transition-fast: .2s ease;
+  --transition-medium: .35s ease-out;
+  --transition-slow: .5s ease-out;
+  --ease-overshoot: cubic-bezier(.68, -.6, .32, 1.6);
+  --animations-enabled: 1;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  :root {
+    --animations-enabled: 0;
+  }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Shared keyframes (global, reused by any section) ---- */
+@keyframes fadein {
+  0% { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeup {
+  0% { opacity: 0; transform: translateY(1em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rotating {
+  0% { transform: rotate(0); }
+  to { transform: rotate(1turn); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  to { transform: scale(1); }
+}
+
+@keyframes fadeinout {
+  0% { opacity: 1; }
+  to { opacity: .2; }
+}

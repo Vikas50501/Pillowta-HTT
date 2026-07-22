@@ -1,0 +1,151 @@
+{% comment %}
+  Maps to: source site's contact-form section — real native Shopify contact form
+  (not Zendesk/Gorgias), fields: Name, Email, "How can we help?" (9-option select),
+  Message, submit "Send". Source also used a Google reCAPTCHA checkbox; that
+  requires either Shopify's built-in spam protection (automatic, no setup) or a
+  reCAPTCHA app — noted in the README rather than hard-coded here.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="contact-form-section{% if section.settings.font_override != 'inherit' %} contact-form-section--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="contact-form"
+>
+  <div class="contact-form page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="contact-form__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {% form 'contact', id: 'ContactForm', class: 'contact-form__form' %}
+      {%- if form.posted_successfully? -%}
+        <p class="form__message form__message--success">
+          {{ 'contact.form.post_success' | t: default: "Thanks for reaching out. We'll be in touch soon." }}
+        </p>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <p class="form__message form__message--error">
+          {{ form.errors | default_errors }}
+        </p>
+      {%- endif -%}
+
+      <div class="form__field">
+        <label for="ContactFormName">{{ 'contact.form.name' | t: default: 'Name' }}</label>
+        <input type="text" id="ContactFormName" name="contact[name]" required>
+      </div>
+
+      <div class="form__field">
+        <label for="ContactFormEmail">{{ 'contact.form.email' | t: default: 'Email*' }}</label>
+        <input type="email" id="ContactFormEmail" name="contact[email]" value="{{ form.email }}" required>
+      </div>
+
+      <div class="form__field">
+        <label for="ContactFormTopic">{{ 'contact.form.topic' | t: default: 'How can we help?' }}</label>
+        <select id="ContactFormTopic" name="contact[How can we help?]">
+          {%- for option in section.settings.topics | split: '|' -%}
+            <option value="{{ option | strip }}">{{ option | strip }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+
+      <div class="form__field">
+        <label for="ContactFormMessage">{{ 'contact.form.message' | t: default: 'Message' }}</label>
+        <textarea id="ContactFormMessage" name="contact[body]" rows="10" required></textarea>
+      </div>
+
+      <button type="submit" class="action action--primary">
+        {{ 'contact.form.send' | t: default: 'Send' }}
+      </button>
+    {% endform %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .contact-form-section {
+    padding-block: var(--section-spacing);
+  }
+
+  .contact-form {
+    max-width: 34rem;
+    margin: 0 auto;
+  }
+
+  .contact-form__heading {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-form__form .form__field {
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-form__form label {
+    display: block;
+    margin-bottom: .375rem;
+    text-transform: lowercase;
+  }
+
+  .contact-form__form input,
+  .contact-form__form select,
+  .contact-form__form textarea {
+    width: 100%;
+    padding: .625rem .75rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-sm);
+    background: rgb(var(--color-background));
+    font-family: var(--font-body);
+  }
+
+  .form__message--success {
+    padding: .75rem 1rem;
+    border-radius: var(--radius-sm);
+    background: rgb(var(--color-border-accent));
+    margin-bottom: 1rem;
+  }
+
+  .form__message--error {
+    padding: .75rem 1rem;
+    border-radius: var(--radius-sm);
+    background: rgba(var(--color-error), .1);
+    color: rgb(var(--color-error));
+    margin-bottom: 1rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.contact-form.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.contact-form.heading.label"
+    },
+    {
+      "type": "textarea",
+      "id": "topics",
+      "default": "Product questions or issues|Tracking and delivery issues|Damaged product|Health concern|Website feedback, checkout, or promotions issue|Website account|Public relations and collaborations|Data privacy|Other",
+      "label": "t:sections.contact-form.topics.label",
+      "info": "t:sections.contact-form.topics.info"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.contact-form.name"
+    }
+  ]
+}
+{% endschema %}

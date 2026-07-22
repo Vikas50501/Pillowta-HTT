@@ -1,0 +1,156 @@
+{% comment %}
+  Maps to: source site's "ingredient_tiles" section on the cosmic fragrance product
+  — real content is a 3-column fragrance-note pyramid (Opening/Heart/Base notes,
+  2 items each, image + name only, no descriptions). Grouped by settings.group_label
+  per block so a non-fragrance product could relabel groups (e.g. "Key ingredients").
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="ingredient-tiles{% if section.settings.font_override != 'inherit' %} ingredient-tiles--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="ingredient-tiles"
+>
+  {%- if section.settings.title != blank -%}
+    <h2 class="ingredient-tiles__title page-width">{{ section.settings.title }}</h2>
+  {%- endif -%}
+
+  <div class="ingredient-tiles__groups page-width">
+    {%- assign groups = section.blocks | map: 'settings' | map: 'group_label' | uniq -%}
+    {%- for group in groups -%}
+      <div class="ingredient-tiles__group">
+        <h3 class="ingredient-tiles__group-label">{{ group }}</h3>
+        <div class="ingredient-tiles__items">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.group_label == group -%}
+              <div class="ingredient-tiles__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  <div class="aspect-ratio" style="--aspect-ratio: 100%;">
+                    {{ block.settings.image | image_url: width: 300 | image_tag: widths: '150,300', alt: block.settings.name, loading: 'lazy' }}
+                  </div>
+                {%- endif -%}
+                <p class="ingredient-tiles__item-name">{{ block.settings.name }}</p>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .ingredient-tiles {
+    padding-block: var(--section-spacing);
+  }
+
+  .ingredient-tiles__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 2rem;
+  }
+
+  .ingredient-tiles__groups {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gutter);
+  }
+
+  .ingredient-tiles__group-label {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: var(--font-size-small);
+    letter-spacing: .05em;
+    margin-bottom: 1rem;
+  }
+
+  .ingredient-tiles__items {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .ingredient-tiles__item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .ingredient-tiles__item-name {
+    margin-top: .5rem;
+    font-size: var(--font-size-caption);
+    text-transform: lowercase;
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .ingredient-tiles__groups {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.ingredient-tiles.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.ingredient-tiles.title.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "note",
+      "name": "t:sections.ingredient-tiles.blocks.note.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "group_label",
+          "label": "t:sections.ingredient-tiles.blocks.note.group_label.label",
+          "info": "t:sections.ingredient-tiles.blocks.note.group_label.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.ingredient-tiles.blocks.note.image.label"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "t:sections.ingredient-tiles.blocks.note.name_field.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.ingredient-tiles.name",
+      "settings": {
+        "title": "the ingredients"
+      },
+      "blocks": [
+        { "type": "note", "settings": { "group_label": "OPENING NOTES", "name": "star jasmine" } },
+        { "type": "note", "settings": { "group_label": "OPENING NOTES", "name": "blood orange" } },
+        { "type": "note", "settings": { "group_label": "HEART NOTES", "name": "golden amber accord" } },
+        { "type": "note", "settings": { "group_label": "HEART NOTES", "name": "benzoin" } },
+        { "type": "note", "settings": { "group_label": "BASE NOTES", "name": "vanilla" } },
+        { "type": "note", "settings": { "group_label": "BASE NOTES", "name": "musk accord" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

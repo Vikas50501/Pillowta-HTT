@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {{ content_for_header }}
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <!-- Brand font files (custom-uploaded, not Shopify's font library) -->
+  <link rel="preload" as="font" type="font/woff2" href="{{ 'tt_chocolates_regular-webfont.woff2' | asset_url }}" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="{{ 'universltstd-boldcn-webfont.woff2' | asset_url }}" crossorigin>
+
+  {% style %}
+    @font-face {
+      font-family: 'Tt-Chocolate';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url({{ 'tt_chocolates_regular-webfont.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'Tt-Chocolate';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url({{ 'tt_chocolates_italic-webfont.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'Tt-Chocolate';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url({{ 'tt_chocolates_demibold-webfont.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'Tt-Chocolate';
+      font-style: italic;
+      font-weight: 600;
+      font-display: swap;
+      src: url({{ 'tt_chocolates_demibold_italic-webfont.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'UniversLTStd-Bold';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url({{ 'universltstd-boldcn-webfont.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'script412displayregular';
+      font-style: normal;
+      font-weight: normal;
+      font-display: swap;
+      src: url({{ 'script_412_1l-webfont.woff2' | asset_url }}) format('woff2');
+    }
+
+    {%- comment -%}
+      Font role resolution: brand (custom @font-face above) vs shopify (font_picker library font).
+      Cascades site-wide since every section reads var(--font-heading|body|accent|condensed).
+    {%- endcomment -%}
+    {%- if settings.font_heading_source == 'shopify' -%}
+      {{ settings.font_heading_shopify | font_face: font_display: 'swap' }}
+    {%- endif -%}
+    {%- if settings.font_body_source == 'shopify' -%}
+      {{ settings.font_body_shopify | font_face: font_display: 'swap' }}
+    {%- endif -%}
+    {%- if settings.font_accent_source == 'shopify' -%}
+      {{ settings.font_accent_shopify | font_face: font_display: 'swap' }}
+    {%- endif -%}
+    {%- if settings.font_condensed_source == 'shopify' -%}
+      {{ settings.font_condensed_shopify | font_face: font_display: 'swap' }}
+    {%- endif -%}
+
+    :root {
+      --font-heading: {% if settings.font_heading_source == 'shopify' %}{{ settings.font_heading_shopify.family }}, {{ settings.font_heading_shopify.fallback_families }}{% else %}'UniversLTStd-Bold', Arial, sans-serif{% endif %};
+      --font-heading-weight: {% if settings.font_heading_source == 'shopify' %}{{ settings.font_heading_shopify.weight }}{% else %}700{% endif %};
+      --font-body: {% if settings.font_body_source == 'shopify' %}{{ settings.font_body_shopify.family }}, {{ settings.font_body_shopify.fallback_families }}{% else %}'Tt-Chocolate', Arial, sans-serif{% endif %};
+      --font-body-weight: {% if settings.font_body_source == 'shopify' %}{{ settings.font_body_shopify.weight }}{% else %}400{% endif %};
+      --font-accent: {% if settings.font_accent_source == 'shopify' %}{{ settings.font_accent_shopify.family }}, {{ settings.font_accent_shopify.fallback_families }}{% else %}'script412displayregular', cursive{% endif %};
+      --font-condensed: {% if settings.font_condensed_source == 'shopify' %}{{ settings.font_condensed_shopify.family }}, {{ settings.font_condensed_shopify.fallback_families }}{% else %}'UniversLTCondensed', Arial, sans-serif{% endif %};
+
+      --font-size-body: {{ 1.0625 | times: settings.font_body_scale | divided_by: 100.0 }}rem;
+      --line-height-base: {{ settings.line_height_base | divided_by: 100.0 }};
+
+      --color-background: {{ settings.color_background.red }}, {{ settings.color_background.green }}, {{ settings.color_background.blue }};
+      --color-background-alt: {{ settings.color_background_alt.red }}, {{ settings.color_background_alt.green }}, {{ settings.color_background_alt.blue }};
+      --color-text: {{ settings.color_text.red }}, {{ settings.color_text.green }}, {{ settings.color_text.blue }};
+      --color-heading: {{ settings.color_heading.red }}, {{ settings.color_heading.green }}, {{ settings.color_heading.blue }};
+      --color-accent: {{ settings.color_accent.red }}, {{ settings.color_accent.green }}, {{ settings.color_accent.blue }};
+      --color-border: {{ settings.color_border.red }}, {{ settings.color_border.green }}, {{ settings.color_border.blue }};
+      --color-border-accent: {{ settings.color_border_accent.red }}, {{ settings.color_border_accent.green }}, {{ settings.color_border_accent.blue }};
+      --color-button-primary-bg: {{ settings.color_button_primary_bg.red }}, {{ settings.color_button_primary_bg.green }}, {{ settings.color_button_primary_bg.blue }};
+      --color-button-primary-text: {{ settings.color_button_primary_text.red }}, {{ settings.color_button_primary_text.green }}, {{ settings.color_button_primary_text.blue }};
+      --color-button-primary-bg-hover: {{ settings.color_button_primary_bg_hover.red }}, {{ settings.color_button_primary_bg_hover.green }}, {{ settings.color_button_primary_bg_hover.blue }};
+      --color-button-primary-text-hover: {{ settings.color_button_primary_text_hover.red }}, {{ settings.color_button_primary_text_hover.green }}, {{ settings.color_button_primary_text_hover.blue }};
+      --color-focus-outline: {{ settings.color_focus_outline.red }}, {{ settings.color_focus_outline.green }}, {{ settings.color_focus_outline.blue }};
+      --color-error: {{ settings.color_error.red }}, {{ settings.color_error.green }}, {{ settings.color_error.blue }};
+      --color-sale: {{ settings.color_sale.red }}, {{ settings.color_sale.green }}, {{ settings.color_sale.blue }};
+      --color-badge-bg: {{ settings.color_badge_bg.red }}, {{ settings.color_badge_bg.green }}, {{ settings.color_badge_bg.blue }};
+      --color-badge-text: {{ settings.color_badge_text.red }}, {{ settings.color_badge_text.green }}, {{ settings.color_badge_text.blue }};
+      --color-link: {{ settings.color_link.red }}, {{ settings.color_link.green }}, {{ settings.color_link.blue }};
+      --color-link-hover: {{ settings.color_link_hover.red }}, {{ settings.color_link_hover.green }}, {{ settings.color_link_hover.blue }};
+
+      --container-max-width: {{ settings.container_max_width }}px;
+      --container-padding: {{ settings.container_padding }}px;
+      --section-spacing: {{ settings.section_spacing }}px;
+      --grid-gutter: {{ settings.grid_gutter }}px;
+
+      --button-radius: {{ settings.button_radius }}px;
+      --button-border-width: {{ settings.button_border_width }}px;
+      --button-letter-spacing: {{ settings.button_letter_spacing }}px;
+      --button-text-transform: {% if settings.button_uppercase %}uppercase{% else %}lowercase{% endif %};
+
+      --radius-sm: {% if settings.border_radius_style == 'sharp' %}0px{% elsif settings.border_radius_style == 'round' %}16px{% else %}4px{% endif %};
+      --radius-md: {% if settings.border_radius_style == 'sharp' %}0px{% elsif settings.border_radius_style == 'round' %}24px{% else %}8px{% endif %};
+      --radius-lg: {% if settings.border_radius_style == 'sharp' %}0px{% elsif settings.border_radius_style == 'round' %}32px{% else %}10px{% endif %};
+    }
+
+    {%- unless settings.animations_enabled -%}
+      :root { --animations-enabled: 0; }
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+      }
+    {%- endunless -%}
+  {% endstyle %}
+
+  <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+  {%- if settings.logo != blank -%}
+    <link rel="preload" as="image" href="{{ settings.logo | image_url: width: 400 }}">
+  {%- endif -%}
+</head>
+
+<body class="template-{{ request.page_type | handle }}"{% if settings.animations_enabled == false %} data-animations-disabled{% endif %}>
+  <a class="skip-to-content-link visually-hidden" href="#MainContent">
+    {{ 'accessibility.skip_to_text' | t }}
+  </a>
+
+  {% sections 'header-group' %}
+
+  <main id="MainContent" class="content-for-layout" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  {% section 'cart-drawer' %}
+</body>
+</html>

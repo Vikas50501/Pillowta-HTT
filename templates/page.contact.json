@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "intro": {
+      "type": "page-content",
+      "settings": {
+        "show_title": true
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "topics": "Product questions or issues|Tracking and delivery issues|Damaged product|Health concern|Website feedback, checkout, or promotions issue|Website account|Public relations and collaborations|Data privacy|Other"
+      }
+    }
+  },
+  "order": ["intro", "form"]
+}

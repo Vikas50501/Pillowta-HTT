@@ -1,0 +1,105 @@
+{% comment %}
+  Maps to: source site's theme.promotions config (shopify-section-promotions) —
+  on-page reminder banners for the same cart-total incentive tiers used by the cart
+  drawer (gift-with-purchase at $55+, free sample at $30+). Placed on collection/
+  product pages to surface the offer before checkout, separate from the live
+  cart-drawer logic in sections/cart-drawer.liquid.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="promotions{% if section.settings.font_override != 'inherit' %} promotions--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="promotions"
+>
+  {%- for block in section.blocks -%}
+    <div class="promotions__banner" {{ block.shopify_attributes }}>
+      <p class="promotions__title">{{ block.settings.title }}</p>
+      {%- if block.settings.description != blank -%}
+        <p class="promotions__description">{{ block.settings.description }}</p>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+</div>
+
+{% stylesheet %}
+  .promotions {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+
+  .promotions__banner {
+    padding: .75rem 1rem;
+    background-color: rgb(var(--color-border-accent));
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+
+  .promotions__title {
+    font-weight: var(--font-body-weight-demibold);
+  }
+
+  .promotions__description {
+    font-size: var(--font-size-caption);
+    color: rgba(var(--color-text), .8);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.promotions.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "t:sections.promotions.blocks.banner.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.promotions.blocks.banner.title.label"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "t:sections.promotions.blocks.banner.description.label"
+        },
+        {
+          "type": "number",
+          "id": "cart_total_threshold",
+          "label": "t:sections.promotions.blocks.banner.threshold.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "t:sections.promotions.name",
+      "blocks": [
+        {
+          "type": "banner",
+          "settings": { "title": "free compact mirror and pouch! 🩷", "description": "online exclusive and limited time only — with any $55+ order.", "cart_total_threshold": 55 }
+        },
+        {
+          "type": "banner",
+          "settings": { "title": "1 Free Mini Deluxe Sample with Any $30+ Order", "cart_total_threshold": 30 }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

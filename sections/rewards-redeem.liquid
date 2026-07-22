@@ -1,0 +1,120 @@
+{% comment %}
+  Maps to: source site's Yotpo redeem-catalog widget — real product/points pairs
+  recovered: Kylie Tinted Butter Balm (170pts), Playfully Pink Gloss Drip (170pts),
+  Strawberry Lip Oil (210pts), Mellow Berry Lip & Cheek Glow Balm (200pts), Meet
+  There Powder Blush Stick (220pts), Always Rosy Transformative Lip Tint (220pts).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="rewards-redeem{% if section.settings.font_override != 'inherit' %} rewards-redeem--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="rewards-redeem"
+>
+  <div class="rewards-redeem__inner page-width">
+    {%- if section.settings.title != blank -%}
+      <h2 class="rewards-redeem__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    <div class="rewards-redeem__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.product != blank -%}
+          <a href="{{ block.settings.product.url }}" class="rewards-redeem__item" {{ block.shopify_attributes }}>
+            {{ block.settings.product.featured_image | image_url: width: 300 | image_tag: widths: '150,300', alt: block.settings.product.title, loading: 'lazy' }}
+            <p class="rewards-redeem__item-title">{{ block.settings.product.title }}</p>
+            <p class="rewards-redeem__item-points">{{ block.settings.points_cost }} pts</p>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .rewards-redeem {
+    padding-block: var(--section-spacing);
+  }
+
+  .rewards-redeem__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 1.5rem;
+  }
+
+  .rewards-redeem__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gutter);
+  }
+
+  .rewards-redeem__item {
+    display: block;
+    text-align: center;
+    color: rgb(var(--color-text));
+  }
+
+  .rewards-redeem__item img {
+    border-radius: var(--radius-sm);
+  }
+
+  .rewards-redeem__item-title {
+    margin-top: .5rem;
+    font-weight: var(--font-body-weight-demibold);
+  }
+
+  .rewards-redeem__item-points {
+    font-size: var(--font-size-caption);
+    color: rgb(var(--color-accent));
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .rewards-redeem__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rewards-redeem.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "redeem your points",
+      "label": "t:sections.rewards-redeem.title.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reward_item",
+      "name": "t:sections.rewards-redeem.blocks.reward_item.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.rewards-redeem.blocks.reward_item.product.label"
+        },
+        {
+          "type": "number",
+          "id": "points_cost",
+          "label": "t:sections.rewards-redeem.blocks.reward_item.points_cost.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12
+}
+{% endschema %}

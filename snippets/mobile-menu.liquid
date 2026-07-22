@@ -1,0 +1,40 @@
+{%- comment -%}
+  Maps to: source site's <flyout wrapper-id="main-menu-flyout"><mobile-menu> — close
+  button, "Main Menu" title, search link, account link, then a 3-level accordion menu.
+  The real site adds a mobile-only 5th top-level item ("rewards") not present in the
+  desktop mega-menu; reproduced here via section.settings.mobile_extra_link.
+  CSS/JS for this snippet live in sections/header.liquid (snippets can't hold
+  {% stylesheet %}/{% javascript %} blocks — only sections can).
+{%- endcomment -%}
+<theme-drawer id="MobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="{{ 'accessibility.main_menu' | t: default: 'Main Menu' }}">
+  <div class="mobile-menu__header">
+    <h2>{{ 'accessibility.main_menu' | t: default: 'Main Menu' }}</h2>
+    <button type="button" data-drawer-close aria-label="{{ 'accessibility.close_menu' | t }}">
+      {%- render 'icon', name: 'close' -%}
+    </button>
+  </div>
+
+  <div class="mobile-menu__utilities">
+    <a href="{{ routes.search_url }}" class="mobile-menu__utility-link">
+      {%- render 'icon', name: 'search' -%} {{ 'general.search' | t }}
+    </a>
+    <a href="{{ routes.account_login_url }}" class="mobile-menu__utility-link mobile-menu__utility--account" aria-label="{{ 'accessibility.account' | t: default: 'Account Login' }}">
+      {%- render 'icon', name: 'account' -%} {{ 'sections.header.account' | t: default: 'Account' }}
+    </a>
+  </div>
+
+  <nav class="mobile-menu__nav">
+    <ul>
+      {%- for link in section.settings.main_menu.links -%}
+        {%- render 'mobile-menu-level', link: link, depth: 1 -%}
+      {%- endfor -%}
+      {%- if section.settings.mobile_extra_link != blank -%}
+        <li class="mobile-menu__item">
+          <a href="{{ section.settings.mobile_extra_link }}" class="mobile-menu__link">
+            {{ section.settings.mobile_extra_link_title | default: 'rewards' }}
+          </a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </nav>
+</theme-drawer>

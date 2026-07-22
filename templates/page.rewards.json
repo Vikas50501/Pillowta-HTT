@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "hero": {
+      "type": "rewards-hero",
+      "settings": {
+        "title": "kylie rewards",
+        "subtext": "get rewarded each time you shop plus additional perks.",
+        "join_button_text": "join now",
+        "signin_button_text": "sign in"
+      }
+    },
+    "how_it_works": {
+      "type": "rewards-steps",
+      "settings": {
+        "title": "how it works",
+        "columns": 3
+      },
+      "blocks": {
+        "step1": { "type": "item", "settings": { "title": "create an account", "text": "start here first" } },
+        "step2": { "type": "item", "settings": { "title": "earn points", "text": "$1 = 1 point earned" } },
+        "step3": { "type": "item", "settings": { "title": "redeem points", "text": "redeem points for exclusive discounts" } }
+      },
+      "block_order": ["step1", "step2", "step3"]
+    },
+    "ways_to_earn": {
+      "type": "rewards-steps",
+      "settings": {
+        "title": "ways to earn points",
+        "columns": 5
+      },
+      "blocks": {
+        "e1": { "type": "item", "settings": { "points_value": "25", "title": "create account" } },
+        "e2": { "type": "item", "settings": { "points_value": "20", "title": "follow on Instagram" } },
+        "e3": { "type": "item", "settings": { "points_value": "20", "title": "share on Facebook" } },
+        "e4": { "type": "item", "settings": { "points_value": "20", "title": "follow on TikTok" } },
+        "e5": { "type": "item", "settings": { "points_value": "35", "title": "write a review" } },
+        "e6": { "type": "item", "settings": { "points_value": "50", "title": "review with a photo" } },
+        "e7": { "type": "item", "settings": { "points_value": "75", "title": "review with a video" } },
+        "e8": { "type": "item", "settings": { "points_value": "35", "title": "sign up for texts" } },
+        "e9": { "type": "item", "settings": { "points_value": "25", "title": "sign up for email" } },
+        "e10": { "type": "item", "settings": { "points_value": "25", "title": "bonus", "text": "spend $100+ in a single purchase" } },
+        "e11": { "type": "item", "settings": { "title": "birthday gift", "text": "tell us your birthday" } }
+      },
+      "block_order": ["e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "e10", "e11"]
+    },
+    "tiers": {
+      "type": "rewards-tiers",
+      "settings": {
+        "title": "VIP Tiers"
+      },
+      "blocks": {
+        "silver": {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Silver",
+            "threshold": "$0 – $99",
+            "points_rate": "1 pt per $1",
+            "perks": "<ul><li>Free standard shipping on $40+ orders</li><li>Exclusive discounts</li><li>Member-only events</li><li>Rewards catalogue</li><li>Birthday gift</li></ul>"
+          }
+        },
+        "gold": {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Gold",
+            "threshold": "Spend $100",
+            "points_rate": "1 pt per $1",
+            "perks": "<ul><li>Free shipping $40+</li><li>Early access to sales</li><li>Anniversary gift</li><li>Tier welcome points</li></ul>"
+          }
+        },
+        "platinum": {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Platinum",
+            "threshold": "Spend $250",
+            "points_rate": "1.25 pts per $1",
+            "perks": "<ul><li>Free shipping $30+</li><li>All Gold perks</li></ul>"
+          }
+        },
+        "diamond": {
+          "type": "tier",
+          "settings": {
+            "tier_name": "Diamond",
+            "threshold": "Spend $500",
+            "points_rate": "1.5 pts per $1",
+            "perks": "<ul><li>Free shipping on any order</li><li>Invite-only events</li><li>All Platinum perks</li></ul>"
+          }
+        }
+      },
+      "block_order": ["silver", "gold", "platinum", "diamond"]
+    },
+    "redeem": {
+      "type": "rewards-redeem",
+      "settings": {
+        "title": "redeem your points"
+      },
+      "blocks": {
+        "r1": { "type": "reward_item", "settings": { "points_cost": 170 } },
+        "r2": { "type": "reward_item", "settings": { "points_cost": 170 } },
+        "r3": { "type": "reward_item", "settings": { "points_cost": 210 } },
+        "r4": { "type": "reward_item", "settings": { "points_cost": 200 } },
+        "r5": { "type": "reward_item", "settings": { "points_cost": 220 } },
+        "r6": { "type": "reward_item", "settings": { "points_cost": 220 } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6"]
+    },
+    "faq": {
+      "type": "faq-accordion",
+      "settings": {
+        "category_title": "frequently asked questions"
+      },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "What is Kylie Cosmetics Rewards?" } },
+        "q2": { "type": "qa", "settings": { "question": "Does it cost anything to join?", "answer": "<p>No, it's free to join.</p>" } },
+        "q3": { "type": "qa", "settings": { "question": "Can I join if I'm shopping outside of the United States?", "answer": "<p>This program is currently only available to US customers.</p>" } },
+        "q4": { "type": "qa", "settings": { "question": "Do my points expire?", "answer": "<p>Points expire after 12 months of account inactivity.</p>" } },
+        "q5": { "type": "qa", "settings": { "question": "How do I keep my VIP tier status?", "answer": "<p>Tier qualification is based on a rolling 12-month spend period, with a 1-year grace period to retain your tier.</p>" } },
+        "q6": { "type": "qa", "settings": { "question": "Can I combine reward points with promo codes?", "answer": "<p>Reward points cannot be stacked with other promo codes, especially during Black Friday/Cyber Monday.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"]
+    }
+  },
+  "order": ["hero", "how_it_works", "ways_to_earn", "tiers", "redeem", "faq"]
+}

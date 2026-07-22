@@ -1,0 +1,189 @@
+{% comment %}
+  Maps to: source site's "image_with_text_overlay" section (e.g. mobile "VIRTUAL
+  TRY-ON" promo, desktop equivalent is a "hero" instance) — single image with
+  centered text overlaid directly on top, distinct from the hero component's
+  separate content area below/beside the media.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="image-text-overlay{% if section.settings.font_override != 'inherit' %} image-text-overlay--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="image-with-text-overlay"
+>
+  <a href="{{ section.settings.link | default: '#' }}" class="image-text-overlay__link{% if section.settings.link == blank %} image-text-overlay__link--static{% endif %}">
+    <div class="image-text-overlay__media">
+      {%- if section.settings.desktop_image != blank -%}
+        {{ section.settings.desktop_image | image_url: width: 1728 | image_tag: widths: '900,1300,1728', class: 'image-text-overlay__image image-text-overlay__image--desktop', alt: section.settings.heading | default: '', loading: 'lazy' }}
+      {%- endif -%}
+      {%- if section.settings.mobile_image != blank -%}
+        {{ section.settings.mobile_image | image_url: width: 750 | image_tag: widths: '390,540,750', class: 'image-text-overlay__image image-text-overlay__image--mobile', alt: section.settings.heading | default: '', loading: 'lazy' }}
+      {%- endif -%}
+    </div>
+
+    <div class="image-text-overlay__content image-text-overlay__content--h-{{ section.settings.text_align_h }} image-text-overlay__content--v-{{ section.settings.text_align_v }}" style="--overlay-text-color: {{ section.settings.text_color }};">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="image-text-overlay__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <p class="image-text-overlay__subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_text != blank -%}
+        <span class="action action--{{ section.settings.button_style }}">{{ section.settings.button_text }}</span>
+      {%- endif -%}
+    </div>
+  </a>
+</div>
+
+{% stylesheet %}
+  .image-text-overlay__link {
+    position: relative;
+    display: block;
+  }
+
+  .image-text-overlay__link--static {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .image-text-overlay__image--mobile {
+    display: none;
+  }
+
+  .image-text-overlay__image {
+    width: 100%;
+    display: block;
+  }
+
+  .image-text-overlay__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 2rem;
+    color: rgb(var(--overlay-text-color, var(--color-text)));
+  }
+
+  .image-text-overlay__content--h-left { align-items: flex-start; text-align: left; }
+  .image-text-overlay__content--h-center { align-items: center; text-align: center; }
+  .image-text-overlay__content--h-right { align-items: flex-end; text-align: right; }
+
+  .image-text-overlay__content--v-top { justify-content: flex-start; }
+  .image-text-overlay__content--v-center { justify-content: center; }
+  .image-text-overlay__content--v-bottom { justify-content: flex-end; }
+
+  .image-text-overlay__title {
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .image-text-overlay__image--desktop {
+      display: none;
+    }
+    .image-text-overlay__image--mobile {
+      display: block;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.image-with-text-overlay.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "t:sections.image-with-text-overlay.desktop_image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:sections.image-with-text-overlay.mobile_image.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.image-with-text-overlay.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "t:sections.image-with-text-overlay.subtext.label"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#b3848f",
+      "label": "t:sections.image-with-text-overlay.text_color.label"
+    },
+    {
+      "type": "select",
+      "id": "text_align_h",
+      "options": [
+        { "value": "left", "label": "t:sections.common.align.left" },
+        { "value": "center", "label": "t:sections.common.align.center" },
+        { "value": "right", "label": "t:sections.common.align.right" }
+      ],
+      "default": "center",
+      "label": "t:sections.image-with-text-overlay.text_align_h.label"
+    },
+    {
+      "type": "select",
+      "id": "text_align_v",
+      "options": [
+        { "value": "top", "label": "t:sections.common.align.top" },
+        { "value": "center", "label": "t:sections.common.align.center" },
+        { "value": "bottom", "label": "t:sections.common.align.bottom" }
+      ],
+      "default": "center",
+      "label": "t:sections.image-with-text-overlay.text_align_v.label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:sections.image-with-text-overlay.link.label",
+      "info": "t:sections.image-with-text-overlay.link.info"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.image-with-text-overlay.button_text.label"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "options": [
+        { "value": "primary", "label": "t:sections.common.button_style.primary" },
+        { "value": "secondary", "label": "t:sections.common.button_style.secondary" }
+      ],
+      "default": "primary",
+      "label": "t:sections.common.button_style.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.image-with-text-overlay.name",
+      "settings": {
+        "heading": "VIRTUAL TRY-ON",
+        "subtext": "try on lipsticks, blushes, & more to discover your new fave shade.",
+        "button_text": "discover now",
+        "link": "#vto://home"
+      }
+    }
+  ]
+}
+{% endschema %}

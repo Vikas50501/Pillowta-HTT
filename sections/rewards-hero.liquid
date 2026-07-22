@@ -1,0 +1,117 @@
+{% comment %}
+  Maps to: source site's Yotpo Loyalty hero widget instance (real copy: "kylie
+  rewards" / "get rewarded each time you shop plus additional perks." / "join now"
+  + "sign in" buttons). Rebuilt native (no Yotpo dependency) — swap in a Yotpo/
+  Smile.io embed via block if you already use one of those platforms.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="rewards-hero{% if section.settings.font_override != 'inherit' %} rewards-hero--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="rewards-hero"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  <div class="rewards-hero__inner page-width">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 200 | image_tag: widths: '100,200', alt: '', loading: 'eager' }}
+    {%- endif -%}
+    <h1 class="rewards-hero__title">{{ section.settings.title }}</h1>
+    {%- if section.settings.subtext != blank -%}
+      <p class="rewards-hero__subtext">{{ section.settings.subtext }}</p>
+    {%- endif -%}
+    <div class="rewards-hero__actions">
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}" class="action action--primary">{{ section.settings.account_button_text }}</a>
+      {%- else -%}
+        <a href="{{ routes.account_register_url }}" class="action action--primary">{{ section.settings.join_button_text }}</a>
+        <a href="{{ routes.account_login_url }}" class="action action--secondary">{{ section.settings.signin_button_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .rewards-hero {
+    padding-block: var(--section-spacing);
+    text-align: center;
+  }
+
+  .rewards-hero__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    text-transform: uppercase;
+    margin: 1rem 0 .5rem;
+  }
+
+  .rewards-hero__subtext {
+    max-width: 30rem;
+    margin: 0 auto 1.5rem;
+  }
+
+  .rewards-hero__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rewards-hero.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.rewards-hero.image.label"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "default": "kylie rewards",
+      "label": "t:sections.rewards-hero.title.label"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "default": "get rewarded each time you shop plus additional perks.",
+      "label": "t:sections.rewards-hero.subtext.label"
+    },
+    {
+      "type": "text",
+      "id": "join_button_text",
+      "default": "join now",
+      "label": "t:sections.rewards-hero.join_button_text.label"
+    },
+    {
+      "type": "text",
+      "id": "signin_button_text",
+      "default": "sign in",
+      "label": "t:sections.rewards-hero.signin_button_text.label"
+    },
+    {
+      "type": "text",
+      "id": "account_button_text",
+      "default": "view my rewards",
+      "label": "t:sections.rewards-hero.account_button_text.label"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#f8f1f4",
+      "label": "t:sections.rewards-hero.background_color.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ]
+}
+{% endschema %}

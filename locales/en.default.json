@@ -1,0 +1,136 @@
+{
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "close": "Close",
+    "close_menu": "Close menu",
+    "open_menu": "Open menu",
+    "main_menu": "Main Menu",
+    "search": "Search",
+    "wishlist": "Wishlist",
+    "account": "Account",
+    "cart": "Cart",
+    "previous": "Previous message",
+    "next": "Next message",
+    "pause": "Pause",
+    "breadcrumbs": "Breadcrumbs",
+    "cart_count": "{{ count }} items in cart"
+  },
+  "general": {
+    "loading": "Loading...",
+    "search": "Search",
+    "email": "Email",
+    "email_placeholder": "Email address",
+    "newsletter_success": "Thanks for subscribing!",
+    "log_in": "log in",
+    "home_page": "home page",
+    "home": "Home",
+    "slide": "Slide",
+    "pagination": "Pagination",
+    "shop_by_category": "Shop by category"
+  },
+  "filter_toolbar": {
+    "filters": {
+      "title": "filter"
+    },
+    "current_facets": "Selected Filters",
+    "sorting": {
+      "title": "Sort by:",
+      "title_mobile": "sort"
+    },
+    "actions": {
+      "clear_filters": "reset filter",
+      "clear_all_filters": "reset all filters",
+      "submit": "Filter"
+    }
+  },
+  "collections": {
+    "general": {
+      "items_with_count": "{{ count }} products",
+      "no_matches": "Sorry, there are no products in this collection",
+      "shop_all": "Shop all"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email*",
+      "topic": "How can we help?",
+      "message": "Message",
+      "send": "Send",
+      "post_success": "Thanks for reaching out. We'll be in touch soon."
+    }
+  },
+  "sections": {
+    "header": {
+      "account": "Account"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "cart",
+      "checkout": "Checkout",
+      "empty": "your cart is empty, get started with recommend products below or ",
+      "continue_shopping": "Continue shopping",
+      "free": "Free",
+      "free_shipping": "You are {{ n }} away from free shipping!",
+      "free_shipping_qualified": "Your order qualifies for free shipping",
+      "remove": "Remove",
+      "subtotal": "Estimated total:",
+      "taxes_and_shipping_at_checkout": "shipping & discounts calculated at checkout",
+      "qty": "Qty",
+      "loyalty_points": "kylie rewards to earn {{ points }} points with this purchase",
+      "choose": "Choose"
+    },
+    "featured_product": {
+      "title": "Before you go",
+      "subtitle": "Add this for $20 and get free shipping"
+    },
+    "gifts": {
+      "add": "Add",
+      "decline": "No thanks",
+      "title": "You qualified for {{ n }} free gifts!",
+      "sub_title": "Select your gift:",
+      "not_qualified": "Get a Gift!",
+      "qualified_at": "Spend another {{ f }} and select {{ n }} free gift(s)",
+      "select_gift": "Select gift"
+    },
+    "free_samples": {
+      "add": "Add",
+      "unavailable": "Out of stock",
+      "title": "Select Complimentary Samples",
+      "choose": "choose free samples"
+    }
+  },
+  "products": {
+    "quick_add": "quick add",
+    "add_to_cart": "add to cart",
+    "badges": {
+      "best_seller": "best seller",
+      "new": "new",
+      "sale": "sale"
+    },
+    "gallery": {
+      "view_image": "View image"
+    },
+    "quantity": {
+      "label": "Quantity"
+    },
+    "reviews": {
+      "setup_notice": "Add your Bazaarvoice client name in Theme Settings to show reviews here."
+    },
+    "shade_finder": {
+      "trigger": "find my shade",
+      "heading": "how would you like to find your perfect match?",
+      "scan_and_match": "scan & match",
+      "try_on_virtually": "try on virtually",
+      "match_another_brand": "match my shade to another brand",
+      "take_a_quiz": "take a quiz"
+    },
+    "engraving": {
+      "input_label": "Your message",
+      "placeholder": "e.g. K.J.",
+      "fee_note": "Engraving adds {{ price }} to your order",
+      "confirm": "Add engraving"
+    }
+  }
+}

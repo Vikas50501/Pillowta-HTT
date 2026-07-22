@@ -1,0 +1,729 @@
+{% comment %}
+  Maps to: source site's <div data-vue="pdp" class="product-section main-product-kk">
+  — gallery (Swiper zoom), title/price/badges, variant picker (shade swatches for
+  skin-tint/skincare OR pill buttons for cosmic/fragrance sizes — auto-detected by
+  option name), quantity + add-to-cart with a sticky bar, 5 accordion blocks
+  (description/ingredients/how-to-use/shipping/producttip — real titles weren't in
+  the static capture, Vue-rendered from data not present; these are sensible
+  defaults, editable per product), an optional engraving flow (cosmic bottles),
+  and a "find my shade" popup with the 4 real options recovered from the source.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="main-product{% if section.settings.font_override != 'inherit' %} main-product--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="main-product"
+>
+  <div class="main-product__layout page-width">
+    <div class="main-product__gallery">
+      <div class="product-gallery" data-product-gallery>
+        <div class="product-gallery__main">
+          {%- for media in product.media -%}
+            <div class="product-gallery__slide{% if forloop.first %} is-active{% endif %}" data-gallery-slide data-media-id="{{ media.id }}">
+              {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+                {{ media | media_tag: autoplay: true, loop: true, muted: true, controls: false }}
+              {%- else -%}
+                {{ media | image_url: width: 1200 | image_tag: widths: '600,900,1200', alt: media.alt | default: product.title, loading: forloop.first }}
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <div class="product-gallery__slide is-active">
+              {{ product.featured_image | image_url: width: 1200 | image_tag: widths: '600,900,1200', alt: product.title }}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="product-gallery__thumbs" data-gallery-thumbs>
+            {%- for media in product.media -%}
+              <button type="button" class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}" data-gallery-thumb data-media-id="{{ media.id }}" aria-label="{{ 'products.gallery.view_image' | t: default: 'View image' }} {{ forloop.index }}">
+                {{ media.preview_image | image_url: width: 160 | image_tag: widths: '80,160', alt: '', loading: 'lazy' }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="main-product__info">
+      <div class="main-product__badges">{%- render 'badge', product: product -%}</div>
+
+      <p class="main-product__vendor">{{ product.vendor }}</p>
+      <h1 class="main-product__title">{{ product.title }}</h1>
+
+      <div class="main-product__price price" data-product-price>
+        {%- if product.compare_at_price > product.price -%}
+          <span class="price--compare-at">{{ product.compare_at_price | money }}</span>
+          <span class="price--sale">{{ product.price | money }}</span>
+        {%- else -%}
+          <span>{{ product.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_reviews_summary -%}
+        <div class="main-product__reviews-summary" data-bv-summary="{{ product.handle }}"></div>
+      {%- endif -%}
+
+      {% form 'product', product, id: 'ProductForm', class: 'form form--product', data-product-form: '' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id-input>
+
+        {%- for option in product.options_with_values -%}
+          {%- liquid
+            assign option_lower = option.name | downcase
+            assign is_shade_option = false
+            if option_lower == 'shade' or option_lower == 'color' or option_lower == 'colour'
+              assign is_shade_option = true
+            endif
+          -%}
+          <fieldset class="form__fieldset form__fieldset-container{% if is_shade_option == false %}--pill{% endif %}" data-option-index="{{ forloop.index0 }}">
+            <legend class="form__label{% if is_shade_option == false %} label--pill{% endif %}">
+              {{ option.name }}: <span data-selected-value>{{ option.selected_value }}</span>
+            </legend>
+            <div class="form__options">
+              {%- for value in option.values -%}
+                <div class="form__option">
+                  <input
+                    type="radio"
+                    id="option-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}"
+                    name="option-{{ forloop.parentloop.index0 }}"
+                    value="{{ value | escape }}"
+                    class="{% if is_shade_option %}option--swatch{% else %}option--pill{% endif %}"
+                    {% if value == option.selected_value %}checked{% endif %}
+                    data-option-value
+                  >
+                  <label for="option-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
+                    {%- if is_shade_option -%}
+                      {%- render 'shades-swatch', value: value, size: 'large' -%}
+                    {%- else -%}
+                      {{ value }}
+                    {%- endif -%}
+                  </label>
+                </div>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endfor -%}
+
+        {%- if section.settings.enable_shade_finder and product.options contains 'Shade' -%}
+          <button type="button" class="main-product__find-shade action action--secondary" data-shade-finder-open>
+            {{ 'products.shade_finder.trigger' | t: default: 'find my shade' }}
+          </button>
+        {%- endif -%}
+
+        <div class="form__field form__field--quantity">
+          <label for="Quantity">{{ 'products.quantity.label' | t: default: 'Quantity' }}</label>
+          <div class="quantity-selector quantity-selector--discrete">
+            <button type="button" class="quantity-selector__button" data-quantity-decrease aria-label="-1">{%- render 'icon', name: 'minus' -%}</button>
+            <input type="number" id="Quantity" name="quantity" value="1" min="1" max="{{ section.settings.max_quantity }}" data-quantity-input>
+            <button type="button" class="quantity-selector__button" data-quantity-increase aria-label="+1">{%- render 'icon', name: 'plus' -%}</button>
+          </div>
+        </div>
+
+        {%- if section.settings.enable_engraving and product.tags contains 'engravable' -%}
+          <div class="main-product__engraving">
+            <button type="button" class="action action--secondary main-product__engraving-toggle" data-drawer-open="EngravingDrawer">
+              {{ section.settings.engraving_button_text }}
+            </button>
+          </div>
+        {%- endif -%}
+
+        <button type="submit" name="add" class="action action--primary action--full main-product__add-to-cart" data-product-form-submit>
+          <span data-add-to-cart-text>{{ 'products.add_to_cart' | t: default: 'add to cart' }}</span>
+        </button>
+      {% endform %}
+
+      <div class="main-product__accordions">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'accordion' -%}
+              <details class="accordion" {{ block.shopify_attributes }}>
+                <summary class="accordion__button">
+                  {{ block.settings.title }}
+                  {%- render 'icon', name: 'plus' -%}
+                </summary>
+                <div class="accordion__content">
+                  {%- if block.settings.page != blank -%}
+                    {{ block.settings.page.content }}
+                  {%- else -%}
+                    {{ block.settings.content }}
+                  {%- endif -%}
+                </div>
+              </details>
+            {%- when 'product_tip' -%}
+              {%- if block.settings.tip_product != blank -%}
+                <div class="main-product__tip" {{ block.shopify_attributes }}>
+                  <p class="main-product__tip-title">{{ block.settings.title }}</p>
+                  <a href="{{ block.settings.tip_product.url }}" class="main-product__tip-product">
+                    {{ block.settings.tip_product.featured_image | image_url: width: 120 | image_tag: widths: '60,120', alt: block.settings.tip_product.title }}
+                    <span>{{ block.settings.text }}</span>
+                  </a>
+                </div>
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="main-product__sticky-bar" data-sticky-atc hidden>
+    <div class="page-width main-product__sticky-bar-inner">
+      <span>{{ product.title }}</span>
+      <span class="price">{{ product.price | money }}</span>
+      <button type="button" class="action action--primary" data-sticky-add-to-cart>
+        {{ 'products.add_to_cart' | t: default: 'add to cart' }}
+      </button>
+    </div>
+  </div>
+
+  {%- if section.settings.enable_engraving and product.tags contains 'engravable' -%}
+    <theme-drawer id="EngravingDrawer" class="engraving-drawer" role="dialog" aria-label="{{ section.settings.engraving_button_text }}">
+      <div class="engraving-drawer__header">
+        <h2 class="engraving-drawer__title">{{ section.settings.engraving_button_text }}</h2>
+        <button type="button" data-drawer-close aria-label="{{ 'accessibility.close' | t }}">{%- render 'icon', name: 'close' -%}</button>
+      </div>
+      <div class="engraving-drawer__body">
+        {{ product.featured_image | image_url: width: 300 | image_tag: widths: '150,300', alt: product.title, class: 'engraving-drawer__preview-image' }}
+        <label for="EngravingText">{{ 'products.engraving.input_label' | t: default: 'Your message' }}</label>
+        <input type="text" id="EngravingText" maxlength="20" placeholder="{{ 'products.engraving.placeholder' | t: default: 'e.g. K.J.' }}">
+        <label class="engraving-drawer__terms">
+          <input type="checkbox" required>
+          <span>{{ section.settings.engraving_terms_text }}</span>
+        </label>
+        {%- if section.settings.engraving_fee_variant != blank -%}
+          <p class="engraving-drawer__fee">{{ 'products.engraving.fee_note' | t: price: section.settings.engraving_fee_variant.price | money, default: 'Engraving adds {{ price }} to your order' }}</p>
+        {%- endif -%}
+        <button type="button" class="action action--primary action--full" data-engraving-confirm>
+          {{ 'products.engraving.confirm' | t: default: 'Add engraving' }}
+        </button>
+      </div>
+    </theme-drawer>
+  {%- endif -%}
+
+  {%- if section.settings.enable_shade_finder and product.options contains 'Shade' -%}
+    {%- render 'shade-finder-popup' -%}
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .main-product {
+    padding-block: var(--section-spacing);
+  }
+
+  .main-product__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--grid-gutter);
+    align-items: start;
+  }
+
+  .product-gallery__main {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: rgb(var(--color-background-alt));
+  }
+
+  .product-gallery__slide {
+    display: none;
+  }
+
+  .product-gallery__slide.is-active {
+    display: block;
+  }
+
+  .product-gallery__slide img,
+  .product-gallery__slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-gallery__thumbs {
+    display: flex;
+    gap: .5rem;
+    margin-top: .75rem;
+    overflow-x: auto;
+  }
+
+  .product-gallery__thumb {
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .product-gallery__thumb.is-active {
+    border-color: rgb(var(--color-text));
+  }
+
+  .main-product__badges {
+    display: flex;
+    gap: .375rem;
+    margin-bottom: .5rem;
+  }
+
+  .main-product__vendor {
+    font-size: var(--font-size-caption);
+    color: rgba(var(--color-text), .6);
+  }
+
+  .main-product__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    margin: 0 0 .5rem;
+  }
+
+  .main-product__price {
+    font-size: var(--font-size-h3);
+    margin-bottom: 1rem;
+  }
+
+  .form__fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0 0 1.25rem;
+  }
+
+  .form__label {
+    text-transform: lowercase;
+    margin-bottom: .5rem;
+    display: block;
+  }
+
+  .form__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .form__option input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  .option--pill + label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-transform: lowercase;
+  }
+
+  .option--pill:checked + label {
+    background-color: rgb(var(--color-text));
+    border-color: rgb(var(--color-text));
+    color: rgb(var(--color-background));
+  }
+
+  .option--swatch + label {
+    display: inline-flex;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .option--swatch:checked + label {
+    outline: 2px solid rgb(var(--color-text));
+    outline-offset: 2px;
+  }
+
+  .main-product__find-shade {
+    margin-bottom: 1.25rem;
+  }
+
+  .form__field--quantity {
+    margin-bottom: 1.25rem;
+  }
+
+  .main-product__engraving {
+    margin-bottom: 1rem;
+  }
+
+  .main-product__accordions {
+    margin-top: 2rem;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .accordion {
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .accordion__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    cursor: pointer;
+    list-style: none;
+    text-transform: lowercase;
+  }
+
+  .accordion__button::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion[open] .accordion__button svg {
+    transform: rotate(45deg);
+  }
+
+  .accordion__content {
+    padding-bottom: 1rem;
+    font-size: var(--font-size-small);
+  }
+
+  .main-product__tip {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 1rem;
+    background: rgb(var(--color-background-alt));
+    border-radius: var(--radius-sm);
+    margin-top: 1rem;
+  }
+
+  .main-product__tip-product {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    color: rgb(var(--color-text));
+  }
+
+  .main-product__tip-product img {
+    width: 3rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .main-product__sticky-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(var(--color-background));
+    border-top: 1px solid rgb(var(--color-border));
+    z-index: 40;
+    transform: translateY(100%);
+    transition: transform var(--transition-medium);
+  }
+
+  .main-product__sticky-bar[data-visible] {
+    transform: translateY(0);
+  }
+
+  .main-product__sticky-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: .75rem;
+  }
+
+  .engraving-drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(90vw, 400px);
+    background: rgb(var(--color-background));
+    transform: translateX(100%);
+    transition: right .3s ease-in-out;
+    z-index: 60;
+    overflow-y: auto;
+  }
+
+  .engraving-drawer[open] {
+    transform: translateX(0);
+  }
+
+  .engraving-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .engraving-drawer__body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .engraving-drawer__preview-image {
+    width: 100%;
+    border-radius: var(--radius-sm);
+  }
+
+  .engraving-drawer__body input[type='text'] {
+    padding: .5rem .75rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-sm);
+  }
+
+  .engraving-drawer__terms {
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+    font-size: var(--font-size-caption);
+  }
+
+  /* ---- Shade finder popup (snippets/shade-finder-popup.liquid) ---- */
+  .shade-finder-popup {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    max-width: 26rem;
+    max-height: 24rem;
+    background: rgb(var(--color-background));
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast);
+    z-index: 70;
+  }
+
+  .shade-finder-popup[open] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .shade-finder-popup__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.5rem 1.5rem 1rem;
+  }
+
+  .shade-finder-popup__header h2 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    text-transform: lowercase;
+  }
+
+  .shade-finder-popup__header button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .shade-finder-popup__options {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .shade-finder-popup__option {
+    display: block;
+    width: 100%;
+    padding: .875rem 0;
+    border-bottom: 1px solid rgb(var(--color-border));
+    background: none;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    text-align: left;
+    text-transform: lowercase;
+    color: rgb(var(--color-text));
+    cursor: pointer;
+    font-size: var(--font-size-body);
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .main-product__layout {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
+      gallery.querySelectorAll('[data-gallery-thumb]').forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+          const mediaId = thumb.dataset.mediaId;
+          gallery.querySelectorAll('[data-gallery-slide]').forEach((slide) => {
+            slide.classList.toggle('is-active', slide.dataset.mediaId === mediaId);
+          });
+          gallery.querySelectorAll('[data-gallery-thumb]').forEach((t) => {
+            t.classList.toggle('is-active', t === thumb);
+          });
+        });
+      });
+    });
+
+    document.querySelectorAll('[data-product-form]').forEach((form) => {
+      const decreaseBtn = form.querySelector('[data-quantity-decrease]');
+      const increaseBtn = form.querySelector('[data-quantity-increase]');
+      const qtyInput = form.querySelector('[data-quantity-input]');
+
+      decreaseBtn?.addEventListener('click', () => {
+        qtyInput.value = Math.max(1, parseInt(qtyInput.value, 10) - 1);
+      });
+      increaseBtn?.addEventListener('click', () => {
+        qtyInput.value = parseInt(qtyInput.value, 10) + 1;
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const variantId = form.querySelector('[data-variant-id-input]').value;
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: variantId, quantity: parseInt(qtyInput.value, 10) }),
+        });
+        if (response.ok) {
+          document.getElementById('CartDrawer')?.dispatchEvent(new CustomEvent('theme:drawer:open', { bubbles: true }));
+          document.querySelector('[data-drawer-open="CartDrawer"]')?.click();
+        }
+      });
+    });
+
+    const stickyBar = document.querySelector('[data-sticky-atc]');
+    const addToCartButton = document.querySelector('.main-product__add-to-cart');
+    if (stickyBar && addToCartButton) {
+      const observer = new IntersectionObserver(
+        ([entry]) => stickyBar.toggleAttribute('data-visible', !entry.isIntersecting),
+        { rootMargin: '-100px 0px 0px 0px' }
+      );
+      observer.observe(addToCartButton);
+      stickyBar.querySelector('[data-sticky-add-to-cart]')?.addEventListener('click', () => addToCartButton.click());
+    }
+
+    document.querySelectorAll('[data-shade-finder-open]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.getElementById('ShadeFinderPopup')?.setAttribute('open', '');
+      });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.main-product.name",
+  "settings": [
+    {
+      "type": "number",
+      "id": "max_quantity",
+      "default": 10,
+      "label": "t:sections.main-product.max_quantity.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews_summary",
+      "default": true,
+      "label": "t:sections.main-product.show_reviews_summary.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_shade_finder",
+      "default": true,
+      "label": "t:sections.main-product.enable_shade_finder.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-product.engraving_header"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_engraving",
+      "default": false,
+      "label": "t:sections.main-product.enable_engraving.label",
+      "info": "t:sections.main-product.enable_engraving.info"
+    },
+    {
+      "type": "text",
+      "id": "engraving_button_text",
+      "default": "Engrave your bottle",
+      "label": "t:sections.main-product.engraving_button_text.label"
+    },
+    {
+      "type": "textarea",
+      "id": "engraving_terms_text",
+      "default": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing.",
+      "label": "t:sections.main-product.engraving_terms_text.label"
+    },
+    {
+      "type": "product",
+      "id": "engraving_fee_variant",
+      "label": "t:sections.main-product.engraving_fee_variant.label",
+      "info": "t:sections.main-product.engraving_fee_variant.info"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "t:sections.main-product.blocks.accordion.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.main-product.blocks.accordion.title.label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.main-product.blocks.accordion.content.label"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "t:sections.main-product.blocks.accordion.page.label",
+          "info": "t:sections.main-product.blocks.accordion.page.info"
+        }
+      ]
+    },
+    {
+      "type": "product_tip",
+      "name": "t:sections.main-product.blocks.product_tip.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "pair it with",
+          "label": "t:sections.main-product.blocks.product_tip.title.label"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.main-product.blocks.product_tip.text.label"
+        },
+        {
+          "type": "product",
+          "id": "tip_product",
+          "label": "t:sections.main-product.blocks.product_tip.tip_product.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.main-product.name",
+      "blocks": [
+        { "type": "accordion", "settings": { "title": "description" } },
+        { "type": "accordion", "settings": { "title": "ingredients" } },
+        { "type": "accordion", "settings": { "title": "how to use" } },
+        { "type": "accordion", "settings": { "title": "shipping & returns" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,184 @@
+{% comment %}
+  Maps to: source site's 4 "featured_products" carousels — hand-picked products
+  with a specific pre-selected variant/shade (e.g. hybrid-blush in "summer-sorbet"),
+  Swiper breakpoints 1.2/2.3/2.7/4 slides. 2 of the 4 real instances have an empty
+  title and no view-all link — kept optional here, not force-filled with copy.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="featured-products{% if section.settings.font_override != 'inherit' %} featured-products--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-products"
+>
+  <div class="featured-products__header page-width">
+    {%- if section.settings.title != blank -%}
+      <h2 class="featured-products__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.view_all_text != blank -%}
+      <a href="{{ section.settings.view_all_link }}" class="action action--secondary featured-products__view-all">
+        {{ section.settings.view_all_text }}
+      </a>
+    {%- endif -%}
+  </div>
+
+  <product-carousel class="featured-products__carousel page-width">
+    <div class="carousel__track" data-carousel-track>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product' and block.settings.product != blank -%}
+          <div class="carousel__slide" data-carousel-slide {{ block.shopify_attributes }}>
+            {%- render 'product-card', product: block.settings.product -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if section.blocks.size == 0 and section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: 8 -%}
+          <div class="carousel__slide" data-carousel-slide>
+            {%- render 'product-card', product: product -%}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+    <div class="carousel__dots" role="tablist">
+      {%- for block in section.blocks -%}
+        <button type="button" class="carousel__dot" data-carousel-dot aria-label="{{ 'general.slide' | t: default: 'Slide' }} {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+  </product-carousel>
+</div>
+
+{% stylesheet %}
+  .featured-products {
+    padding-block: var(--section-spacing);
+  }
+
+  .featured-products__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .featured-products__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h2);
+  }
+
+  .featured-products__carousel .carousel__track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: .5rem;
+  }
+
+  .featured-products__carousel .carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .featured-products__carousel .carousel__slide {
+    flex: 0 0 83.3%;
+    scroll-snap-align: center;
+  }
+
+  .carousel__dots {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: 1rem;
+  }
+
+  .carousel__dot {
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    border: 0;
+    background: rgb(var(--color-border));
+    cursor: pointer;
+  }
+
+  .carousel__dot.is-active {
+    background: rgb(var(--color-accent));
+  }
+
+  @media screen and (min-width: 30em) {
+    .featured-products__carousel .carousel__slice,
+    .featured-products__carousel .carousel__slide { flex-basis: 43.5%; }
+  }
+
+  @media screen and (min-width: 45em) {
+    .featured-products__carousel .carousel__slide { flex-basis: 37%; }
+  }
+
+  @media screen and (min-width: 60em) {
+    .featured-products__carousel .carousel__slide { flex-basis: 25%; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.featured-products.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.featured-products.title.label"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "t:sections.featured-products.view_all_text.label"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "t:sections.featured-products.view_all_link.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.featured-products.collection.label",
+      "info": "t:sections.featured-products.collection.info"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.featured-products.blocks.product.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.featured-products.blocks.product.product.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.featured-products.name",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

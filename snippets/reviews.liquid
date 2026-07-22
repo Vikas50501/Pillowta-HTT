@@ -1,0 +1,27 @@
+{%- comment -%}
+  Maps to: source site's <bazaarvoice-main-widget :bazaarvoice-handle="..."> —
+  confirmed as Bazaarvoice (not Yotpo/Loox — Yotpo is loyalty-points only on the
+  source). Requires a Bazaarvoice account; set client_name/site_id in Theme
+  Settings. Usage: {% render 'reviews', product: product %}
+{%- endcomment -%}
+{%- if settings.bazaarvoice_client_name != blank -%}
+  <div
+    class="reviews"
+    data-bazaarvoice-handle="{{ product.handle }}"
+    id="BVRRContainer-{{ product.id }}"
+  ></div>
+  <script>
+    (function () {
+      if (window.bvCallbackRegistered) return;
+      window.bvCallbackRegistered = true;
+      var script = document.createElement('script');
+      script.src = 'https://apps.bazaarvoice.com/deployments/{{ settings.bazaarvoice_client_name }}/main_site/production/en_US/bv.js';
+      script.async = true;
+      document.body.appendChild(script);
+    })();
+  </script>
+{%- else -%}
+  <p class="reviews__setup-notice">
+    {{ 'products.reviews.setup_notice' | t: default: 'Add your Bazaarvoice client name in Theme Settings to show reviews here.' }}
+  </p>
+{%- endif -%}

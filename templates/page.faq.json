@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "orders": {
+      "type": "faq-accordion",
+      "settings": { "category_title": "ORDERS" },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "Can I cancel my order?" } },
+        "q2": { "type": "qa", "settings": { "question": "How can I track my package?" } },
+        "q3": { "type": "qa", "settings": { "question": "Do you offer returns?" } },
+        "q4": { "type": "qa", "settings": { "question": "I refused my delivery, where is my refund?" } },
+        "q5": { "type": "qa", "settings": { "question": "My items arrived damaged, what should I do?" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"]
+    },
+    "payment": {
+      "type": "faq-accordion",
+      "settings": { "category_title": "payment" },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "What forms of payment do you accept?" } },
+        "q2": { "type": "qa", "settings": { "question": "Why was I charged twice?" } },
+        "q3": { "type": "qa", "settings": { "question": "Do you offer payment plans like Shop Pay, Klarna and Afterpay?" } }
+      },
+      "block_order": ["q1", "q2", "q3"]
+    },
+    "accounts": {
+      "type": "faq-accordion",
+      "settings": { "category_title": "accounts" },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "Do I have to set up an account to place an order?" } },
+        "q2": { "type": "qa", "settings": { "question": "How do I create an account?" } },
+        "q3": { "type": "qa", "settings": { "question": "I forgot my password, what should I do?" } },
+        "q4": { "type": "qa", "settings": { "question": "How do I subscribe to emails or cancel my existing email subscription?" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"]
+    },
+    "products": {
+      "type": "faq-accordion",
+      "settings": { "category_title": "PRODUCTS" },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "Where can I purchase Kylie Skin products?" } },
+        "q2": { "type": "qa", "settings": { "question": "How often do you restock?" } },
+        "q3": { "type": "qa", "settings": { "question": "Do you offer free samples or gifts?" } },
+        "q4": { "type": "qa", "settings": { "question": "Do you offer discounts or promotions?" } },
+        "q5": { "type": "qa", "settings": { "question": "Can I use reward points during sales for additional discounts?" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"]
+    },
+    "shipping": {
+      "type": "faq-accordion",
+      "settings": { "category_title": "Shipping" },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "Shipping", "answer": "<p>Free standard shipping on US orders over $40.</p>" } },
+        "q2": { "type": "qa", "settings": { "question": "International Shipping", "answer": "<p>Free Express shipping over $175, otherwise a $22 flat rate.</p>" } },
+        "q3": { "type": "qa", "settings": { "question": "Order Tracking" } },
+        "q4": { "type": "qa", "settings": { "question": "Shipping Disruptions" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"]
+    },
+    "contact": {
+      "type": "faq-accordion",
+      "settings": { "category_title": "CONTACT" },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "How can I contact your customer service team?" } },
+        "q2": { "type": "qa", "settings": { "question": "How long does it take to get a response?", "answer": "<p>Around 24 hours, with possible delays on weekends.</p>" } },
+        "q3": { "type": "qa", "settings": { "question": "How do I request my data be deleted?" } }
+      },
+      "block_order": ["q1", "q2", "q3"]
+    }
+  },
+  "order": ["orders", "payment", "accounts", "products", "shipping", "contact"]
+}

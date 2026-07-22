@@ -1,0 +1,73 @@
+{% comment %}
+  Maps to: source site's `applyGradientToMain` script on the cosmic fragrance
+  product — NOT a bounded banner block like the fragrance collection page; it
+  paints #MainContent's background behind the first section only, real stops
+  #CE3C2D 78% (desktop) / 80% (mobile) → #F4C4BF 100%, close to but distinct from
+  the collection page's #C53627 → #F8EDEB gradient. No heading/CTA — background
+  wash only.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="gradient-background"
+  data-section-id="{{ section.id }}"
+  data-section-type="gradient-background"
+  data-color-from="{{ section.settings.color_from }}"
+  data-color-to="{{ section.settings.color_to }}"
+  data-stop-desktop="{{ section.settings.stop_desktop }}"
+  data-stop-mobile="{{ section.settings.stop_mobile }}"
+></div>
+
+{% javascript %}
+  (function () {
+    document.querySelectorAll('[data-section-type="gradient-background"]').forEach((el) => {
+      const main = document.getElementById('MainContent');
+      if (!main) return;
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      const stop = isMobile ? el.dataset.stopMobile : el.dataset.stopDesktop;
+      main.style.background = `linear-gradient(180deg, ${el.dataset.colorFrom} ${stop}%, ${el.dataset.colorTo} 100%)`;
+      main.style.backgroundRepeat = 'no-repeat';
+      const firstBlock = main.children[0];
+      if (firstBlock) main.style.backgroundSize = `100% ${firstBlock.offsetHeight}px`;
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.gradient-background.name",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color_from",
+      "default": "#CE3C2D",
+      "label": "t:sections.gradient-background.color_from.label"
+    },
+    {
+      "type": "color",
+      "id": "color_to",
+      "default": "#F4C4BF",
+      "label": "t:sections.gradient-background.color_to.label"
+    },
+    {
+      "type": "range",
+      "id": "stop_desktop",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 78,
+      "label": "t:sections.gradient-background.stop_desktop.label"
+    },
+    {
+      "type": "range",
+      "id": "stop_mobile",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 80,
+      "label": "t:sections.gradient-background.stop_mobile.label"
+    }
+  ]
+}
+{% endschema %}

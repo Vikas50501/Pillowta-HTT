@@ -1,0 +1,27 @@
+{%- comment -%}
+  Maps to: source site's theme.shades config (shopify-section-shades-swatch) — a
+  global shade-name → color map shared across every product's shade/color variant
+  option, so swatches look consistent site-wide without re-entering hex codes per
+  product. Usage: {% render 'shades-swatch', value: option_value, size: 'small' %}
+{%- endcomment -%}
+{%- liquid
+  assign shade_handle = value | handle
+  assign shade_color = ''
+  assign shade_map = 'blush:#fe828c|cherry:#d2042d|coral:#fe7d6a|peach:#fc9483|babypink:#ffb6c1|ruby:#900603|sandstone:#d67229|rust:#8d4004|merigold:#fcae1e'
+  assign shade_pairs = shade_map | split: '|'
+  for pair in shade_pairs
+    assign pair_parts = pair | split: ':'
+    if pair_parts.first == shade_handle
+      assign shade_color = pair_parts.last
+    endif
+  endfor
+  unless shade_color != ''
+    assign shade_color = '#ababab'
+  endunless
+-%}
+<span
+  class="shades-swatch shades-swatch--{{ size | default: 'medium' }}"
+  style="background-color: {{ shade_color }};"
+  title="{{ value }}"
+  aria-label="{{ value }}"
+></span>

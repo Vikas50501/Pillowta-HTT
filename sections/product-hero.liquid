@@ -1,0 +1,159 @@
+{% comment %}
+  Maps to: source site's cosmic-fragrance-only hero (`hero_LQKn37`) — a distinct
+  full-width autoplaying background video above the product gallery, separate from
+  the gallery's own media. Real instance had no heading/CTA text (empty in source),
+  both left optional here.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="product-hero{% if section.settings.font_override != 'inherit' %} product-hero--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="product-hero"
+>
+  <div class="product-hero__media">
+    {%- if section.settings.desktop_video != blank -%}
+      <video class="product-hero__video product-hero__video--desktop" autoplay muted loop playsinline poster="{{ section.settings.poster | image_url: width: 1728 }}">
+        <source src="{{ section.settings.desktop_video }}" type="video/mp4">
+      </video>
+    {%- elsif section.settings.desktop_image != blank -%}
+      {{ section.settings.desktop_image | image_url: width: 1728 | image_tag: widths: '900,1300,1728', class: 'product-hero__image product-hero__image--desktop', alt: section.settings.heading | default: '', loading: 'eager' }}
+    {%- endif -%}
+
+    {%- if section.settings.mobile_video != blank -%}
+      <video class="product-hero__video product-hero__video--mobile" autoplay muted loop playsinline poster="{{ section.settings.poster | image_url: width: 750 }}">
+        <source src="{{ section.settings.mobile_video }}" type="video/mp4">
+      </video>
+    {%- elsif section.settings.mobile_image != blank -%}
+      {{ section.settings.mobile_image | image_url: width: 750 | image_tag: widths: '390,540,750', class: 'product-hero__image product-hero__image--mobile', alt: section.settings.heading | default: '', loading: 'eager' }}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.heading != blank or section.settings.button_text != blank -%}
+    <div class="product-hero__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="product-hero__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.button_text != blank -%}
+        <a href="{{ section.settings.link }}" class="action action--primary">{{ section.settings.button_text }}</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .product-hero {
+    position: relative;
+    min-height: 30rem;
+    overflow: hidden;
+  }
+
+  .product-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .product-hero__image,
+  .product-hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-hero__image--mobile,
+  .product-hero__video--mobile {
+    display: none;
+  }
+
+  .product-hero__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: inherit;
+    text-align: center;
+    color: #fff;
+    padding: 2rem;
+  }
+
+  .product-hero__heading {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .product-hero__image--desktop,
+    .product-hero__video--desktop {
+      display: none;
+    }
+    .product-hero__image--mobile,
+    .product-hero__video--mobile {
+      display: block;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.product-hero.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "t:sections.product-hero.desktop_image.label"
+    },
+    {
+      "type": "video_url",
+      "id": "desktop_video",
+      "accept": ["mp4"],
+      "label": "t:sections.product-hero.desktop_video.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:sections.product-hero.mobile_image.label"
+    },
+    {
+      "type": "video_url",
+      "id": "mobile_video",
+      "accept": ["mp4"],
+      "label": "t:sections.product-hero.mobile_video.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "t:sections.product-hero.poster.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.product-hero.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.product-hero.button_text.label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:sections.product-hero.link.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ]
+}
+{% endschema %}

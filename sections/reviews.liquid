@@ -1,0 +1,35 @@
+{% comment %}
+  Maps to: source site's "customer results" review section — a Bazaarvoice widget
+  (confirmed, not Yotpo/Loox — those are loyalty-points/other uses only).
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="reviews-section"
+  style="background-color: {{ section.settings.background_color }};"
+  data-section-id="{{ section.id }}"
+  data-section-type="reviews"
+>
+  <div class="reviews-section__inner page-width">
+    {%- render 'reviews', product: product -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .reviews-section {
+    padding-block: var(--section-spacing);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.reviews.name",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#f8f1f4",
+      "label": "t:sections.reviews.background_color.label"
+    }
+  ]
+}
+{% endschema %}
