@@ -3,6 +3,20 @@
    Section-specific CSS must live inside each section's own .liquid file.
    ========================================================================== */
 
+/* ---- Custom element display defaults ----
+   Unknown/undefined custom elements default to display:inline in browsers.
+   position:fixed/absolute descendants (theme-drawer instances: mobile menu,
+   cart drawer, engraving drawer, shade-finder popup) are unaffected since
+   the CSS spec force-computes those to display:block regardless - but any
+   custom element relying on position:relative or plain block/flex-child
+   layout (e.g. margin:auto centering via the .page-width class) silently
+   breaks without an explicit display here. Applies globally so any current
+   or future use of these tags is safe by default. */
+announcement-bar,
+product-carousel {
+  display: block;
+}
+
 /* ---- Per-section font override (§4.2 of the build brief) ----
    Every section adds a class like "sectionname--font-heading" when a
    merchant picks a font override, but each section's own scoped CSS never

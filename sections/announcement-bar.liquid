@@ -60,6 +60,12 @@
 
 {% stylesheet %}
   .announcement-bar {
+    /* <announcement-bar> is a custom element - browsers default unknown
+       elements to display:inline, which broke full-width background
+       rendering (and the block-level .announcement-bar__wrapper child)
+       once this was switched from a <div> to a custom element tag. */
+    display: block;
+    width: 100%;
     position: relative;
     background-color: var(--announcement-bg, rgb(var(--color-border-accent)));
     color: var(--announcement-text, rgb(var(--color-text)));
