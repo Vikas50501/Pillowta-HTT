@@ -131,11 +131,11 @@
         "mega_menu_text_color": "#393939",
         "sticky": true,
         "transparent_on_home": true,
-        "transparent_text_color": "#FFFFFF",
+        "transparent_text_color": "#ffffff",
         "show_localization": true,
         "mobile_extra_link_title": "Pillowta",
         "mobile_extra_link": "/pages/kylie-rewards",
-        "font_override": "heading"
+        "font_override": "inherit"
       }
     }
   },
