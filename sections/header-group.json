@@ -54,6 +54,11 @@
         "rewards"
       ],
       "settings": {
+        "color_background": "#efd7e5",
+        "color_text": "#393939",
+        "color_link": "#393939",
+        "font_size": 15,
+        "padding_y": 6,
         "autoplay_speed": 4,
         "show_close": false,
         "enable_play_pause": false,
