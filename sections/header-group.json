@@ -17,7 +17,7 @@
         "gift": {
           "type": "message",
           "settings": {
-            "text": "free compact mirror and pouch 🥰 with any $55+ order 🥰",
+            "text": "free compact mirror and pouch 🩷 with any $55+ order 🩷",
             "link": "/collections/kylie-cosmetics-new",
             "link_text": "shop now"
           }
@@ -131,7 +131,7 @@
         "mega_menu_text_color": "#393939",
         "sticky": true,
         "transparent_on_home": true,
-        "transparent_text_color": "#ffffff",
+        "transparent_text_color": "#FFFFFF",
         "show_localization": true,
         "mobile_extra_link_title": "Pillowta",
         "mobile_extra_link": "/pages/kylie-rewards",
