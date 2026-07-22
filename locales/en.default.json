@@ -28,6 +28,9 @@
     "pagination": "Pagination",
     "shop_by_category": "Shop by category"
   },
+  "localization": {
+    "country_label": "Country/region"
+  },
   "filter_toolbar": {
     "filters": {
       "title": "filter"

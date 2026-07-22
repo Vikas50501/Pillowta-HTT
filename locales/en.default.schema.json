@@ -184,6 +184,12 @@
         "label": "Button style",
         "primary": "Primary",
         "secondary": "Secondary"
+      },
+      "text_transform": {
+        "lowercase": "lowercase",
+        "uppercase": "UPPERCASE",
+        "capitalize": "Capitalize",
+        "none": "As typed"
       }
     },
     "header-group": {
@@ -209,13 +215,26 @@
     },
     "header": {
       "name": "Header",
+      "layout_style": {
+        "label": "Layout",
+        "centered": "Centered (logo centered, nav row below)",
+        "inline": "Inline (single row)",
+        "info": "\"Centered\" matches the source site exactly: a top bar with the logo centered, then a separate centered nav row below."
+      },
+      "nav_text_transform": { "label": "Nav link text case" },
+      "logo_header": "Logo",
       "main_menu": { "label": "Main menu" },
       "logo": { "label": "Logo" },
       "logo_width": { "label": "Logo width" },
+      "behavior_header": "Behavior",
       "sticky": { "label": "Sticky header" },
       "transparent_on_home": {
         "label": "Transparent over homepage hero",
         "info": "Header is transparent until the visitor scrolls, then becomes solid — matches the source site's site-header--transparent behavior."
+      },
+      "show_localization": {
+        "label": "Show country/currency selector",
+        "info": "Only appears if your store has more than one market configured under Settings > Markets."
       },
       "mobile_extra": {
         "header": "Mobile-only menu item",

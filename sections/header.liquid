@@ -1,20 +1,39 @@
 {% comment %}
-  Maps to: source site's <header class="layout__header"> Vue app — logo (inline SVG
-  wordmark), desktop mega-menu (Cosmetics/Fragrance/Skin/discover, each with image-menu
-  columns + an aside banner), mobile drawer (adds a mobile-only "rewards" 5th item),
-  search/account/wishlist/cart icons, transparent-over-hero → solid-on-scroll header.
+  Maps to: source site's <header class="layout__header"> Vue app — real layout
+  confirmed via side-by-side screenshot comparison: a top bar with a country/
+  currency selector on the left, the logo CENTERED, and search/wishlist/account/
+  cart icons on the right, followed by a SEPARATE centered nav row below (desktop
+  mega-menu: Cosmetics/Fragrance/Skin/discover, each with image-menu columns + an
+  aside banner). Mobile drawer adds a mobile-only "rewards" 5th item. Transparent-
+  over-hero → solid-on-scroll header. `layout_style` lets a merchant switch back
+  to a single-row inline layout if they prefer.
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
-  class="site-header{% if section.settings.transparent_on_home and request.page_type == 'index' %} site-header--transparent{% endif %}{% if section.settings.font_override != 'inherit' %} site-header--font-{{ section.settings.font_override }}{% endif %}"
+  class="site-header site-header--{{ section.settings.layout_style }}{% if section.settings.transparent_on_home and request.page_type == 'index' %} site-header--transparent{% endif %}{% if section.settings.font_override != 'inherit' %} site-header--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="header"
   data-sticky="{{ section.settings.sticky }}"
 >
-  <div class="site-header__wrapper page-width">
-    <button type="button" class="site-header__mobile-toggle" data-drawer-open="MobileMenu" aria-label="{{ 'accessibility.open_menu' | t }}">
-      {%- render 'icon', name: 'menu' -%}
-    </button>
+  <div class="site-header__topbar page-width">
+    <div class="site-header__topbar-start">
+      <button type="button" class="site-header__mobile-toggle" data-drawer-open="MobileMenu" aria-label="{{ 'accessibility.open_menu' | t }}">
+        {%- render 'icon', name: 'menu' -%}
+      </button>
+
+      {%- if section.settings.show_localization and localization.available_countries.size > 1 -%}
+        {% form 'localization', id: 'HeaderLocalizationForm', class: 'localization-form' %}
+          <label class="visually-hidden" for="HeaderCountrySelect">{{ 'localization.country_label' | t: default: 'Country/region' }}</label>
+          <select name="country_code" id="HeaderCountrySelect" class="localization-form__select" onchange="this.form.submit()">
+            {%- for country in localization.available_countries -%}
+              <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                {{ country.iso_code }} ({{ country.currency.symbol }})
+              </option>
+            {%- endfor -%}
+          </select>
+        {% endform %}
+      {%- endif -%}
+    </div>
 
     <h1 class="site-logo">
       <a href="{{ routes.root_url }}" title="{{ shop.name }} {{ 'general.home_page' | t: default: 'home page' }}">
@@ -25,21 +44,6 @@
         {%- endif -%}
       </a>
     </h1>
-
-    <nav class="linklist linklist--main-menu linklist--desktop" aria-label="{{ 'accessibility.main_menu' | t: default: 'Main menu' }}">
-      <ul class="site-header__nav">
-        {%- for link in section.settings.main_menu.links -%}
-          <li class="site-header__nav-item{% if link.links.size > 0 %} link--has-children link--has-mega-menu{% endif %}">
-            <a href="{{ link.url }}" class="site-header__link" {% if link.links.size > 0 %}aria-expanded="false" aria-haspopup="true"{% endif %}>
-              {{ link.title }}
-            </a>
-            {%- if link.links.size > 0 -%}
-              {%- render 'mega-menu', link: link, section: section -%}
-            {%- endif -%}
-          </li>
-        {%- endfor -%}
-      </ul>
-    </nav>
 
     <div class="site-header__actions">
       <button type="button" class="site-header__action site-header__action--search" data-drawer-open="SearchDrawer" aria-label="{{ 'accessibility.search' | t: default: 'Search' }}">
@@ -57,6 +61,21 @@
       </button>
     </div>
   </div>
+
+  <nav class="linklist linklist--main-menu linklist--desktop site-header__nav-row" aria-label="{{ 'accessibility.main_menu' | t: default: 'Main menu' }}">
+    <ul class="site-header__nav">
+      {%- for link in section.settings.main_menu.links -%}
+        <li class="site-header__nav-item{% if link.links.size > 0 %} link--has-children link--has-mega-menu{% endif %}">
+          <a href="{{ link.url }}" class="site-header__link" {% if link.links.size > 0 %}aria-expanded="false" aria-haspopup="true"{% endif %}>
+            {{ link.title }}
+          </a>
+          {%- if link.links.size > 0 -%}
+            {%- render 'mega-menu', link: link, section: section -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
 
   {%- render 'mobile-menu', section: section -%}
 </div>
@@ -90,12 +109,21 @@
     transition: background-color .3s ease, color .3s ease;
   }
 
-  .site-header__wrapper {
+  /* ---- Top bar: 3-column grid so the logo is always perfectly centered
+     regardless of how much content sits in the start/end slots ---- */
+  .site-header__topbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding-top: .875rem;
+    padding-bottom: .875rem;
+  }
+
+  .site-header__topbar-start {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    padding-top: .75rem;
-    padding-bottom: .75rem;
+    gap: 1rem;
   }
 
   .site-header__mobile-toggle {
@@ -106,46 +134,36 @@
     cursor: pointer;
   }
 
+  .localization-form__select {
+    background: none;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-sm);
+    color: inherit;
+    padding: .25rem .5rem;
+    font-size: var(--font-size-caption);
+  }
+
   .site-logo {
     margin: 0;
     line-height: 0;
+    text-align: center;
+    grid-column: 2;
   }
 
   .site-logo__text {
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    letter-spacing: .05em;
     text-transform: uppercase;
     color: inherit;
-  }
-
-  .site-header__nav {
-    display: flex;
-    gap: 1.75rem;
-    margin-inline-start: auto;
-  }
-
-  .site-header__link {
-    display: block;
-    padding: .5rem 0;
-    color: inherit;
-    text-transform: lowercase;
-    font-size: var(--font-size-small);
-    transition: color var(--transition-fast);
-  }
-
-  .link--has-mega-menu:hover .mega-menu,
-  .link--has-mega-menu:focus-within .mega-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
   }
 
   .site-header__actions {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 1rem;
-    margin-inline-start: 1rem;
   }
 
   .site-header__action {
@@ -181,11 +199,72 @@
     display: none;
   }
 
+  /* ---- Centered nav row (below the top bar) — real site's default layout ---- */
+  .site-header__nav-row {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid rgba(var(--color-border), .6);
+  }
+
+  .site-header--inline .site-header__nav-row {
+    display: none;
+  }
+
+  .site-header--inline .site-header__topbar {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .site-header--inline .site-logo {
+    grid-column: 1;
+    text-align: left;
+  }
+
+  .site-header--inline .site-header__topbar-start {
+    display: none;
+  }
+
+  .site-header--inline .site-header__nav-row--inline-slot {
+    display: flex;
+    grid-column: 2;
+    border-top: 0;
+  }
+
+  .site-header__nav {
+    display: flex;
+    gap: 1.75rem;
+    padding-block: .625rem;
+  }
+
+  .site-header__link {
+    display: block;
+    padding: .5rem 0;
+    color: inherit;
+    text-transform: {{ section.settings.nav_text_transform }};
+    font-size: var(--font-size-small);
+    transition: color var(--transition-fast);
+  }
+
+  .link--has-mega-menu:hover .mega-menu,
+  .link--has-mega-menu:focus-within .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
   @media screen and (max-width: 74.99em) {
     .site-header__mobile-toggle {
       display: inline-flex;
     }
-    .linklist--desktop {
+    .site-header__nav-row {
+      display: none;
+    }
+    .site-header__topbar {
+      grid-template-columns: auto 1fr auto;
+    }
+    .site-header__topbar-start {
+      gap: .5rem;
+    }
+    .localization-form {
       display: none;
     }
   }
@@ -387,10 +466,37 @@
   "name": "t:sections.header.name",
   "settings": [
     {
+      "type": "select",
+      "id": "layout_style",
+      "options": [
+        { "value": "centered", "label": "t:sections.header.layout_style.centered" },
+        { "value": "inline", "label": "t:sections.header.layout_style.inline" }
+      ],
+      "default": "centered",
+      "label": "t:sections.header.layout_style.label",
+      "info": "t:sections.header.layout_style.info"
+    },
+    {
       "type": "link_list",
       "id": "main_menu",
       "default": "main-menu",
       "label": "t:sections.header.main_menu.label"
+    },
+    {
+      "type": "select",
+      "id": "nav_text_transform",
+      "options": [
+        { "value": "lowercase", "label": "t:sections.common.text_transform.lowercase" },
+        { "value": "uppercase", "label": "t:sections.common.text_transform.uppercase" },
+        { "value": "capitalize", "label": "t:sections.common.text_transform.capitalize" },
+        { "value": "none", "label": "t:sections.common.text_transform.none" }
+      ],
+      "default": "lowercase",
+      "label": "t:sections.header.nav_text_transform.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.logo_header"
     },
     {
       "type": "image_picker",
@@ -408,6 +514,10 @@
       "label": "t:sections.header.logo_width.label"
     },
     {
+      "type": "header",
+      "content": "t:sections.header.behavior_header"
+    },
+    {
       "type": "checkbox",
       "id": "sticky",
       "default": true,
@@ -419,6 +529,13 @@
       "default": true,
       "label": "t:sections.header.transparent_on_home.label",
       "info": "t:sections.header.transparent_on_home.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_localization",
+      "default": true,
+      "label": "t:sections.header.show_localization.label",
+      "info": "t:sections.header.show_localization.info"
     },
     {
       "type": "header",
