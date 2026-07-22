@@ -12,7 +12,8 @@
     "hero_mood_stones": {
       "type": "hero",
       "settings": {
-        "height": "tall",
+        "height_desktop": 100,
+        "height_mobile": 75,
         "desktop_video": "shopify://files/videos/Pillowta-1.mp4",
         "mobile_layout": "below-image",
         "overlay_color": "#000000",
@@ -97,7 +98,8 @@
     "hero_summer_faves": {
       "type": "hero",
       "settings": {
-        "height": "medium",
+        "height_desktop": 65,
+        "height_mobile": 75,
         "desktop_image": "shopify://shop_images/pexels-amaria-11259997.jpg",
         "mobile_layout": "below-image",
         "overlay_color": "#000000",
@@ -175,7 +177,8 @@
     "hero_scent_of_summer": {
       "type": "hero",
       "settings": {
-        "height": "short",
+        "height_desktop": 65,
+        "height_mobile": 75,
         "desktop_image": "shopify://shop_images/we-vibe-toys-nyMfwv7LBPw-unsplash.jpg",
         "mobile_layout": "below-image",
         "overlay_color": "#000000",
@@ -289,7 +292,8 @@
     "hero_vto": {
       "type": "hero",
       "settings": {
-        "height": "medium",
+        "height_desktop": 65,
+        "height_mobile": 75,
         "desktop_video": "shopify://files/videos/Pillowta-1.mp4",
         "mobile_layout": "over-image",
         "overlay_color": "#000000",
