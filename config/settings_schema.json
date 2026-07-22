@@ -3,7 +3,9 @@
     "name": "theme_info",
     "theme_name": "Pilllowta",
     "theme_version": "1.0.0",
-    "theme_author": "Custom Build"
+    "theme_author": "Custom Build",
+    "theme_documentation_url": "https://github.com/Vikas50501/Pillowta-HTT",
+    "theme_support_email": "support@pillowta-theme.com"
   },
   {
     "name": "t:settings.typography.name",
