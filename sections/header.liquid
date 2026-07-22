@@ -9,7 +9,7 @@
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
-  class="site-header site-header--{{ section.settings.layout_style }}{% if section.settings.transparent_on_home and request.page_type == 'index' %} site-header--transparent{% endif %}{% if section.settings.font_override != 'inherit' %} site-header--font-{{ section.settings.font_override }}{% endif %}"
+  class="site-header site-header--{{ section.settings.layout_style }}{% if section.settings.transparent_on_home and request.page_type == 'index' %} site-header--transparent{% endif %}{% if section.settings.transparent_logo != blank %} has-transparent-logo{% endif %}{% if section.settings.font_override != 'inherit' %} site-header--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="header"
   data-sticky="{{ section.settings.sticky }}"
@@ -51,10 +51,13 @@
 
     <h1 class="site-logo" style="--logo-max-height: {{ section.settings.logo_max_height }}px;">
       <a href="{{ routes.root_url }}" title="{{ shop.name }} {{ 'general.home_page' | t: default: 'home page' }}">
+        {%- if section.settings.transparent_logo != blank -%}
+          {{ section.settings.transparent_logo | image_url: width: section.settings.logo_width | image_tag: widths: '100,200,300', alt: shop.name, class: 'site-logo__image site-logo__image--transparent' }}
+        {%- endif -%}
         {%- if section.settings.logo != blank -%}
-          {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: widths: '100,200,300', alt: shop.name, class: 'site-logo__image' }}
+          {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: widths: '100,200,300', alt: shop.name, class: 'site-logo__image site-logo__image--solid' }}
         {%- else -%}
-          <span class="site-logo__text">{{ shop.name }}</span>
+          <span class="site-logo__text site-logo__image--solid">{{ shop.name }}</span>
         {%- endif -%}
       </a>
     </h1>
@@ -182,6 +185,22 @@
     width: auto;
   }
 
+  /* Swap to a dedicated light/white logo while floating transparently over
+     the hero, since a raster logo image can't be recolored with CSS `color`
+     the way inline SVG/text can. Falls back to always showing the regular
+     logo if no transparent-state logo was uploaded. */
+  .site-logo__image--transparent {
+    display: none;
+  }
+
+  .site-header--transparent.has-transparent-logo:not(.site-header--active) .site-logo__image--transparent {
+    display: block;
+  }
+
+  .site-header--transparent.has-transparent-logo:not(.site-header--active) .site-logo__image--solid {
+    display: none;
+  }
+
   .site-logo__text {
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
@@ -277,6 +296,19 @@
 
   .site-header__link:hover {
     color: var(--header-nav-link-hover-color, rgb(var(--color-accent)));
+  }
+
+  /* While floating transparently over the hero (not yet scrolled), nav links
+     ignore the custom nav_link_color and inherit the header's transparent
+     text color instead - otherwise a dark default nav color would always win
+     and the nav row would never turn white/light over a dark hero image. */
+  .site-header--transparent:not(.site-header--active) .site-header__link {
+    color: inherit;
+  }
+
+  .site-header--transparent:not(.site-header--active) .site-header__link:hover {
+    color: inherit;
+    opacity: .7;
   }
 
   .link--has-mega-menu:hover .mega-menu,
@@ -562,6 +594,12 @@
       "default": 48,
       "label": "t:sections.header.logo_max_height.label",
       "info": "t:sections.header.logo_max_height.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo",
+      "label": "t:sections.header.transparent_logo.label",
+      "info": "t:sections.header.transparent_logo.info"
     },
     {
       "type": "header",

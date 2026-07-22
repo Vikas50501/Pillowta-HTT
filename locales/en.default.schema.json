@@ -235,6 +235,10 @@
       "logo": { "label": "Logo" },
       "logo_width": { "label": "Logo image width" },
       "logo_max_height": { "label": "Logo max height", "info": "Caps how tall the logo renders, so a wide logo image doesn't overflow the header." },
+      "transparent_logo": {
+        "label": "Logo for transparent state",
+        "info": "A light/white version of your logo to show while the header floats transparently over the hero (a raster image can't be recolored the way text can). Falls back to your regular logo if left blank."
+      },
       "icons_header": "Icons",
       "show_search": { "label": "Show search icon" },
       "show_wishlist": { "label": "Show wishlist icon" },
