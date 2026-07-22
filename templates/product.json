@@ -1,18 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {
-        "max_quantity": 10,
-        "show_reviews_summary": true,
-        "enable_shade_finder": true,
-        "enable_engraving": false
-      },
       "blocks": {
-        "description": { "type": "accordion", "settings": { "title": "description" } },
-        "ingredients": { "type": "accordion", "settings": { "title": "ingredients" } },
-        "how_to_use": { "type": "accordion", "settings": { "title": "how to use" } },
-        "shipping": { "type": "accordion", "settings": { "title": "shipping & returns" } },
+        "description": {
+          "type": "accordion",
+          "settings": {
+            "title": "description"
+          }
+        },
+        "ingredients": {
+          "type": "accordion",
+          "settings": {
+            "title": "ingredients"
+          }
+        },
+        "how_to_use": {
+          "type": "accordion",
+          "settings": {
+            "title": "how to use"
+          }
+        },
+        "shipping": {
+          "type": "accordion",
+          "settings": {
+            "title": "shipping & returns"
+          }
+        },
         "tip": {
           "type": "product_tip",
           "settings": {
@@ -21,7 +44,19 @@
           }
         }
       },
-      "block_order": ["description", "ingredients", "how_to_use", "shipping", "tip"]
+      "block_order": [
+        "description",
+        "ingredients",
+        "how_to_use",
+        "shipping",
+        "tip"
+      ],
+      "settings": {
+        "max_quantity": 10,
+        "show_reviews_summary": true,
+        "enable_shade_finder": true,
+        "enable_engraving": false
+      }
     },
     "social": {
       "type": "foursixty",
@@ -38,9 +73,14 @@
       }
     },
     "brand_principles": {
-      "type": "brand-principles"
+      "type": "brand-principles",
+      "settings": {}
     }
   },
-  "order": ["main", "social", "reviews", "brand_principles"]
+  "order": [
+    "main",
+    "social",
+    "reviews",
+    "brand_principles"
+  ]
 }
-

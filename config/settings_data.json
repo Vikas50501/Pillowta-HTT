@@ -1,5 +1,83 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "current": "Default",
+  "current": {
+    "font_heading_source": "brand",
+    "font_heading_shopify": "helvetica_n7",
+    "font_heading_scale": 100,
+    "font_body_source": "brand",
+    "font_body_shopify": "helvetica_n4",
+    "font_body_scale": 100,
+    "line_height_base": 150,
+    "font_accent_source": "brand",
+    "font_accent_shopify": "helvetica_n4",
+    "font_condensed_source": "brand",
+    "font_condensed_shopify": "helvetica_n4",
+    "color_background": "#F8F1F4",
+    "color_background_alt": "#f8f1f4",
+    "color_text": "#393939",
+    "color_heading": "#393939",
+    "color_accent": "#b3848f",
+    "color_border": "#e7dae2",
+    "color_border_accent": "#efd7e5",
+    "color_button_primary_bg": "#ffffff",
+    "color_button_primary_text": "#393939",
+    "color_button_primary_bg_hover": "#393939",
+    "color_button_primary_text_hover": "#ffffff",
+    "color_focus_outline": "#905d5d",
+    "color_error": "#b70101",
+    "color_sale": "#ffb8b8",
+    "color_badge_bg": "#efd7e5",
+    "color_badge_text": "#393939",
+    "color_link": "#393939",
+    "color_link_hover": "#b3848f",
+    "button_style": "filled",
+    "button_radius": 4,
+    "button_uppercase": false,
+    "button_letter_spacing": 0,
+    "button_border_width": 1,
+    "container_max_width": 1728,
+    "container_padding": 16,
+    "section_spacing": 48,
+    "grid_gutter": 32,
+    "border_radius_style": "soft",
+    "card_image_ratio": "square",
+    "card_show_vendor": false,
+    "card_show_swatches": true,
+    "card_quick_add": true,
+    "card_show_badges": true,
+    "card_hover_zoom": true,
+    "bazaarvoice_client_name": "",
+    "cart_type": "drawer",
+    "cart_free_shipping_bar": true,
+    "cart_free_shipping_threshold": 40,
+    "cart_notes": false,
+    "cart_upsell": true,
+    "animations_enabled": true,
+    "animations_scroll_reveal": true,
+    "animations_hover_zoom": true,
+    "animations_speed": "normal",
+    "logo_width": 130,
+    "social_instagram": "https://www.instagram.com/kyliecosmetics/",
+    "social_tiktok": "https://www.tiktok.com/@kyliecosmetics?lang=en",
+    "social_facebook": "https://www.facebook.com/KylieCosmetics/",
+    "social_twitter": "https://twitter.com/kyliecosmetics",
+    "social_youtube": "",
+    "sections": {
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  },
   "presets": {
     "Default": {
       "font_heading_source": "brand",
@@ -13,7 +91,6 @@
       "font_accent_shopify": "helvetica_n4",
       "font_condensed_source": "brand",
       "font_condensed_shopify": "helvetica_n4",
-
       "color_background": "#ffffff",
       "color_background_alt": "#f8f1f4",
       "color_text": "#393939",
@@ -32,39 +109,32 @@
       "color_badge_text": "#393939",
       "color_link": "#393939",
       "color_link_hover": "#b3848f",
-
       "button_style": "filled",
       "button_radius": 4,
       "button_uppercase": false,
       "button_letter_spacing": 0,
       "button_border_width": 1,
-
       "container_max_width": 1728,
       "container_padding": 16,
       "section_spacing": 48,
       "grid_gutter": 32,
       "border_radius_style": "soft",
-
       "card_image_ratio": "square",
       "card_show_vendor": false,
       "card_show_swatches": true,
       "card_quick_add": true,
       "card_show_badges": true,
       "card_hover_zoom": true,
-
       "bazaarvoice_client_name": "",
-
       "cart_type": "drawer",
       "cart_free_shipping_bar": true,
       "cart_free_shipping_threshold": 40,
       "cart_notes": false,
       "cart_upsell": true,
-
       "animations_enabled": true,
       "animations_scroll_reveal": true,
       "animations_hover_zoom": true,
       "animations_speed": "normal",
-
       "logo_width": 130,
       "social_instagram": "https://www.instagram.com/kyliecosmetics/",
       "social_facebook": "https://www.facebook.com/KylieCosmetics/",
@@ -77,8 +147,16 @@
     "cart-drawer": {
       "type": "cart-drawer",
       "blocks": {
-        "shipping_bar": { "type": "free_shipping_bar", "settings": { "threshold": 40 } },
-        "items": { "type": "line_items", "settings": {} },
+        "shipping_bar": {
+          "type": "free_shipping_bar",
+          "settings": {
+            "threshold": 40
+          }
+        },
+        "items": {
+          "type": "line_items",
+          "settings": {}
+        },
         "gift": {
           "type": "gift_with_purchase",
           "settings": {
@@ -95,7 +173,10 @@
             "cart_total_tier1": 30
           }
         },
-        "loyalty": { "type": "loyalty_points", "settings": {} },
+        "loyalty": {
+          "type": "loyalty_points",
+          "settings": {}
+        },
         "upsell": {
           "type": "featured_product",
           "settings": {
@@ -104,7 +185,14 @@
           }
         }
       },
-      "block_order": ["shipping_bar", "items", "gift", "samples", "loyalty", "upsell"]
+      "block_order": [
+        "shipping_bar",
+        "items",
+        "gift",
+        "samples",
+        "loyalty",
+        "upsell"
+      ]
     }
   }
 }

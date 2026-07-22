@@ -1,41 +1,126 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Header",
   "type": "header",
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
+      "blocks": {
+        "gift": {
+          "type": "message",
+          "settings": {
+            "text": "free compact mirror and pouch 🩷 with any $55+ order 🩷",
+            "link": "/collections/kylie-cosmetics-new",
+            "link_text": "shop now"
+          }
+        },
+        "engraving": {
+          "type": "message",
+          "settings": {
+            "text": "💕 custom engraving on all cosmic bottles 💕",
+            "link": "/collections/kylie-fragrance",
+            "link_text": "shop now"
+          }
+        },
+        "shipping": {
+          "type": "message",
+          "settings": {
+            "text": "Free U.S. Shipping with Orders Over $40",
+            "link": "",
+            "link_text": "shop now"
+          }
+        },
+        "rewards": {
+          "type": "message",
+          "settings": {
+            "text": "💖 Join Kylie Cosmetics Rewards and enjoy exclusive perks 💖",
+            "link": "/pages/kylie-rewards",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "gift",
+        "engraving",
+        "shipping",
+        "rewards"
+      ],
       "settings": {
         "autoplay_speed": 4,
-        "show_close": true,
-        "enable_play_pause": true,
-        "show_arrows": false
-      },
-      "blocks": {
-        "gift": { "type": "message", "settings": { "text": "free compact mirror and pouch 🩷 with any $55+ order 🩷", "link": "/collections/kylie-cosmetics-new", "link_text": "shop now" } },
-        "engraving": { "type": "message", "settings": { "text": "💕 custom engraving on all cosmic bottles 💕", "link": "/collections/kylie-fragrance", "link_text": "shop now" } },
-        "shipping": { "type": "message", "settings": { "text": "Free U.S. Shipping with Orders Over $40" } },
-        "rewards": { "type": "message", "settings": { "text": "💖 Join Kylie Cosmetics Rewards and enjoy exclusive perks 💖", "link": "/pages/kylie-rewards", "link_text": "" } }
-      },
-      "block_order": ["gift", "engraving", "shipping", "rewards"]
+        "show_close": false,
+        "enable_play_pause": false,
+        "show_arrows": false,
+        "font_override": "inherit"
+      }
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "cosmetics_banner": {
+          "type": "menu_promo",
+          "settings": {
+            "menu_handle": "cosmetics",
+            "image": "shopify://shop_images/pexels-alice-c-70978593-8761243.jpg",
+            "title": "complexion essentials",
+            "link": "/collections/kylie-cosmetics-face-complexion"
+          }
+        },
+        "fragrance_banner": {
+          "type": "menu_promo",
+          "settings": {
+            "menu_handle": "fragrance",
+            "image": "shopify://shop_images/hair-care-spa-products-concept-cosmetic-skin-or-h-2026-03-17-00-03-00-utc.jpg",
+            "title": "hair & body mist",
+            "link": "/collections/hair-body-mist"
+          }
+        },
+        "skin_banner": {
+          "type": "menu_promo",
+          "settings": {
+            "menu_handle": "skin",
+            "image": "shopify://shop_images/we-vibe-toys-4S4hB8iFFoY-unsplash.jpg",
+            "title": "lip butter",
+            "link": "/collections/lip-butter"
+          }
+        },
+        "discover_banner": {
+          "type": "menu_promo",
+          "settings": {
+            "menu_handle": "discover",
+            "image": "shopify://shop_images/neroli-flower-realistic.png",
+            "title": "current offers",
+            "link": "/pages/offers"
+          }
+        }
+      },
+      "block_order": [
+        "cosmetics_banner",
+        "fragrance_banner",
+        "skin_banner",
+        "discover_banner"
+      ],
       "settings": {
         "main_menu": "main-menu",
+        "logo": "shopify://shop_images/Pillowta_logo_1-removebg-preview.png",
         "logo_width": 130,
         "sticky": true,
-        "transparent_on_home": true,
-        "mobile_extra_link_title": "rewards",
-        "mobile_extra_link": "/pages/kylie-rewards"
-      },
-      "blocks": {
-        "cosmetics_banner": { "type": "menu_promo", "settings": { "menu_handle": "cosmetics", "title": "complexion essentials", "link": "/collections/kylie-cosmetics-face-complexion" } },
-        "fragrance_banner": { "type": "menu_promo", "settings": { "menu_handle": "fragrance", "title": "hair & body mist", "link": "/collections/hair-body-mist" } },
-        "skin_banner": { "type": "menu_promo", "settings": { "menu_handle": "skin", "title": "lip butter", "link": "/collections/lip-butter" } },
-        "discover_banner": { "type": "menu_promo", "settings": { "menu_handle": "discover", "title": "current offers", "link": "/pages/offers" } }
-      },
-      "block_order": ["cosmetics_banner", "fragrance_banner", "skin_banner", "discover_banner"]
+        "transparent_on_home": false,
+        "mobile_extra_link_title": "Pillowta",
+        "mobile_extra_link": "/pages/kylie-rewards",
+        "font_override": "heading"
+      }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }
