@@ -84,12 +84,17 @@
     position: relative;
     overflow: hidden;
     background-color: rgb(var(--color-background-alt));
-    min-height: var(--hero-height-mobile, 75vh);
+    /* Subtract the announcement bar's real height (measured live by
+       header.liquid's JS and exposed on :root) so a hero set close to
+       100vh doesn't add its own height ON TOP of the announcement bar and
+       push the total page height past one full viewport - which is what
+       was creating the extra vertical scroll. */
+    min-height: calc(var(--hero-height-mobile, 75vh) - var(--announcement-bar-height, 0px));
   }
 
   @media screen and (min-width: 60em) {
     .hero {
-      min-height: var(--hero-height-desktop, 65vh);
+      min-height: calc(var(--hero-height-desktop, 65vh) - var(--announcement-bar-height, 0px));
     }
   }
 
