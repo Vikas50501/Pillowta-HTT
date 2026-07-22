@@ -11,18 +11,69 @@
   "sections": {
     "banner": {
       "type": "collection-banner",
-      "settings": {
-        "banner_style": "image"
-      },
       "blocks": {
-        "new": { "type": "category_link", "settings": { "title": "New", "link": "/collections/kylie-cosmetics-new" } },
-        "best_sellers": { "type": "category_link", "settings": { "title": "Best Sellers" } },
-        "lips": { "type": "category_link", "settings": { "title": "Lips" } },
-        "face": { "type": "category_link", "settings": { "title": "Face" } },
-        "eyes": { "type": "category_link", "settings": { "title": "Eyes & Brows" } },
-        "featured": { "type": "category_link", "settings": { "title": "Featured" } }
+        "new": {
+          "type": "category_link",
+          "settings": {
+            "title": "New",
+            "link": "/collections/kylie-cosmetics-new"
+          }
+        },
+        "best_sellers": {
+          "type": "category_link",
+          "settings": {
+            "title": "Best Sellers",
+            "link": ""
+          }
+        },
+        "lips": {
+          "type": "category_link",
+          "settings": {
+            "title": "Lips",
+            "link": ""
+          }
+        },
+        "face": {
+          "type": "category_link",
+          "settings": {
+            "title": "Face",
+            "link": ""
+          }
+        },
+        "eyes": {
+          "type": "category_link",
+          "settings": {
+            "title": "Eyes & Brows",
+            "link": ""
+          }
+        },
+        "featured": {
+          "type": "category_link",
+          "settings": {
+            "title": "Featured",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["new", "best_sellers", "lips", "face", "eyes", "featured"]
+      "block_order": [
+        "new",
+        "best_sellers",
+        "lips",
+        "face",
+        "eyes",
+        "featured"
+      ],
+      "settings": {
+        "banner_style": "image",
+        "title": "",
+        "description": "",
+        "desktop_image": "shopify://shop_images/claudia-love-rY-LInOjRGY-unsplash.jpg",
+        "gradient_from": "#c53627",
+        "gradient_to": "#f8edeb",
+        "gradient_stop_desktop": 45,
+        "gradient_stop_mobile": 35,
+        "font_override": "inherit"
+      }
     },
     "main": {
       "type": "main-collection",
@@ -31,10 +82,13 @@
         "columns_mobile": 2,
         "products_per_page": 12,
         "enable_filtering": true,
-        "enable_sorting": true
+        "enable_sorting": true,
+        "font_override": "inherit"
       }
     }
   },
-  "order": ["banner", "main"]
+  "order": [
+    "banner",
+    "main"
+  ]
 }
-
