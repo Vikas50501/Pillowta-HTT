@@ -113,7 +113,13 @@
     z-index: 30;
   }
 
-  .site-header[data-sticky='true'] {
+  /* :not(.site-header--transparent) so this never competes on specificity
+     with the transparent-state rules below when both sticky and
+     transparent_on_home are enabled together (a common combination) -
+     an attribute selector like [data-sticky='true'] otherwise beats a
+     plain class selector regardless of source order, silently overriding
+     position: absolute with position: sticky and defeating the overlay. */
+  .site-header[data-sticky='true']:not(.site-header--transparent) {
     position: sticky;
     top: 0;
   }
