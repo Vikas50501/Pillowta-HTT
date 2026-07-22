@@ -290,7 +290,10 @@
 
   @media screen and (max-width: 44.99em) {
     .cart-drawer {
-      width: 100vw;
+      /* 100% instead of 100vw - vw includes the scrollbar's own width in
+         some browsers, which can make a fixed-position element wider than
+         the actual visible viewport and contribute to horizontal overflow. */
+      width: 100%;
     }
   }
 {% endstylesheet %}
