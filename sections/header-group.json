@@ -68,6 +68,7 @@
           "type": "menu_promo",
           "settings": {
             "menu_handle": "cosmetics",
+            "image": "shopify://shop_images/pexels-alice-c-70978593-8761243.jpg",
             "title": "complexion essentials",
             "link": "/collections/kylie-cosmetics-face-complexion"
           }
@@ -76,6 +77,7 @@
           "type": "menu_promo",
           "settings": {
             "menu_handle": "fragrance",
+            "image": "shopify://shop_images/hair-care-spa-products-concept-cosmetic-skin-or-h-2026-03-17-00-03-00-utc.jpg",
             "title": "hair & body mist",
             "link": "/collections/hair-body-mist"
           }
@@ -84,6 +86,7 @@
           "type": "menu_promo",
           "settings": {
             "menu_handle": "skin",
+            "image": "shopify://shop_images/we-vibe-toys-4S4hB8iFFoY-unsplash.jpg",
             "title": "lip butter",
             "link": "/collections/lip-butter"
           }
@@ -109,7 +112,7 @@
         "logo": "shopify://shop_images/Pillowta_logo_1-removebg-preview.png",
         "logo_width": 130,
         "sticky": true,
-        "transparent_on_home": true,
+        "transparent_on_home": false,
         "mobile_extra_link_title": "Pillowta",
         "mobile_extra_link": "/pages/kylie-rewards",
         "font_override": "heading"
