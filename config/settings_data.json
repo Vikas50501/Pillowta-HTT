@@ -48,7 +48,7 @@
     "section_spacing": 48,
     "grid_gutter": 32,
     "border_radius_style": "soft",
-    "card_image_ratio": "square",
+    "card_image_ratio": "portrait",
     "card_show_vendor": false,
     "card_show_swatches": true,
     "card_quick_add": true,
