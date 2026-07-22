@@ -134,6 +134,23 @@
     top: var(--announcement-bar-height, 0px);
     background-color: transparent;
     color: var(--header-transparent-text, #fff);
+    transition: background-color .2s ease, color .2s ease;
+  }
+
+  /* While still floating over the hero (not yet scrolled), hovering
+     anywhere on the header turns it solid for readability, then reverts to
+     transparent on mouseout. */
+  .site-header--transparent:not(.site-header--active):hover {
+    background-color: var(--header-bg, rgb(var(--color-background)));
+    color: var(--header-text, rgb(var(--color-text)));
+  }
+
+  .site-header--transparent.has-transparent-logo:not(.site-header--active):hover .site-logo__image--transparent {
+    display: none;
+  }
+
+  .site-header--transparent.has-transparent-logo:not(.site-header--active):hover .site-logo__image--solid {
+    display: block;
   }
 
   .site-header--transparent.site-header--active {
@@ -265,7 +282,6 @@
   .site-header__nav-row {
     display: flex;
     justify-content: center;
-    border-top: 1px solid var(--header-border, rgba(var(--color-border), .6));
   }
 
   .site-header--inline .site-header__nav-row {
