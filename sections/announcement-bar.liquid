@@ -163,6 +163,7 @@
       window.sessionStorage.setItem('hide-announcement-bar', 'true');
       this.setAttribute('hidden', '');
       clearInterval(this.timer);
+      document.dispatchEvent(new CustomEvent('theme:announcement-bar:dismissed'));
     }
   }
 

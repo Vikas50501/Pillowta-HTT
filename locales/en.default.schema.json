@@ -221,16 +221,39 @@
         "inline": "Inline (single row)",
         "info": "\"Centered\" matches the source site exactly: a top bar with the logo centered, then a separate centered nav row below."
       },
-      "nav_text_transform": { "label": "Nav link text case" },
-      "logo_header": "Logo",
       "main_menu": { "label": "Main menu" },
+      "logo_header": "Logo",
       "logo": { "label": "Logo" },
-      "logo_width": { "label": "Logo width" },
+      "logo_width": { "label": "Logo image width" },
+      "logo_max_height": { "label": "Logo max height", "info": "Caps how tall the logo renders, so a wide logo image doesn't overflow the header." },
+      "icons_header": "Icons",
+      "show_search": { "label": "Show search icon" },
+      "show_wishlist": { "label": "Show wishlist icon" },
+      "show_account": { "label": "Show account icon" },
+      "icon_size": { "label": "Icon size" },
+      "nav_header": "Navigation",
+      "nav_text_transform": { "label": "Nav link text case" },
+      "nav_font_size": { "label": "Nav link font size" },
+      "nav_gap": { "label": "Space between nav links" },
+      "colors_header": "Colors",
+      "color_background": { "label": "Background" },
+      "color_text": { "label": "Text / icons" },
+      "color_border": { "label": "Border (below top bar and nav row)" },
+      "nav_link_color": { "label": "Nav link color" },
+      "nav_link_hover_color": { "label": "Nav link color (hover)" },
+      "cart_badge_bg_color": { "label": "Cart count badge background" },
+      "cart_badge_text_color": { "label": "Cart count badge text" },
+      "mega_menu_bg_color": { "label": "Mega-menu background" },
+      "mega_menu_text_color": { "label": "Mega-menu text" },
       "behavior_header": "Behavior",
       "sticky": { "label": "Sticky header" },
       "transparent_on_home": {
         "label": "Transparent over homepage hero",
-        "info": "Header is transparent until the visitor scrolls, then becomes solid — matches the source site's site-header--transparent behavior."
+        "info": "Header is transparent until the visitor scrolls, then becomes solid — matches the source site's site-header--transparent behavior. Automatically positions itself below the announcement bar."
+      },
+      "transparent_text_color": {
+        "label": "Transparent state text / icon color",
+        "info": "Used only while the header is floating transparently over the hero, before the visitor scrolls."
       },
       "show_localization": {
         "label": "Show country/currency selector",

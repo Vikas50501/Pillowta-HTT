@@ -1,12 +1,11 @@
 {% comment %}
-  Maps to: source site's <header class="layout__header"> Vue app — real layout
-  confirmed via side-by-side screenshot comparison: a top bar with a country/
-  currency selector on the left, the logo CENTERED, and search/wishlist/account/
-  cart icons on the right, followed by a SEPARATE centered nav row below (desktop
-  mega-menu: Cosmetics/Fragrance/Skin/discover, each with image-menu columns + an
-  aside banner). Mobile drawer adds a mobile-only "rewards" 5th item. Transparent-
-  over-hero → solid-on-scroll header. `layout_style` lets a merchant switch back
-  to a single-row inline layout if they prefer.
+  Maps to: source site's <header class="layout__header"> Vue app — top bar
+  (country/currency selector left, logo centered, icons right) + a separate
+  centered nav row below (desktop mega-menu: Cosmetics/Fragrance/Skin/discover).
+  Mobile drawer adds a mobile-only "rewards" 5th item. Transparent-over-hero →
+  solid-on-scroll header, correctly offset below the always-visible announcement
+  bar (measured live via JS, since the announcement bar's height varies with
+  content/viewport and isn't a fixed value we can hard-code in CSS).
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
@@ -14,11 +13,26 @@
   data-section-id="{{ section.id }}"
   data-section-type="header"
   data-sticky="{{ section.settings.sticky }}"
+  style="
+    --header-bg: {{ section.settings.color_background }};
+    --header-text: {{ section.settings.color_text }};
+    --header-border: {{ section.settings.color_border }};
+    --header-transparent-text: {{ section.settings.transparent_text_color }};
+    --header-icon-size: {{ section.settings.icon_size }}px;
+    --header-nav-font-size: {{ section.settings.nav_font_size }}px;
+    --header-nav-gap: {{ section.settings.nav_gap }}px;
+    --header-nav-link-color: {{ section.settings.nav_link_color }};
+    --header-nav-link-hover-color: {{ section.settings.nav_link_hover_color }};
+    --header-cart-badge-bg: {{ section.settings.cart_badge_bg_color }};
+    --header-cart-badge-text: {{ section.settings.cart_badge_text_color }};
+    --mega-menu-bg: {{ section.settings.mega_menu_bg_color }};
+    --mega-menu-text: {{ section.settings.mega_menu_text_color }};
+  "
 >
   <div class="site-header__topbar page-width">
     <div class="site-header__topbar-start">
       <button type="button" class="site-header__mobile-toggle" data-drawer-open="MobileMenu" aria-label="{{ 'accessibility.open_menu' | t }}">
-        {%- render 'icon', name: 'menu' -%}
+        {%- render 'icon', name: 'menu', size: section.settings.icon_size -%}
       </button>
 
       {%- if section.settings.show_localization and localization.available_countries.size > 1 -%}
@@ -35,7 +49,7 @@
       {%- endif -%}
     </div>
 
-    <h1 class="site-logo">
+    <h1 class="site-logo" style="--logo-max-height: {{ section.settings.logo_max_height }}px;">
       <a href="{{ routes.root_url }}" title="{{ shop.name }} {{ 'general.home_page' | t: default: 'home page' }}">
         {%- if section.settings.logo != blank -%}
           {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: widths: '100,200,300', alt: shop.name, class: 'site-logo__image' }}
@@ -46,17 +60,23 @@
     </h1>
 
     <div class="site-header__actions">
-      <button type="button" class="site-header__action site-header__action--search" data-drawer-open="SearchDrawer" aria-label="{{ 'accessibility.search' | t: default: 'Search' }}">
-        {%- render 'icon', name: 'search' -%}
-      </button>
-      <a href="{{ routes.root_url }}pages/wishlist" class="site-header__action site-header__action--wishlist" aria-label="{{ 'accessibility.wishlist' | t: default: 'Wishlist' }}">
-        {%- render 'icon', name: 'wishlist' -%}
-      </a>
-      <a href="{{ routes.account_url }}" class="site-header__action site-header__action--account" aria-label="{{ 'accessibility.account' | t: default: 'Account' }}">
-        {%- render 'icon', name: 'account' -%}
-      </a>
+      {%- if section.settings.show_search -%}
+        <button type="button" class="site-header__action site-header__action--search" data-drawer-open="SearchDrawer" aria-label="{{ 'accessibility.search' | t: default: 'Search' }}">
+          {%- render 'icon', name: 'search', size: section.settings.icon_size -%}
+        </button>
+      {%- endif -%}
+      {%- if section.settings.show_wishlist -%}
+        <a href="{{ routes.root_url }}pages/wishlist" class="site-header__action site-header__action--wishlist" aria-label="{{ 'accessibility.wishlist' | t: default: 'Wishlist' }}">
+          {%- render 'icon', name: 'wishlist', size: section.settings.icon_size -%}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_account -%}
+        <a href="{{ routes.account_url }}" class="site-header__action site-header__action--account" aria-label="{{ 'accessibility.account' | t: default: 'Account' }}">
+          {%- render 'icon', name: 'account', size: section.settings.icon_size -%}
+        </a>
+      {%- endif -%}
       <button type="button" class="site-header__action site-header__action--cart" data-drawer-open="CartDrawer" aria-label="{{ 'accessibility.cart' | t: default: 'Cart' }}">
-        {%- render 'icon', name: 'cart' -%}
+        {%- render 'icon', name: 'cart', size: section.settings.icon_size -%}
         <span class="site-header__cart-count" data-cart-count>{{ cart.item_count }}</span>
       </button>
     </div>
@@ -84,6 +104,8 @@
   .site-header {
     position: relative;
     background-color: rgb(var(--color-background));
+    background-color: var(--header-bg, rgb(var(--color-background)));
+    color: var(--header-text, rgb(var(--color-text)));
     font-family: var(--font-body);
     z-index: 30;
   }
@@ -93,19 +115,24 @@
     top: 0;
   }
 
+  /* ---- Transparent-over-hero state (homepage only) ----
+     Offset by --announcement-bar-height (set via JS below) so the transparent
+     header floats correctly below the always-visible announcement bar instead
+     of overlapping/fighting with it at the very top of the page. */
   .site-header--transparent {
     position: absolute;
     inset-inline: 0;
-    top: 0;
+    top: var(--announcement-bar-height, 0px);
     background-color: transparent;
-    color: #fff;
+    color: var(--header-transparent-text, #fff);
   }
 
   .site-header--transparent.site-header--active {
     position: sticky;
-    background-color: rgb(var(--color-background));
-    color: rgb(var(--color-text));
-    box-shadow: 0 1px 0 rgba(var(--color-border), 1);
+    top: 0;
+    background-color: var(--header-bg, rgb(var(--color-background)));
+    color: var(--header-text, rgb(var(--color-text)));
+    box-shadow: 0 1px 0 var(--header-border, rgba(var(--color-border), 1));
     transition: background-color .3s ease, color .3s ease;
   }
 
@@ -150,6 +177,11 @@
     grid-column: 2;
   }
 
+  .site-logo__image {
+    max-height: var(--logo-max-height, 48px);
+    width: auto;
+  }
+
   .site-logo__text {
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
@@ -175,6 +207,11 @@
     cursor: pointer;
   }
 
+  .site-header__action svg {
+    width: var(--header-icon-size, 20px);
+    height: var(--header-icon-size, 20px);
+  }
+
   .site-header__action:focus-visible {
     outline: 2px solid rgb(var(--color-focus-outline));
   }
@@ -187,8 +224,8 @@
     height: 16px;
     padding: 0 3px;
     border-radius: 50%;
-    background: rgb(var(--color-accent));
-    color: #fff;
+    background: var(--header-cart-badge-bg, rgb(var(--color-accent)));
+    color: var(--header-cart-badge-text, #fff);
     font-size: 10px;
     line-height: 16px;
     text-align: center;
@@ -203,7 +240,7 @@
   .site-header__nav-row {
     display: flex;
     justify-content: center;
-    border-top: 1px solid rgba(var(--color-border), .6);
+    border-top: 1px solid var(--header-border, rgba(var(--color-border), .6));
   }
 
   .site-header--inline .site-header__nav-row {
@@ -223,25 +260,23 @@
     display: none;
   }
 
-  .site-header--inline .site-header__nav-row--inline-slot {
-    display: flex;
-    grid-column: 2;
-    border-top: 0;
-  }
-
   .site-header__nav {
     display: flex;
-    gap: 1.75rem;
+    gap: var(--header-nav-gap, 1.75rem);
     padding-block: .625rem;
   }
 
   .site-header__link {
     display: block;
     padding: .5rem 0;
-    color: inherit;
+    color: var(--header-nav-link-color, inherit);
     text-transform: {{ section.settings.nav_text_transform }};
-    font-size: var(--font-size-small);
+    font-size: var(--header-nav-font-size, var(--font-size-small));
     transition: color var(--transition-fast);
+  }
+
+  .site-header__link:hover {
+    color: var(--header-nav-link-hover-color, rgb(var(--color-accent)));
   }
 
   .link--has-mega-menu:hover .mega-menu,
@@ -279,7 +314,8 @@
     visibility: hidden;
     transform: translateY(-8px);
     transition: opacity .2s ease, transform .2s ease, visibility .2s;
-    background: rgb(var(--color-background));
+    background: var(--mega-menu-bg, rgb(var(--color-background)));
+    color: var(--mega-menu-text, rgb(var(--color-text)));
     border-top: 1px solid rgb(var(--color-border));
     box-shadow: 0 12px 24px rgba(0, 0, 0, .08);
   }
@@ -302,7 +338,7 @@
     font-family: var(--font-body);
     font-weight: var(--font-body-weight-demibold);
     text-transform: lowercase;
-    color: rgb(var(--color-text));
+    color: inherit;
   }
 
   .mega-menu__column-list li + li {
@@ -310,11 +346,13 @@
   }
 
   .mega-menu__column-link {
-    color: rgba(var(--color-text), .8);
+    color: inherit;
+    opacity: .8;
     font-size: var(--font-size-small);
   }
 
   .mega-menu__column-link:hover {
+    opacity: 1;
     color: rgb(var(--color-accent));
   }
 
@@ -434,6 +472,19 @@
 
 {% javascript %}
   (function () {
+    // Measure the announcement bar's real rendered height and expose it as a
+    // CSS variable so a transparent header can offset itself below it
+    // instead of overlapping the top of the page.
+    function updateAnnouncementBarHeight() {
+      const bar = document.querySelector('[data-section-type="announcement-bar"]');
+      const height = bar && !bar.hasAttribute('hidden') ? bar.offsetHeight : 0;
+      document.documentElement.style.setProperty('--announcement-bar-height', height + 'px');
+    }
+    updateAnnouncementBarHeight();
+    window.addEventListener('resize', updateAnnouncementBarHeight);
+    window.addEventListener('load', updateAnnouncementBarHeight);
+    document.addEventListener('theme:announcement-bar:dismissed', updateAnnouncementBarHeight);
+
     document.querySelectorAll('[data-section-type="header"]').forEach((header) => {
       if (header.dataset.sticky !== 'true' && !header.classList.contains('site-header--transparent')) return;
       const onScroll = () => {
@@ -483,18 +534,6 @@
       "label": "t:sections.header.main_menu.label"
     },
     {
-      "type": "select",
-      "id": "nav_text_transform",
-      "options": [
-        { "value": "lowercase", "label": "t:sections.common.text_transform.lowercase" },
-        { "value": "uppercase", "label": "t:sections.common.text_transform.uppercase" },
-        { "value": "capitalize", "label": "t:sections.common.text_transform.capitalize" },
-        { "value": "none", "label": "t:sections.common.text_transform.none" }
-      ],
-      "default": "lowercase",
-      "label": "t:sections.header.nav_text_transform.label"
-    },
-    {
       "type": "header",
       "content": "t:sections.header.logo_header"
     },
@@ -514,6 +553,143 @@
       "label": "t:sections.header.logo_width.label"
     },
     {
+      "type": "range",
+      "id": "logo_max_height",
+      "min": 24,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.header.logo_max_height.label",
+      "info": "t:sections.header.logo_max_height.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.icons_header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "default": true,
+      "label": "t:sections.header.show_search.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "default": true,
+      "label": "t:sections.header.show_wishlist.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "default": true,
+      "label": "t:sections.header.show_account.label"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "label": "t:sections.header.icon_size.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.nav_header"
+    },
+    {
+      "type": "select",
+      "id": "nav_text_transform",
+      "options": [
+        { "value": "lowercase", "label": "t:sections.common.text_transform.lowercase" },
+        { "value": "uppercase", "label": "t:sections.common.text_transform.uppercase" },
+        { "value": "capitalize", "label": "t:sections.common.text_transform.capitalize" },
+        { "value": "none", "label": "t:sections.common.text_transform.none" }
+      ],
+      "default": "lowercase",
+      "label": "t:sections.header.nav_text_transform.label"
+    },
+    {
+      "type": "range",
+      "id": "nav_font_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "label": "t:sections.header.nav_font_size.label"
+    },
+    {
+      "type": "range",
+      "id": "nav_gap",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28,
+      "label": "t:sections.header.nav_gap.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.colors_header"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "default": "#ffffff",
+      "label": "t:sections.header.color_background.label"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "default": "#393939",
+      "label": "t:sections.header.color_text.label"
+    },
+    {
+      "type": "color",
+      "id": "color_border",
+      "default": "#e7dae2",
+      "label": "t:sections.header.color_border.label"
+    },
+    {
+      "type": "color",
+      "id": "nav_link_color",
+      "default": "#393939",
+      "label": "t:sections.header.nav_link_color.label"
+    },
+    {
+      "type": "color",
+      "id": "nav_link_hover_color",
+      "default": "#b3848f",
+      "label": "t:sections.header.nav_link_hover_color.label"
+    },
+    {
+      "type": "color",
+      "id": "cart_badge_bg_color",
+      "default": "#b3848f",
+      "label": "t:sections.header.cart_badge_bg_color.label"
+    },
+    {
+      "type": "color",
+      "id": "cart_badge_text_color",
+      "default": "#ffffff",
+      "label": "t:sections.header.cart_badge_text_color.label"
+    },
+    {
+      "type": "color",
+      "id": "mega_menu_bg_color",
+      "default": "#ffffff",
+      "label": "t:sections.header.mega_menu_bg_color.label"
+    },
+    {
+      "type": "color",
+      "id": "mega_menu_text_color",
+      "default": "#393939",
+      "label": "t:sections.header.mega_menu_text_color.label"
+    },
+    {
       "type": "header",
       "content": "t:sections.header.behavior_header"
     },
@@ -529,6 +705,13 @@
       "default": true,
       "label": "t:sections.header.transparent_on_home.label",
       "info": "t:sections.header.transparent_on_home.info"
+    },
+    {
+      "type": "color",
+      "id": "transparent_text_color",
+      "default": "#ffffff",
+      "label": "t:sections.header.transparent_text_color.label",
+      "info": "t:sections.header.transparent_text_color.info"
     },
     {
       "type": "checkbox",
