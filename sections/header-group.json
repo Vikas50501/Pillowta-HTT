@@ -108,11 +108,14 @@
         "discover_banner"
       ],
       "settings": {
+        "layout_style": "centered",
         "main_menu": "main-menu",
+        "nav_text_transform": "lowercase",
         "logo": "shopify://shop_images/Pillowta_logo_1-removebg-preview.png",
         "logo_width": 130,
         "sticky": true,
-        "transparent_on_home": false,
+        "transparent_on_home": true,
+        "show_localization": false,
         "mobile_extra_link_title": "Pillowta",
         "mobile_extra_link": "/pages/kylie-rewards",
         "font_override": "heading"
