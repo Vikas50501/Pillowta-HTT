@@ -12,15 +12,22 @@
     "gradient": {
       "type": "gradient-background",
       "settings": {
-        "color_from": "#CE3C2D",
-        "color_to": "#F4C4BF",
+        "color_from": "#ce3c2d",
+        "color_to": "#f4c4bf",
         "stop_desktop": 78,
         "stop_mobile": 80
       }
     },
     "hero": {
       "type": "product-hero",
-      "settings": {}
+      "settings": {
+        "desktop_image": "shopify://shop_images/pexels-john-rocha-62772-230986.jpg",
+        "desktop_video": "shopify://files/videos/7677261-hd_1920_1080_25fps.mp4",
+        "heading": "gcysgvcs",
+        "button_text": "",
+        "link": "",
+        "font_override": "inherit"
+      }
     },
     "main": {
       "type": "main-product",
@@ -28,25 +35,33 @@
         "description": {
           "type": "accordion",
           "settings": {
-            "title": "description"
+            "title": "description",
+            "content": "",
+            "page": ""
           }
         },
         "ingredients": {
           "type": "accordion",
           "settings": {
-            "title": "ingredients"
+            "title": "ingredients",
+            "content": "",
+            "page": ""
           }
         },
         "how_to_use": {
           "type": "accordion",
           "settings": {
-            "title": "how to use"
+            "title": "how to use",
+            "content": "",
+            "page": ""
           }
         },
         "shipping": {
           "type": "accordion",
           "settings": {
-            "title": "shipping & returns"
+            "title": "shipping & returns",
+            "content": "",
+            "page": ""
           }
         }
       },
@@ -62,7 +77,9 @@
         "enable_shade_finder": false,
         "enable_engraving": true,
         "engraving_button_text": "Engrave your bottle",
-        "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing."
+        "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing.",
+        "engraving_fee_variant": "",
+        "font_override": "inherit"
       }
     },
     "ingredient_tiles": {
@@ -72,6 +89,7 @@
           "type": "note",
           "settings": {
             "group_label": "OPENING NOTES",
+            "image": "shopify://shop_images/pexels-drais-7119596.jpg",
             "name": "star jasmine"
           }
         },
@@ -79,6 +97,7 @@
           "type": "note",
           "settings": {
             "group_label": "OPENING NOTES",
+            "image": "shopify://shop_images/pexels-dibakar-roy-2432543-19608207.jpg",
             "name": "blood orange"
           }
         },
@@ -86,6 +105,7 @@
           "type": "note",
           "settings": {
             "group_label": "HEART NOTES",
+            "image": "shopify://shop_images/we-vibe-toys-nyMfwv7LBPw-unsplash.jpg",
             "name": "golden amber accord"
           }
         },
@@ -93,6 +113,7 @@
           "type": "note",
           "settings": {
             "group_label": "HEART NOTES",
+            "image": "shopify://shop_images/claudia-love-rY-LInOjRGY-unsplash.jpg",
             "name": "benzoin"
           }
         },
@@ -100,6 +121,7 @@
           "type": "note",
           "settings": {
             "group_label": "BASE NOTES",
+            "image": "shopify://shop_images/pexels-amaria-11259997.jpg",
             "name": "vanilla"
           }
         },
@@ -107,6 +129,7 @@
           "type": "note",
           "settings": {
             "group_label": "BASE NOTES",
+            "image": "shopify://shop_images/we-vibe-toys-4S4hB8iFFoY-unsplash.jpg",
             "name": "musk accord"
           }
         }
@@ -120,7 +143,8 @@
         "base_2"
       ],
       "settings": {
-        "title": "the ingredients"
+        "title": "the ingredients",
+        "font_override": "inherit"
       }
     },
     "marketing_tiles": {
@@ -130,23 +154,33 @@
           "type": "tile",
           "settings": {
             "width": "full",
+            "image": "shopify://shop_images/sandalwood.png",
             "title": "from kylie",
-            "text": "intense is my favorite parts of cosmic amplified"
+            "text": "intense is my favorite parts of cosmic amplified",
+            "background_color": "#c53627",
+            "text_color": "#ffffff"
           }
         },
         "the_scent": {
           "type": "tile",
           "settings": {
             "width": "half",
+            "image": "shopify://shop_images/pexels-seyed-reza-kamyab-3410582-5095591.jpg",
             "title": "the scent",
-            "text": "a warm blend of creamy softness and rich vanilla for an irresistible finish"
+            "text": "a warm blend of creamy softness and rich vanilla for an irresistible finish",
+            "background_color": "#c53627",
+            "text_color": "#ffffff"
           }
         },
         "the_sizes": {
           "type": "tile",
           "settings": {
             "width": "half",
-            "title": "the sizes"
+            "image": "shopify://shop_images/clary-sage.png",
+            "title": "the sizes",
+            "text": "",
+            "background_color": "#c53627",
+            "text_color": "#ffffff"
           }
         }
       },
@@ -155,7 +189,9 @@
         "the_scent",
         "the_sizes"
       ],
-      "settings": {}
+      "settings": {
+        "font_override": "inherit"
+      }
     },
     "cosmic_universe": {
       "type": "cosmic-universe",
@@ -163,6 +199,8 @@
         "fragrance_1": {
           "type": "fragrance_card",
           "settings": {
+            "product": "",
+            "image": "shopify://shop_images/rati-sensual-oil.png",
             "title": "cosmic kylie jenner",
             "fragrance_family": "ambery floral",
             "about_the_scent": "warm, comforting, enveloping",
@@ -172,6 +210,7 @@
         "fragrance_2": {
           "type": "fragrance_card",
           "settings": {
+            "product": "",
             "title": "cosmic kylie jenner 2.0",
             "fragrance_family": "floral amber",
             "about_the_scent": "fresh, bright, sweet",
@@ -181,6 +220,7 @@
         "fragrance_3": {
           "type": "fragrance_card",
           "settings": {
+            "product": "",
             "title": "cosmic kylie jenner intense",
             "fragrance_family": "ambery gourmand",
             "about_the_scent": "creamy, warm, rich",
@@ -194,7 +234,8 @@
         "fragrance_3"
       ],
       "settings": {
-        "title": "THE COSMIC UNIVERSE"
+        "title": "THE COSMIC UNIVERSE",
+        "font_override": "inherit"
       }
     },
     "social": {
@@ -202,7 +243,8 @@
       "settings": {
         "title": "on social",
         "feed_id": "kylie_1",
-        "page_size": 8
+        "page_size": 8,
+        "font_override": "inherit"
       }
     },
     "reviews": {
