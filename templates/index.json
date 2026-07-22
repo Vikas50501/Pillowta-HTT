@@ -13,7 +13,6 @@
       "type": "hero",
       "settings": {
         "height": "tall",
-        "desktop_image": "shopify://shop_images/pexels-alice-c-70978593-8761243.jpg",
         "desktop_video": "shopify://files/videos/Pillowta-1.mp4",
         "mobile_layout": "below-image",
         "overlay_color": "#000000",
