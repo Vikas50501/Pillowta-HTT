@@ -8,9 +8,10 @@
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
-  class="hero hero--{{ section.settings.height }}{% if section.settings.font_override != 'inherit' %} hero--font-{{ section.settings.font_override }}{% endif %}"
+  class="hero{% if section.settings.font_override != 'inherit' %} hero--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="hero"
+  style="--hero-height-mobile: {{ section.settings.height_mobile }}vh; --hero-height-desktop: {{ section.settings.height_desktop }}vh;"
 >
   <a
     href="{{ section.settings.link | default: '#' }}"
@@ -83,12 +84,14 @@
     position: relative;
     overflow: hidden;
     background-color: rgb(var(--color-background-alt));
+    min-height: var(--hero-height-mobile, 75vh);
   }
 
-  .hero--short { min-height: 25rem; }
-  .hero--medium { min-height: 37.5rem; }
-  .hero--tall { min-height: 45rem; }
-  .hero--auto { min-height: 0; }
+  @media screen and (min-width: 60em) {
+    .hero {
+      min-height: var(--hero-height-desktop, 65vh);
+    }
+  }
 
   .hero__media-link {
     position: absolute;
@@ -213,16 +216,24 @@
   "name": "t:sections.hero.name",
   "settings": [
     {
-      "type": "select",
-      "id": "height",
-      "options": [
-        { "value": "short", "label": "t:sections.hero.height.short" },
-        { "value": "medium", "label": "t:sections.hero.height.medium" },
-        { "value": "tall", "label": "t:sections.hero.height.tall" },
-        { "value": "auto", "label": "t:sections.hero.height.auto" }
-      ],
-      "default": "medium",
-      "label": "t:sections.hero.height.label"
+      "type": "range",
+      "id": "height_desktop",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 65,
+      "label": "t:sections.hero.height_desktop.label"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 75,
+      "label": "t:sections.hero.height_mobile.label"
     },
     {
       "type": "header",

@@ -368,13 +368,8 @@
     },
     "hero": {
       "name": "Hero",
-      "height": {
-        "label": "Height",
-        "short": "Short",
-        "medium": "Medium",
-        "tall": "Tall",
-        "auto": "Auto (fit content)"
-      },
+      "height_desktop": { "label": "Height (desktop)", "info": "As a percentage of the viewport height." },
+      "height_mobile": { "label": "Height (mobile)", "info": "As a percentage of the viewport height." },
       "desktop_media_header": "Desktop media",
       "desktop_image": { "label": "Desktop image" },
       "desktop_video": { "label": "Desktop video (MP4)" },
