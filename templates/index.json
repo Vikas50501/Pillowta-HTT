@@ -86,6 +86,7 @@
         "p3",
         "p4"
       ],
+      "disabled": true,
       "settings": {
         "title": "",
         "view_all_text": "",
@@ -153,6 +154,7 @@
         "p3",
         "p4"
       ],
+      "disabled": true,
       "settings": {
         "title": "",
         "view_all_text": "shop now",
@@ -331,9 +333,9 @@
     "featured_content_summer_look",
     "featured_products_1",
     "hero_summer_faves",
+    "fireworks_cosmic",
     "featured_products_2",
     "hero_scent_of_summer",
-    "fireworks_cosmic",
     "shop_by_category",
     "hero_vto",
     "shop_our_ig",
