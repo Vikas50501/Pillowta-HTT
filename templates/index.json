@@ -45,9 +45,9 @@
         "button_text": "shop now",
         "link": "/products/kylie-s-summer-look-bundle",
         "button_style": "secondary",
-        "show_product_rail": false,
+        "show_product_rail": true,
         "collection": "",
-        "product_limit": 12,
+        "product_limit": 4,
         "font_override": "inherit"
       }
     },
