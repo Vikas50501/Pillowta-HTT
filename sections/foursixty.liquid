@@ -17,7 +17,7 @@
 
   <div
     class="foursixty__grid page-width"
-    style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: {{ section.settings.columns_mobile }};"
+    style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: {{ section.settings.columns_mobile }}; --foursixty-gap: {{ section.settings.tile_gap }}px; --foursixty-radius: {{ section.settings.tile_radius }}px;"
   >
     {%- for block in section.blocks -%}
       {%- liquid
@@ -61,7 +61,7 @@
   .foursixty__grid {
     display: grid;
     grid-template-columns: repeat(var(--columns-mobile, 3), 1fr);
-    gap: 2px;
+    gap: var(--foursixty-gap, 8px);
   }
 
   .foursixty__tile {
@@ -69,6 +69,7 @@
     display: block;
     aspect-ratio: 1 / 1;
     overflow: hidden;
+    border-radius: var(--foursixty-radius, 12px);
     background: rgb(var(--color-background-alt));
   }
 
@@ -143,6 +144,26 @@
       "step": 1,
       "default": 3,
       "label": "t:sections.foursixty.columns_mobile.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_gap",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8,
+      "label": "t:sections.foursixty.tile_gap.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12,
+      "label": "t:sections.foursixty.tile_radius.label"
     },
     {
       "type": "select",
