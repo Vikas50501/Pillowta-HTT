@@ -381,7 +381,7 @@
         "post_jKnxLN": {
           "type": "post",
           "settings": {
-            "featured": true,
+            "featured": false,
             "video": "shopify://files/videos/Pillowta-1.mp4",
             "alt": "",
             "link": ""
