@@ -465,6 +465,7 @@
     },
     "brand_principles": {
       "type": "brand-principles",
+      "disabled": true,
       "settings": {
         "font_override": "inherit"
       }
