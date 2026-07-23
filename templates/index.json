@@ -245,6 +245,33 @@
             "link": "/collections/kylie-cosmetics-lips"
           }
         },
+        "tile_xKDf4Q": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
+        "tile_RtrHz3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
+        "tile_tCJPgG": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
         "fragrance": {
           "type": "tile",
           "disabled": true,
@@ -290,6 +317,9 @@
         "lips",
         "tile_zYDV8z",
         "tile_Jidgg4",
+        "tile_xKDf4Q",
+        "tile_RtrHz3",
+        "tile_tCJPgG",
         "fragrance",
         "face",
         "blush",
