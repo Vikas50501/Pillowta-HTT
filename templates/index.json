@@ -330,7 +330,7 @@
         "title": "shop by category",
         "columns_desktop": 3,
         "columns_mobile": 2,
-        "enable_hover_media": false,
+        "enable_hover_media": true,
         "font_override": "inherit"
       }
     },
