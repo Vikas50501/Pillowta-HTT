@@ -207,7 +207,7 @@
       ],
       "settings": {
         "title": "LOVE FOR COSMIC",
-        "mode": "grid",
+        "mode": "row",
         "columns_desktop": 5,
         "columns_mobile": 2,
         "tile_gap": 16,
