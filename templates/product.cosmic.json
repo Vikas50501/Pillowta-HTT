@@ -180,7 +180,7 @@
             "title": "the sizes",
             "text": "",
             "background_color": "#c53627",
-            "text_color": "#ffffff"
+            "text_color": "#EFD7E5"
           }
         }
       },
@@ -200,7 +200,7 @@
           "type": "fragrance_card",
           "settings": {
             "product": "",
-            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "image": "shopify://shop_images/we-vibe-toys-nyMfwv7LBPw-unsplash.jpg",
             "title": "cosmic kylie jenner",
             "fragrance_family": "ambery floral",
             "about_the_scent": "warm, comforting, enveloping",
@@ -211,6 +211,7 @@
           "type": "fragrance_card",
           "settings": {
             "product": "",
+            "image": "shopify://shop_images/claudia-love-rY-LInOjRGY-unsplash.jpg",
             "title": "cosmic kylie jenner 2.0",
             "fragrance_family": "floral amber",
             "about_the_scent": "fresh, bright, sweet",
@@ -221,6 +222,7 @@
           "type": "fragrance_card",
           "settings": {
             "product": "",
+            "image": "shopify://shop_images/we-vibe-toys-4S4hB8iFFoY-unsplash.jpg",
             "title": "cosmic kylie jenner intense",
             "fragrance_family": "ambery gourmand",
             "about_the_scent": "creamy, warm, rich",
@@ -251,8 +253,91 @@
     },
     "reviews": {
       "type": "reviews",
+      "disabled": true,
       "settings": {
         "background_color": "#f8f1f4"
+      }
+    },
+    "rewards_steps_8xUM8P": {
+      "type": "rewards-steps",
+      "blocks": {
+        "item_3CCYgw": {
+          "type": "item",
+          "settings": {
+            "points_value": "01",
+            "title": "create an account",
+            "text": "start here first"
+          }
+        },
+        "item_K4DLLj": {
+          "type": "item",
+          "settings": {
+            "points_value": "02",
+            "title": "earn points",
+            "text": "$1 = 1 point earned"
+          }
+        },
+        "item_iF9gaP": {
+          "type": "item",
+          "settings": {
+            "points_value": "03",
+            "title": "redeem points",
+            "text": "redeem points for exclusive discounts"
+          }
+        },
+        "item_jt3Hga": {
+          "type": "item",
+          "settings": {
+            "points_value": "04",
+            "title": "Test",
+            "text": "fhdsvcuyedv"
+          }
+        }
+      },
+      "block_order": [
+        "item_3CCYgw",
+        "item_K4DLLj",
+        "item_iF9gaP",
+        "item_jt3Hga"
+      ],
+      "name": "t:sections.rewards-steps.name",
+      "settings": {
+        "title": "how it works",
+        "columns": 4,
+        "font_override": "inherit"
+      }
+    },
+    "featured_content_KPg3bU": {
+      "type": "featured-content",
+      "name": "t:sections.featured-content.name",
+      "settings": {
+        "video": "shopify://files/videos/Pillowta-1.mp4",
+        "reverse": true,
+        "media_aspect_ratio": "4 / 3",
+        "media_radius": 20,
+        "color_background": "",
+        "color_heading": "#b3848f",
+        "color_text": "#393939",
+        "heading_font_size": 34,
+        "section_padding_left": 50,
+        "section_padding_right": 50,
+        "tile_background_color": "#ffffff",
+        "tile_max_width": 1728,
+        "tile_padding_top": 0,
+        "tile_padding_bottom": 0,
+        "tile_padding_left": 80,
+        "tile_padding_right": 0,
+        "tile_radius": 20,
+        "heading": "kylie's summer look",
+        "subtext": "<p>recreate this flushed and contoured summer look featuring our best-selling hybrid blush and precision pout lip liner.</p>",
+        "text_align": "center",
+        "button_text": "shop now",
+        "link": "",
+        "button_style": "secondary",
+        "show_product_rail": false,
+        "collection": "",
+        "product_limit": 12,
+        "font_override": "inherit"
       }
     }
   },
@@ -264,6 +349,8 @@
     "marketing_tiles",
     "cosmic_universe",
     "social",
-    "reviews"
+    "reviews",
+    "rewards_steps_8xUM8P",
+    "featured_content_KPg3bU"
   ]
 }
