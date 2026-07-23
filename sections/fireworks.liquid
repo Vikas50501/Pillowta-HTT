@@ -15,7 +15,13 @@
     <h2 class="fireworks__title page-width">{{ section.settings.title }}</h2>
   {%- endif -%}
 
-  <div
+  {%- liquid
+    assign wrapper_tag = 'div'
+    if section.settings.mode == 'row'
+      assign wrapper_tag = 'product-carousel'
+    endif
+  -%}
+  <{{ wrapper_tag }}
     class="fireworks__track fireworks__track--{{ section.settings.mode }} page-width"
     style="
       --columns-desktop: {{ section.settings.columns_desktop }};
@@ -24,34 +30,41 @@
       --fireworks-radius: {{ section.settings.tile_radius }}px;
       --fireworks-caption-color: {{ section.settings.caption_color }};
     "
-    {% if section.settings.mode == 'row' %}data-carousel-track{% endif %}
   >
-    {%- for block in section.blocks -%}
-      {%- liquid
-        assign tile_tag = 'div'
-        if block.settings.link != blank
-          assign tile_tag = 'a'
-        endif
-      -%}
-      <{{ tile_tag }}
-        {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
-        class="fireworks__tile"
-        {{ block.shopify_attributes }}
-      >
-        <div class="fireworks__media">
-          {%- if block.settings.video != blank -%}
-            {{ block.settings.video | video_tag: image_size: '600x', autoplay: section.settings.autoplay, loop: true, muted: true, controls: false, class: 'fireworks__video' }}
-          {%- elsif block.settings.poster != blank -%}
-            {{ block.settings.poster | image_url: width: 600 | image_tag: widths: '300,450,600', alt: block.settings.caption, class: 'fireworks__poster', loading: 'lazy' }}
-          {%- endif -%}
+    <div class="fireworks__tiles" {% if section.settings.mode == 'row' %}data-carousel-track{% endif %}>
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign tile_tag = 'div'
+          if block.settings.link != blank
+            assign tile_tag = 'a'
+          endif
+        -%}
+        <{{ tile_tag }}
+          {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
+          class="fireworks__tile"
+          {% if section.settings.mode == 'row' %}data-carousel-slide{% endif %}
+          {{ block.shopify_attributes }}
+        >
+          <div class="fireworks__media">
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: image_size: '600x', autoplay: section.settings.autoplay, loop: true, muted: true, controls: false, class: 'fireworks__video' }}
+            {%- elsif block.settings.poster != blank -%}
+              {{ block.settings.poster | image_url: width: 600 | image_tag: widths: '300,450,600', alt: block.settings.caption, class: 'fireworks__poster', loading: 'lazy' }}
+            {%- endif -%}
 
-          {%- if section.settings.show_captions and block.settings.caption != blank -%}
-            <span class="fireworks__caption">{{ block.settings.caption }}</span>
-          {%- endif -%}
-        </div>
-      </{{ tile_tag }}>
-    {%- endfor -%}
-  </div>
+            {%- if section.settings.show_captions and block.settings.caption != blank -%}
+              <span class="fireworks__caption">{{ block.settings.caption }}</span>
+            {%- endif -%}
+          </div>
+        </{{ tile_tag }}>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.mode == 'row' -%}
+      <button type="button" class="fireworks__nav fireworks__nav--prev" data-carousel-prev aria-label="{{ 'accessibility.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+      <button type="button" class="fireworks__nav fireworks__nav--next" data-carousel-next aria-label="{{ 'accessibility.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+    {%- endif -%}
+  </{{ wrapper_tag }}>
 </div>
 
 {% stylesheet %}
@@ -68,13 +81,17 @@
     margin-bottom: 1.5rem;
   }
 
-  .fireworks__track--grid {
+  .fireworks__track--row {
+    position: relative;
+  }
+
+  .fireworks__track--grid .fireworks__tiles {
     display: grid;
     grid-template-columns: repeat(var(--columns-mobile, 2), 1fr);
     gap: var(--fireworks-gap, 16px);
   }
 
-  .fireworks__track--row {
+  .fireworks__track--row .fireworks__tiles {
     display: flex;
     gap: var(--fireworks-gap, 16px);
     overflow-x: auto;
@@ -82,7 +99,7 @@
     scrollbar-width: none;
   }
 
-  .fireworks__track--row::-webkit-scrollbar {
+  .fireworks__track--row .fireworks__tiles::-webkit-scrollbar {
     display: none;
   }
 
@@ -90,6 +107,25 @@
     flex: 0 0 calc((100% - (var(--columns-mobile, 2) - 1) * var(--fireworks-gap, 16px)) / var(--columns-mobile, 2));
     scroll-snap-align: start;
   }
+
+  .fireworks__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--color-background));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+  }
+
+  .fireworks__nav--prev { left: -1.25rem; }
+  .fireworks__nav--next { right: -1.25rem; }
 
   .fireworks__tile {
     position: relative;
@@ -120,7 +156,7 @@
   }
 
   @media screen and (min-width: 45em) {
-    .fireworks__track--grid {
+    .fireworks__track--grid .fireworks__tiles {
       grid-template-columns: repeat(var(--columns-desktop, 5), 1fr);
     }
 
