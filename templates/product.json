@@ -67,7 +67,7 @@
         "enable_engraving": false,
         "engraving_button_text": "Engrave your bottle",
         "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing.",
-        "engraving_fee_variant": "",
+        "engraving_fee_variant": "rati",
         "font_override": "inherit"
       }
     },
