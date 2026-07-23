@@ -245,6 +245,33 @@
             "link": "/collections/kylie-cosmetics-lips"
           }
         },
+        "tile_xKDf4Q": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
+        "tile_RtrHz3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
+        "tile_tCJPgG": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/look-studio-nTR3bFq1KWg-unsplash.jpg",
+            "hover_video": "shopify://files/videos/Pillowta-1.mp4",
+            "title": "lips",
+            "link": "/collections/kylie-cosmetics-lips"
+          }
+        },
         "fragrance": {
           "type": "tile",
           "disabled": true,
@@ -290,6 +317,9 @@
         "lips",
         "tile_zYDV8z",
         "tile_Jidgg4",
+        "tile_xKDf4Q",
+        "tile_RtrHz3",
+        "tile_tCJPgG",
         "fragrance",
         "face",
         "blush",
@@ -369,7 +399,7 @@
             "link": ""
           }
         },
-        "post_ccmLP6": {
+        "post_LWDaAP": {
           "type": "post",
           "settings": {
             "featured": false,
@@ -381,8 +411,35 @@
         "post_jKnxLN": {
           "type": "post",
           "settings": {
-            "featured": false,
+            "featured": true,
             "video": "shopify://files/videos/Pillowta-1.mp4",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_kgVBhW": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_y3ztwN": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_LcedEb": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
             "alt": "",
             "link": ""
           }
@@ -393,12 +450,15 @@
         "post_cnVgXc",
         "post_FmCqVz",
         "post_Ld4GMr",
-        "post_ccmLP6",
-        "post_jKnxLN"
+        "post_LWDaAP",
+        "post_jKnxLN",
+        "post_kgVBhW",
+        "post_y3ztwN",
+        "post_LcedEb"
       ],
       "settings": {
         "title": "SHOP OUR IG",
-        "columns_desktop": 7,
+        "columns_desktop": 5,
         "columns_mobile": 3,
         "font_override": "inherit"
       }
