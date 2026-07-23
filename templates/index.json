@@ -32,7 +32,7 @@
         "button2_text": "",
         "link2": "",
         "button2_style": "secondary",
-        "font_override": "accent"
+        "font_override": "body"
       }
     },
     "featured_content_summer_look": {
