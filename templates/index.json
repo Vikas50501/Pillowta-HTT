@@ -140,9 +140,14 @@
       "type": "fireworks",
       "settings": {
         "title": "LOVE FOR COSMIC",
-        "channel": "us_kylie_cosmetics",
-        "playlist": "5ndJV2",
         "mode": "grid",
+        "columns_desktop": 5,
+        "columns_mobile": 2,
+        "tile_gap": 16,
+        "tile_radius": 10,
+        "autoplay": true,
+        "show_captions": true,
+        "caption_color": "#ffffff",
         "font_override": "inherit"
       }
     },
@@ -476,6 +481,7 @@
         "qa_6EGjY3": {
           "type": "qa",
           "settings": {
+            "category": "orders",
             "question": "Can I cancel my order?",
             "answer": ""
           }
@@ -483,6 +489,7 @@
         "qa_JddaEP": {
           "type": "qa",
           "settings": {
+            "category": "orders",
             "question": "How can I track my package?",
             "answer": ""
           }
@@ -490,6 +497,7 @@
         "qa_U3CCY8": {
           "type": "qa",
           "settings": {
+            "category": "orders",
             "question": "Do you offer returns?",
             "answer": ""
           }
@@ -502,7 +510,7 @@
       ],
       "name": "t:sections.faq-accordion.name",
       "settings": {
-        "category_title": "ORDERS",
+        "title": "FAQ",
         "font_override": "inherit"
       }
     }

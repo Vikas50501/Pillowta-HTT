@@ -7,10 +7,35 @@
 {% endcomment %}
 <footer
   id="shopify-section-{{ section.id }}"
-  class="site-footer{% if section.settings.font_override != 'inherit' %} site-footer--font-{{ section.settings.font_override }}{% endif %}"
+  class="site-footer{% if section.settings.font_override != 'inherit' %} site-footer--font-{{ section.settings.font_override }}{% endif %}{% unless section.settings.show_dividers %} site-footer--no-dividers{% endunless %}"
   data-section-id="{{ section.id }}"
   data-section-type="footer"
->
+  style="
+    {%- if section.settings.background_color != blank -%}
+    --footer-bg: {{ section.settings.background_color }};
+    {%- endif -%}
+    {%- if section.settings.text_color != blank -%}
+    --footer-text: {{ section.settings.text_color }};
+    {%- endif -%}
+    {%- if section.settings.heading_color != blank -%}
+    --footer-heading: {{ section.settings.heading_color }};
+    {%- endif -%}
+    {%- if section.settings.link_color != blank -%}
+    --footer-link: {{ section.settings.link_color }};
+    {%- endif -%}
+    {%- if section.settings.link_hover_color != blank -%}
+    --footer-link-hover: {{ section.settings.link_hover_color }};
+    {%- endif -%}
+    {%- if section.settings.border_color != blank -%}
+    --footer-border: {{ section.settings.border_color }};
+    {%- endif -%}
+    {%- if section.settings.icon_color != blank -%}
+    --footer-icon-color: {{ section.settings.icon_color }};
+    {%- endif -%}
+    --footer-columns-align: {{ section.settings.columns_alignment }};
+    --footer-icon-size: {{ section.settings.icon_size }}px;
+    --footer-copyright-size: {{ section.settings.copyright_font_size }}px;
+  ">
   <div class="site-footer__container page-width">
     {%- if section.settings.show_newsletter -%}
       <div class="site-footer__newsletter">
@@ -28,7 +53,7 @@
             placeholder="{{ 'general.email_placeholder' | t: default: 'Email address' }}"
             required
           >
-          <button type="submit" class="action action--primary">
+          <button type="submit" class="action action--{{ section.settings.newsletter_button_style }}">
             {{ section.settings.newsletter_button_text }}
           </button>
           {%- if form.posted_successfully? -%}
@@ -43,6 +68,9 @@
         {%- case block.type -%}
           {%- when 'link_list' -%}
             <nav class="site-footer__menu-column" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <p class="site-footer__menu-title">{{ block.settings.title }}</p>
+              {%- endif -%}
               {%- if block.settings.menu != blank -%}
                 <ul class="linklist linklist--footer">
                   {%- for link in block.settings.menu.links -%}
@@ -57,19 +85,19 @@
 
     <ul class="site-footer__social-icons">
       {%- if settings.social_instagram != blank -%}
-        <li class="social-icon"><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a></li>
+        <li class="social-icon"><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram', icon_size: section.settings.icon_size %}</a></li>
       {%- endif -%}
       {%- if settings.social_facebook != blank -%}
-        <li class="social-icon"><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a></li>
+        <li class="social-icon"><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook', icon_size: section.settings.icon_size %}</a></li>
       {%- endif -%}
       {%- if settings.social_twitter != blank -%}
-        <li class="social-icon"><a href="{{ settings.social_twitter }}" target="_blank" rel="noopener" aria-label="Twitter">{% render 'icon', name: 'twitter' %}</a></li>
+        <li class="social-icon"><a href="{{ settings.social_twitter }}" target="_blank" rel="noopener" aria-label="Twitter">{% render 'icon', name: 'twitter', icon_size: section.settings.icon_size %}</a></li>
       {%- endif -%}
       {%- if settings.social_tiktok != blank -%}
-        <li class="social-icon"><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a></li>
+        <li class="social-icon"><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok', icon_size: section.settings.icon_size %}</a></li>
       {%- endif -%}
       {%- if settings.social_youtube != blank -%}
-        <li class="social-icon"><a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a></li>
+        <li class="social-icon"><a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon', name: 'youtube', icon_size: section.settings.icon_size %}</a></li>
       {%- endif -%}
     </ul>
 
@@ -83,8 +111,8 @@
 
 {% stylesheet %}
   .site-footer {
-    background-color: rgb(var(--color-background-alt));
-    color: rgb(var(--color-text));
+    background-color: var(--footer-bg, rgb(var(--color-background-alt)));
+    color: var(--footer-text, rgb(var(--color-text)));
     font-family: var(--font-body);
     padding-top: var(--section-spacing);
     padding-bottom: var(--section-spacing);
@@ -99,6 +127,7 @@
   .site-footer__newsletter-title {
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
+    color: var(--footer-heading, inherit);
   }
 
   .site-footer__newsletter-form {
@@ -111,7 +140,7 @@
     flex: 1;
     padding: 0 1rem;
     height: 2.5rem;
-    border: 1px solid rgb(var(--color-border));
+    border: 1px solid var(--footer-border, rgb(var(--color-border)));
     border-radius: var(--radius-sm);
     background: rgb(var(--color-background));
   }
@@ -120,10 +149,23 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--grid-gutter);
-    justify-content: center;
+    justify-content: var(--footer-columns-align, center);
     padding-block: 2rem;
-    border-top: 1px solid rgb(var(--color-border));
-    border-bottom: 1px solid rgb(var(--color-border));
+    border-top: 1px solid var(--footer-border, rgb(var(--color-border)));
+    border-bottom: 1px solid var(--footer-border, rgb(var(--color-border)));
+  }
+
+  .site-footer--no-dividers .site-footer__menus {
+    border-top: none;
+    border-bottom: none;
+  }
+
+  .site-footer__menu-title {
+    margin: 0 0 .75rem;
+    text-transform: uppercase;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-body-weight-demibold);
+    color: var(--footer-heading, inherit);
   }
 
   .linklist--footer li {
@@ -133,25 +175,30 @@
   .linklist--footer a {
     font-size: var(--font-size-small);
     text-transform: lowercase;
+    color: var(--footer-link, inherit);
+  }
+
+  .linklist--footer a:hover {
+    color: var(--footer-link-hover, var(--footer-link, inherit));
   }
 
   .site-footer__social-icons {
     display: flex;
-    justify-content: center;
+    justify-content: var(--footer-columns-align, center);
     gap: 1rem;
     padding-top: 1.5rem;
   }
 
   .social-icon a {
     display: inline-flex;
-    color: rgb(var(--color-text));
+    color: var(--footer-icon-color, var(--footer-text, rgb(var(--color-text))));
   }
 
   .site-footer__copyright {
     text-align: center;
     margin-top: 1.5rem;
-    font-size: var(--font-size-caption);
-    color: rgba(var(--color-text), .7);
+    font-size: var(--footer-copyright-size, var(--font-size-caption));
+    color: var(--footer-text, rgba(var(--color-text), .7));
   }
 
   @media screen and (max-width: 44.99em) {
@@ -193,6 +240,91 @@
       "label": "t:sections.footer.newsletter_button_text.label"
     },
     {
+      "type": "select",
+      "id": "newsletter_button_style",
+      "options": [
+        { "value": "primary", "label": "t:sections.common.button_style.primary" },
+        { "value": "secondary", "label": "t:sections.common.button_style.secondary" }
+      ],
+      "default": "primary",
+      "label": "t:sections.common.button_style.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.colors_header"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:sections.footer.background_color.label",
+      "info": "t:sections.footer.background_color.info"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.footer.text_color.label"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.footer.heading_color.label"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "t:sections.footer.link_color.label"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "t:sections.footer.link_hover_color.label"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:sections.footer.border_color.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.layout_header"
+    },
+    {
+      "type": "select",
+      "id": "columns_alignment",
+      "options": [
+        { "value": "flex-start", "label": "t:sections.common.align.left" },
+        { "value": "center", "label": "t:sections.common.align.center" },
+        { "value": "flex-end", "label": "t:sections.common.align.right" }
+      ],
+      "default": "center",
+      "label": "t:sections.footer.columns_alignment.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "default": true,
+      "label": "t:sections.footer.show_dividers.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.social_header"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18,
+      "label": "t:sections.footer.icon_size.label"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "t:sections.footer.icon_color.label"
+    },
+    {
       "type": "header",
       "content": "t:sections.footer.copyright_header"
     },
@@ -201,6 +333,16 @@
       "id": "copyright_text",
       "label": "t:sections.footer.copyright_text.label",
       "info": "t:sections.footer.copyright_text.info"
+    },
+    {
+      "type": "range",
+      "id": "copyright_font_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "label": "t:sections.footer.copyright_font_size.label"
     },
     {
       "type": "select",
@@ -220,6 +362,11 @@
       "type": "link_list",
       "name": "t:sections.footer.blocks.link_list.name",
       "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.footer.blocks.link_list.title.label"
+        },
         {
           "type": "link_list",
           "id": "menu",

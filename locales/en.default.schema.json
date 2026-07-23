@@ -302,11 +302,26 @@
       "newsletter_title": { "label": "Heading" },
       "newsletter_subtext": { "label": "Subtext" },
       "newsletter_button_text": { "label": "Button text" },
+      "colors_header": "Colors",
+      "background_color": { "label": "Background", "info": "Leave blank to use the theme's default section background." },
+      "text_color": { "label": "Text" },
+      "heading_color": { "label": "Headings" },
+      "link_color": { "label": "Links" },
+      "link_hover_color": { "label": "Links (hover)" },
+      "border_color": { "label": "Dividers & input border" },
+      "layout_header": "Layout",
+      "columns_alignment": { "label": "Columns alignment" },
+      "show_dividers": { "label": "Show divider lines" },
+      "social_header": "Social icons",
+      "icon_size": { "label": "Icon size" },
+      "icon_color": { "label": "Icon color" },
       "copyright_header": "Copyright",
       "copyright_text": { "label": "Copyright text", "info": "Defaults to your shop name if left blank." },
+      "copyright_font_size": { "label": "Copyright text size" },
       "blocks": {
         "link_list": {
           "name": "Link list column",
+          "title": { "label": "Column heading" },
           "menu": { "label": "Menu" }
         }
       }
@@ -451,14 +466,28 @@
       }
     },
     "fireworks": {
-      "name": "Fireworks (shoppable video)",
+      "name": "Video gallery",
       "title": { "label": "Title" },
-      "channel": { "label": "Firework channel", "info": "e.g. us_kylie_cosmetics — provided by your Firework (fw.tv) account." },
-      "playlist": { "label": "Playlist ID" },
       "mode": {
         "label": "Layout",
-        "row": "Row",
+        "row": "Scrolling row",
         "grid": "Grid"
+      },
+      "columns_desktop": { "label": "Columns (desktop)" },
+      "columns_mobile": { "label": "Columns (mobile)" },
+      "tile_gap": { "label": "Tile spacing" },
+      "tile_radius": { "label": "Tile corner radius" },
+      "autoplay": { "label": "Autoplay videos", "info": "Videos always play muted and looped." },
+      "show_captions": { "label": "Show captions" },
+      "caption_color": { "label": "Caption color" },
+      "blocks": {
+        "video": {
+          "name": "Video",
+          "video": { "label": "Video" },
+          "poster": { "label": "Poster image", "info": "Shown if no video is set." },
+          "caption": { "label": "Caption" },
+          "link": { "label": "Link", "info": "Where this tile goes when clicked, e.g. a product page." }
+        }
       }
     },
     "multicolumn": {
@@ -674,11 +703,20 @@
       "show_title": { "label": "Show page title" }
     },
     "faq-accordion": {
-      "name": "FAQ category",
-      "category_title": { "label": "Category title" },
+      "name": "FAQ",
+      "title": { "label": "Title" },
       "blocks": {
         "qa": {
           "name": "Question",
+          "category": {
+            "label": "Category",
+            "orders": "orders",
+            "payment": "payment",
+            "accounts": "accounts",
+            "products": "products",
+            "shipping": "shipping",
+            "contact": "contact"
+          },
           "question": { "label": "Question" },
           "answer": { "label": "Answer" }
         }

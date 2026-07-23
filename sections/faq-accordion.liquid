@@ -1,8 +1,9 @@
 {% comment %}
   Maps to: source site's per-category `accordion-faq` Vue sections — real category
   structure recovered: Orders, Payment, Accounts, Products, Shipping, Contact (6
-  categories, one section per category on the real FAQ page). Rebuilt as native
-  Liquid <details> accordions (same open/close feel, no Vue dependency needed).
+  categories, one section per category on the real FAQ page). Rebuilt as ONE
+  section with a category tag per question block, rendering clickable category
+  tabs above native <details> accordions (same open/close feel, no Vue needed).
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
@@ -11,13 +12,46 @@
   data-section-type="faq-accordion"
 >
   <div class="faq-accordion__inner page-width">
-    {%- if section.settings.category_title != blank -%}
-      <h2 class="faq-accordion__category">{{ section.settings.category_title }}</h2>
+    {%- if section.settings.title != blank -%}
+      <h2 class="faq-accordion__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    {%- liquid
+      assign category_keys = ''
+      for block in section.blocks
+        assign cat = block.settings.category
+        unless category_keys contains cat
+          assign category_keys = category_keys | append: cat | append: ','
+        endunless
+      endfor
+      assign category_list = category_keys | split: ','
+      assign active_category = category_list.first
+    -%}
+
+    {%- if category_list.size > 1 -%}
+      <div class="faq-accordion__tabs" role="tablist">
+        {%- for cat in category_list -%}
+          <button
+            type="button"
+            class="faq-accordion__tab{% if cat == active_category %} is-active{% endif %}"
+            data-faq-tab="{{ cat }}"
+            role="tab"
+            aria-selected="{% if cat == active_category %}true{% else %}false{% endif %}"
+          >
+            {{ cat }}
+          </button>
+        {%- endfor -%}
+      </div>
     {%- endif -%}
 
     <div class="faq-accordion__list">
       {%- for block in section.blocks -%}
-        <details class="accordion faq-accordion__item" {{ block.shopify_attributes }}>
+        <details
+          class="accordion faq-accordion__item"
+          data-faq-category="{{ block.settings.category }}"
+          {% unless block.settings.category == active_category %}hidden{% endunless %}
+          {{ block.shopify_attributes }}
+        >
           <summary class="accordion__button">
             {{ block.settings.question }}
             {%- render 'icon', name: 'plus' -%}
@@ -33,18 +67,46 @@
 
 {% stylesheet %}
   .faq-accordion {
-    padding-block: 2rem;
+    padding-block: var(--section-spacing);
   }
 
   .faq-accordion__inner {
     max-width: 48rem;
   }
 
-  .faq-accordion__category {
+  .faq-accordion__title {
+    text-align: center;
     text-transform: uppercase;
+    color: rgb(var(--color-accent));
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-accordion__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .75rem;
+    margin-bottom: 2rem;
+  }
+
+  .faq-accordion__tab {
+    padding: .5rem 1.25rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: var(--button-radius);
+    background: transparent;
+    color: rgb(var(--color-text));
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .faq-accordion__tab.is-active {
+    border-color: rgb(var(--color-accent));
+    color: rgb(var(--color-accent));
   }
 
   .faq-accordion__item {
@@ -56,6 +118,8 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 0;
+    color: rgb(var(--color-accent));
+    font-weight: var(--font-body-weight-demibold);
     cursor: pointer;
     list-style: none;
   }
@@ -74,14 +138,40 @@
   }
 {% endstylesheet %}
 
+{% javascript %}
+  document.querySelectorAll('[data-section-type="faq-accordion"]').forEach((section) => {
+    const tabs = section.querySelectorAll('[data-faq-tab]');
+    const items = section.querySelectorAll('[data-faq-category]');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const category = tab.dataset.faqTab;
+
+        tabs.forEach((t) => {
+          const isActive = t === tab;
+          t.classList.toggle('is-active', isActive);
+          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        items.forEach((item) => {
+          const matches = item.dataset.faqCategory === category;
+          item.hidden = !matches;
+          if (!matches) item.removeAttribute('open');
+        });
+      });
+    });
+  });
+{% endjavascript %}
+
 {% schema %}
 {
   "name": "t:sections.faq-accordion.name",
   "settings": [
     {
       "type": "text",
-      "id": "category_title",
-      "label": "t:sections.faq-accordion.category_title.label"
+      "id": "title",
+      "default": "FAQ",
+      "label": "t:sections.faq-accordion.title.label"
     },
     {
       "type": "select",
@@ -102,6 +192,20 @@
       "name": "t:sections.faq-accordion.blocks.qa.name",
       "settings": [
         {
+          "type": "select",
+          "id": "category",
+          "options": [
+            { "value": "orders", "label": "t:sections.faq-accordion.blocks.qa.category.orders" },
+            { "value": "payment", "label": "t:sections.faq-accordion.blocks.qa.category.payment" },
+            { "value": "accounts", "label": "t:sections.faq-accordion.blocks.qa.category.accounts" },
+            { "value": "products", "label": "t:sections.faq-accordion.blocks.qa.category.products" },
+            { "value": "shipping", "label": "t:sections.faq-accordion.blocks.qa.category.shipping" },
+            { "value": "contact", "label": "t:sections.faq-accordion.blocks.qa.category.contact" }
+          ],
+          "default": "orders",
+          "label": "t:sections.faq-accordion.blocks.qa.category.label"
+        },
+        {
           "type": "text",
           "id": "question",
           "label": "t:sections.faq-accordion.blocks.qa.question.label"
@@ -114,17 +218,16 @@
       ]
     }
   ],
-  "max_blocks": 24,
+  "max_blocks": 48,
   "presets": [
     {
       "name": "t:sections.faq-accordion.name",
-      "settings": {
-        "category_title": "ORDERS"
-      },
       "blocks": [
-        { "type": "qa", "settings": { "question": "Can I cancel my order?" } },
-        { "type": "qa", "settings": { "question": "How can I track my package?" } },
-        { "type": "qa", "settings": { "question": "Do you offer returns?" } }
+        { "type": "qa", "settings": { "category": "orders", "question": "Can I cancel my order?" } },
+        { "type": "qa", "settings": { "category": "orders", "question": "How can I track my package?" } },
+        { "type": "qa", "settings": { "category": "orders", "question": "Do you offer returns?" } },
+        { "type": "qa", "settings": { "category": "payment", "question": "What payment methods do you accept?" } },
+        { "type": "qa", "settings": { "category": "shipping", "question": "How long does shipping take?" } }
       ]
     }
   ]
