@@ -418,6 +418,8 @@
       "color_heading": { "label": "Heading color" },
       "color_text": { "label": "Text color" },
       "heading_font_size": { "label": "Heading size" },
+      "section_padding_left": { "label": "Section padding left" },
+      "section_padding_right": { "label": "Section padding right" },
       "tile_header": "Card / tile",
       "tile_background_color": { "label": "Card background" },
       "tile_max_width": { "label": "Section max width" },
