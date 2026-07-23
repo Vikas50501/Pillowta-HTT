@@ -491,10 +491,19 @@
       "button_text": { "label": "Button text (visual only, whole image is the link)" }
     },
     "foursixty": {
-      "name": "Instagram feed (Foursixty)",
+      "name": "Instagram gallery",
       "title": { "label": "Title" },
-      "feed_id": { "label": "Foursixty feed ID", "info": "Provided by your Foursixty account." },
-      "page_size": { "label": "Number of tiles" }
+      "columns_desktop": { "label": "Columns (desktop)" },
+      "columns_mobile": { "label": "Columns (mobile)" },
+      "blocks": {
+        "post": {
+          "name": "Post",
+          "image": { "label": "Image" },
+          "video": { "label": "Video", "info": "Overrides the image if set." },
+          "alt": { "label": "Alt text" },
+          "link": { "label": "Link", "info": "Where this tile goes when clicked, e.g. a product page." }
+        }
+      }
     },
     "collection-banner": {
       "name": "Collection banner",

@@ -1,8 +1,9 @@
 {% comment %}
-  Maps to: source site's section wrapped in class "bv-main-section" — that name is
-  a leftover/misleading label; the actual widget embedded is Foursixty (shoppable
-  Instagram feed), not Bazaarvoice reviews. Real instance: title "SHOP OUR IG",
-  feed "kylie_1", 14 tiles, hover shows a "shop now" pill.
+  Manual Instagram-style gallery. Originally wired to the third-party Foursixty
+  widget (auto-pulled real Instagram posts via an external account); replaced
+  with merchant-uploaded blocks (image or video + link) per the site owner's
+  choice, since the third-party service needs a separate paid signup — this
+  needs zero external accounts and updates directly through the Theme Editor.
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
@@ -15,10 +16,34 @@
   {%- endif -%}
 
   <div
-    class="foursixty__feed page-width"
-    data-feed-id="{{ section.settings.feed_id }}"
-    data-page-size="{{ section.settings.page_size }}"
-  ></div>
+    class="foursixty__grid page-width"
+    style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: {{ section.settings.columns_mobile }};"
+  >
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign tile_tag = 'div'
+        if block.settings.link != blank
+          assign tile_tag = 'a'
+        endif
+      -%}
+      <{{ tile_tag }}
+        {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
+        class="foursixty__tile{% if block.settings.link != blank %} foursixty__tile--linked{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="foursixty__media">
+          {%- if block.settings.video != blank -%}
+            {{ block.settings.video | video_tag: image_size: '600x', autoplay: true, loop: true, muted: true, controls: false, class: 'foursixty__image' }}
+          {%- elsif block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: block.settings.alt, class: 'foursixty__image', loading: 'lazy' }}
+          {%- endif -%}
+        </div>
+        {%- if block.settings.link != blank -%}
+          <span class="foursixty__shop-now">shop now</span>
+        {%- endif -%}
+      </{{ tile_tag }}>
+    {%- endfor -%}
+  </div>
 </div>
 
 {% stylesheet %}
@@ -35,46 +60,66 @@
     margin-bottom: 1.5rem;
   }
 
-  .foursixty__feed {
-    min-height: 12rem;
+  .foursixty__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns-mobile, 3), 1fr);
+    gap: 2px;
   }
 
-  .foursixty__feed .fs-has-links::after {
-    content: 'shop now';
+  .foursixty__tile {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: rgb(var(--color-background-alt));
+  }
+
+  .foursixty__tile--linked {
+    cursor: pointer;
+  }
+
+  .foursixty__media,
+  .foursixty__image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .foursixty__image {
+    display: block;
+    object-fit: cover;
+  }
+
+  .foursixty__shop-now {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
     display: block;
     text-align: center;
     text-transform: lowercase;
     background-color: rgb(var(--color-text));
     color: rgb(var(--color-background));
     padding: .5rem;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .foursixty__tile--linked:hover .foursixty__shop-now,
+  .foursixty__tile--linked:focus-visible .foursixty__shop-now {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .foursixty__shop-now {
+      opacity: 1;
+    }
+  }
+
+  @media screen and (min-width: 45em) {
+    .foursixty__grid {
+      grid-template-columns: repeat(var(--columns-desktop, 7), 1fr);
+    }
   }
 {% endstylesheet %}
-
-{% javascript %}
-  (function () {
-    document.querySelectorAll('[data-section-type="foursixty"]').forEach((section) => {
-      if (!('IntersectionObserver' in window)) return loadFoursixty(section);
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            loadFoursixty(section);
-            obs.disconnect();
-          }
-        });
-      });
-      observer.observe(section);
-    });
-
-    function loadFoursixty(section) {
-      if (window.fsAsyncInit || section.dataset.loaded) return;
-      section.dataset.loaded = 'true';
-      const script = document.createElement('script');
-      script.src = 'https://foursixty.com/media/scripts/fs.embed.v2.5.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  })();
-{% endjavascript %}
 
 {% schema %}
 {
@@ -87,19 +132,22 @@
       "label": "t:sections.foursixty.title.label"
     },
     {
-      "type": "text",
-      "id": "feed_id",
-      "label": "t:sections.foursixty.feed_id.label",
-      "info": "t:sections.foursixty.feed_id.info"
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 4,
+      "max": 8,
+      "step": 1,
+      "default": 7,
+      "label": "t:sections.foursixty.columns_desktop.label"
     },
     {
       "type": "range",
-      "id": "page_size",
-      "min": 6,
-      "max": 24,
-      "step": 2,
-      "default": 14,
-      "label": "t:sections.foursixty.page_size.label"
+      "id": "columns_mobile",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.foursixty.columns_mobile.label"
     },
     {
       "type": "select",
@@ -114,13 +162,49 @@
       "label": "t:sections.common.font.label"
     }
   ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "t:sections.foursixty.blocks.post.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.foursixty.blocks.post.image.label"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:sections.foursixty.blocks.post.video.label",
+          "info": "t:sections.foursixty.blocks.post.video.info"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "t:sections.foursixty.blocks.post.alt.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.foursixty.blocks.post.link.label",
+          "info": "t:sections.foursixty.blocks.post.link.info"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 21,
   "presets": [
     {
       "name": "t:sections.foursixty.name",
-      "settings": {
-        "title": "SHOP OUR IG",
-        "feed_id": "kylie_1"
-      }
+      "blocks": [
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" }
+      ]
     }
   ]
 }

@@ -334,8 +334,8 @@
       "type": "foursixty",
       "settings": {
         "title": "SHOP OUR IG",
-        "feed_id": "pillowta",
-        "page_size": 14,
+        "columns_desktop": 7,
+        "columns_mobile": 3,
         "font_override": "inherit"
       }
     },
