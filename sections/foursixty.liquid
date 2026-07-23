@@ -28,7 +28,7 @@
       -%}
       <{{ tile_tag }}
         {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}
-        class="foursixty__tile{% if block.settings.link != blank %} foursixty__tile--linked{% endif %}"
+        class="foursixty__tile{% if block.settings.link != blank %} foursixty__tile--linked{% endif %}{% if block.settings.featured %} foursixty__tile--featured{% endif %}"
         {{ block.shopify_attributes }}
       >
         <div class="foursixty__media">
@@ -38,9 +38,7 @@
             {{ block.settings.image | image_url: width: 600 | image_tag: widths: '300,450,600', alt: block.settings.alt, class: 'foursixty__image', loading: 'lazy' }}
           {%- endif -%}
         </div>
-        {%- if block.settings.link != blank -%}
-          <span class="foursixty__shop-now">shop now</span>
-        {%- endif -%}
+        <span class="foursixty__overlay">{%- render 'icon', name: 'instagram', icon_size: 28 -%}</span>
       </{{ tile_tag }}>
     {%- endfor -%}
   </div>
@@ -74,6 +72,11 @@
     background: rgb(var(--color-background-alt));
   }
 
+  .foursixty__tile--featured {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
   .foursixty__tile--linked {
     cursor: pointer;
   }
@@ -89,29 +92,21 @@
     object-fit: cover;
   }
 
-  .foursixty__shop-now {
+  .foursixty__overlay {
     position: absolute;
-    inset-inline: 0;
-    bottom: 0;
-    display: block;
-    text-align: center;
-    text-transform: lowercase;
-    background-color: rgb(var(--color-text));
-    color: rgb(var(--color-background));
-    padding: .5rem;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .25);
     opacity: 0;
     transition: opacity var(--transition-fast);
   }
 
-  .foursixty__tile--linked:hover .foursixty__shop-now,
-  .foursixty__tile--linked:focus-visible .foursixty__shop-now {
+  .foursixty__tile:hover .foursixty__overlay,
+  .foursixty__tile:focus-visible .foursixty__overlay {
     opacity: 1;
-  }
-
-  @media (hover: none) {
-    .foursixty__shop-now {
-      opacity: 1;
-    }
   }
 
   @media screen and (min-width: 45em) {
@@ -168,6 +163,13 @@
       "name": "t:sections.foursixty.blocks.post.name",
       "settings": [
         {
+          "type": "checkbox",
+          "id": "featured",
+          "default": false,
+          "label": "t:sections.foursixty.blocks.post.featured.label",
+          "info": "t:sections.foursixty.blocks.post.featured.info"
+        },
+        {
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.foursixty.blocks.post.image.label"
@@ -197,7 +199,7 @@
     {
       "name": "t:sections.foursixty.name",
       "blocks": [
-        { "type": "post" },
+        { "type": "post", "settings": { "featured": true } },
         { "type": "post" },
         { "type": "post" },
         { "type": "post" },

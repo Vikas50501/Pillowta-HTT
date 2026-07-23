@@ -498,6 +498,7 @@
       "blocks": {
         "post": {
           "name": "Post",
+          "featured": { "label": "Large tile (2x2)", "info": "Feature this post as a bigger tile, like the first post in the grid." },
           "image": { "label": "Image" },
           "video": { "label": "Video", "info": "Overrides the image if set." },
           "alt": { "label": "Alt text" },
