@@ -467,6 +467,23 @@
       "columns_desktop": { "label": "Columns (desktop)" },
       "columns_mobile": { "label": "Columns (mobile)" },
       "enable_hover_media": { "label": "Enable hover video/GIF crossfade", "info": "On touch devices the hover media always shows, matching the source site's mobile behavior." },
+      "tile_style_header": "Tile style",
+      "tile_aspect_ratio": {
+        "label": "Tile shape",
+        "landscape": "Landscape",
+        "square": "Square",
+        "portrait": "Portrait",
+        "tall": "Tall portrait"
+      },
+      "tile_gap": { "label": "Tile spacing" },
+      "tile_radius": { "label": "Tile corner radius" },
+      "title_style_header": "Title style",
+      "title_position": { "label": "Title position" },
+      "title_color": { "label": "Title color" },
+      "title_font_size": { "label": "Title size" },
+      "title_text_transform": { "label": "Title text case" },
+      "overlay_color": { "label": "Overlay color", "info": "Darkens the bottom of the image so the title stays readable." },
+      "overlay_opacity": { "label": "Overlay strength" },
       "blocks": {
         "tile": {
           "name": "Tile",
