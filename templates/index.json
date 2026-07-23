@@ -336,6 +336,7 @@
         "post_Nz9VqP": {
           "type": "post",
           "settings": {
+            "featured": true,
             "image": "shopify://shop_images/pexels-amaria-11259997.jpg",
             "alt": "",
             "link": ""
@@ -344,6 +345,16 @@
         "post_cnVgXc": {
           "type": "post",
           "settings": {
+            "featured": false,
+            "video": "shopify://files/videos/7677261-hd_1920_1080_25fps.mp4",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_FmCqVz": {
+          "type": "post",
+          "settings": {
+            "featured": false,
             "video": "shopify://files/videos/7677261-hd_1920_1080_25fps.mp4",
             "alt": "",
             "link": ""
@@ -352,15 +363,8 @@
         "post_Ld4GMr": {
           "type": "post",
           "settings": {
+            "featured": false,
             "image": "shopify://shop_images/neroli-flower-realistic.png",
-            "alt": "",
-            "link": ""
-          }
-        },
-        "post_jKnxLN": {
-          "type": "post",
-          "settings": {
-            "video": "shopify://files/videos/Pillowta-1.mp4",
             "alt": "",
             "link": ""
           }
@@ -368,7 +372,17 @@
         "post_ccmLP6": {
           "type": "post",
           "settings": {
+            "featured": false,
             "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_jKnxLN": {
+          "type": "post",
+          "settings": {
+            "featured": true,
+            "video": "shopify://files/videos/Pillowta-1.mp4",
             "alt": "",
             "link": ""
           }
@@ -377,9 +391,10 @@
       "block_order": [
         "post_Nz9VqP",
         "post_cnVgXc",
+        "post_FmCqVz",
         "post_Ld4GMr",
-        "post_jKnxLN",
-        "post_ccmLP6"
+        "post_ccmLP6",
+        "post_jKnxLN"
       ],
       "settings": {
         "title": "SHOP OUR IG",
