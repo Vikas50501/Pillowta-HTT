@@ -42,7 +42,7 @@
         "reverse": true,
         "media_aspect_ratio": "1 / 1",
         "media_radius": 10,
-        "color_background": "#F8F1F4",
+        "color_background": "#f8f1f4",
         "color_heading": "#b3848f",
         "color_text": "#393939",
         "heading_font_size": 34,
@@ -104,7 +104,7 @@
     "hero_summer_faves": {
       "type": "hero",
       "settings": {
-        "height_desktop": 65,
+        "height_desktop": 85,
         "height_mobile": 75,
         "desktop_image": "shopify://shop_images/pexels-amaria-11259997.jpg",
         "mobile_layout": "below-image",
