@@ -378,10 +378,28 @@
             "link": ""
           }
         },
-        "post_jKnxLN": {
+        "post_NNrBjn": {
           "type": "post",
           "settings": {
             "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_LWDaAP": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_jKnxLN": {
+          "type": "post",
+          "settings": {
+            "featured": true,
             "video": "shopify://files/videos/Pillowta-1.mp4",
             "alt": "",
             "link": ""
@@ -394,11 +412,13 @@
         "post_FmCqVz",
         "post_Ld4GMr",
         "post_ccmLP6",
+        "post_NNrBjn",
+        "post_LWDaAP",
         "post_jKnxLN"
       ],
       "settings": {
         "title": "SHOP OUR IG",
-        "columns_desktop": 7,
+        "columns_desktop": 5,
         "columns_mobile": 3,
         "font_override": "inherit"
       }
