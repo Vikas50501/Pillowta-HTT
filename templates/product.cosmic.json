@@ -242,8 +242,10 @@
       "type": "foursixty",
       "settings": {
         "title": "on social",
-        "feed_id": "kylie_1",
-        "page_size": 8,
+        "columns_desktop": 7,
+        "columns_mobile": 3,
+        "tile_gap": 8,
+        "tile_radius": 12,
         "font_override": "inherit"
       }
     },
@@ -251,6 +253,50 @@
       "type": "reviews",
       "settings": {
         "background_color": "#f8f1f4"
+      }
+    },
+    "faq_accordion_fb3anD": {
+      "type": "faq-accordion",
+      "blocks": {
+        "qa_J3kmwK": {
+          "type": "qa",
+          "settings": {
+            "question": "rfdcxv",
+            "answer": "<p>qwsaedf bnfdesw</p>"
+          }
+        },
+        "qa_PczzqE": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I cancel my order?",
+            "answer": "<p>erfgbvcd</p>"
+          }
+        },
+        "qa_8RTHy6": {
+          "type": "qa",
+          "settings": {
+            "question": "How can I track my package?",
+            "answer": "<p>waesrgvhygvrfedrfgthbjk vbgfrcedgtvhbjk</p>"
+          }
+        },
+        "qa_nayTcP": {
+          "type": "qa",
+          "settings": {
+            "question": "Do you offer returns?",
+            "answer": "<p>fbgxbdsergtmhnbgfvd</p>"
+          }
+        }
+      },
+      "block_order": [
+        "qa_J3kmwK",
+        "qa_PczzqE",
+        "qa_8RTHy6",
+        "qa_nayTcP"
+      ],
+      "name": "t:sections.faq-accordion.name",
+      "settings": {
+        "category_title": "ORDERS",
+        "font_override": "inherit"
       }
     }
   },
@@ -262,6 +308,7 @@
     "marketing_tiles",
     "cosmic_universe",
     "social",
-    "reviews"
+    "reviews",
+    "faq_accordion_fb3anD"
   ]
 }
