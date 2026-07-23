@@ -242,6 +242,90 @@
     },
     "social": {
       "type": "foursixty",
+      "blocks": {
+        "post_MVEF7h": {
+          "type": "post",
+          "settings": {
+            "featured": true,
+            "video": "shopify://files/videos/Pillowta-1.mp4",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_LfAn9n": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/vitaly-gariev-BrTBWcvBaWA-unsplash.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_bFg4AM": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/pexels-cottonbro-6559901.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_eedkkp": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/vitaly-gariev-sRPUcUWqm1Y-unsplash.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_QAXQyp": {
+          "type": "post",
+          "settings": {
+            "featured": true,
+            "image": "shopify://shop_images/vitaly-gariev-XrWtpYuVmU0-unsplash.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_yYMhCB": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/we-vibe-toys-nyMfwv7LBPw-unsplash.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_acHHH6": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "video": "shopify://files/videos/Pillowta vi.mp4",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_HNUL4c": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/group-different-beautiful-women.jpg",
+            "alt": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "post_MVEF7h",
+        "post_LfAn9n",
+        "post_bFg4AM",
+        "post_eedkkp",
+        "post_QAXQyp",
+        "post_yYMhCB",
+        "post_acHHH6",
+        "post_HNUL4c"
+      ],
       "settings": {
         "title": "on social",
         "columns_desktop": 7,
