@@ -8,7 +8,7 @@
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
-  class="hero{% if section.settings.font_override != 'inherit' %} hero--font-{{ section.settings.font_override }}{% endif %}"
+  class="hero hero--mobile-{{ section.settings.mobile_layout }}{% if section.settings.font_override != 'inherit' %} hero--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="hero"
   style="--hero-height-mobile: {{ section.settings.height_mobile }}vh; --hero-height-desktop: {{ section.settings.height_desktop }}vh;"
@@ -152,7 +152,7 @@
     max-width: 32rem;
     min-height: inherit;
     padding: 3rem var(--container-padding);
-    color: rgb(var(--hero-text-color, var(--color-text)));
+    color: var(--hero-text-color, rgb(var(--color-text)));
   }
 
   .hero__content--h-left { align-items: flex-start; text-align: left; margin-inline-end: auto; }
@@ -172,7 +172,7 @@
   .hero__heading {
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
-    color: rgb(var(--hero-heading-color, var(--color-heading)));
+    color: var(--hero-heading-color, rgb(var(--color-heading)));
     text-transform: uppercase;
     white-space: pre-line;
   }
@@ -201,6 +201,21 @@
     .hero__content--mobile-over-image {
       position: absolute;
       inset: 0;
+    }
+    .hero--mobile-below-image {
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero--mobile-below-image .hero__media-link {
+      position: relative;
+      display: block;
+      height: var(--hero-height-mobile, 75vh);
+      flex-shrink: 0;
+    }
+    .hero--mobile-below-image .hero__content {
+      position: static;
+      min-height: auto;
     }
     .hero__content--mobile-h-center {
       align-items: center;
