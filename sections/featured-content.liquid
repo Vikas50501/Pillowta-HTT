@@ -17,6 +17,12 @@
     --featured-content-radius: {{ section.settings.media_radius }}px;
     --featured-content-aspect-ratio: {{ section.settings.media_aspect_ratio }};
     --featured-content-heading-size: {{ section.settings.heading_font_size }}px;
+    {%- if section.settings.tile_background_color != blank -%}
+    --featured-content-tile-bg: {{ section.settings.tile_background_color }};
+    {%- endif -%}
+    --featured-content-tile-padding-y: {{ section.settings.tile_padding_y }}px;
+    --featured-content-tile-padding-x: {{ section.settings.tile_padding_x }}px;
+    --featured-content-tile-radius: {{ section.settings.tile_radius }}px;
   "
 >
   <div class="featured-content__tile page-width">
@@ -76,6 +82,18 @@
     grid-template-columns: 1fr 1fr;
     gap: var(--grid-gutter);
     align-items: center;
+  }
+
+  /* Compound selector (.featured-content__tile.page-width) so this reliably
+     wins over the shared global .page-width padding rule regardless of CSS
+     load order, since both are otherwise equal specificity. */
+  .featured-content__tile.page-width {
+    background-color: var(--featured-content-tile-bg, transparent);
+    padding-top: var(--featured-content-tile-padding-y, 0px);
+    padding-bottom: var(--featured-content-tile-padding-y, 0px);
+    padding-left: var(--featured-content-tile-padding-x, var(--container-padding));
+    padding-right: var(--featured-content-tile-padding-x, var(--container-padding));
+    border-radius: var(--featured-content-tile-radius, 0px);
   }
 
   .featured-content--reverse .featured-content__tile {
@@ -174,6 +192,14 @@
     .featured-content--reverse .featured-content__tile {
       direction: ltr;
     }
+    /* Scale the tile's own horizontal/vertical padding down on mobile so a
+       desktop value like 80px doesn't eat most of a small viewport's width. */
+    .featured-content__tile.page-width {
+      padding-top: calc(var(--featured-content-tile-padding-y, 0px) * .6);
+      padding-bottom: calc(var(--featured-content-tile-padding-y, 0px) * .6);
+      padding-left: calc(var(--featured-content-tile-padding-x, var(--container-padding)) * .4);
+      padding-right: calc(var(--featured-content-tile-padding-x, var(--container-padding)) * .4);
+    }
   }
 {% endstylesheet %}
 
@@ -255,6 +281,46 @@
       "unit": "px",
       "default": 34,
       "label": "t:sections.featured-content.heading_font_size.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.featured-content.tile_header"
+    },
+    {
+      "type": "color",
+      "id": "tile_background_color",
+      "default": "#ffffff",
+      "label": "t:sections.featured-content.tile_background_color.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_y",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40,
+      "label": "t:sections.featured-content.tile_padding_y.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "t:sections.featured-content.tile_padding_x.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 20,
+      "label": "t:sections.featured-content.tile_radius.label"
     },
     {
       "type": "text",
