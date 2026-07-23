@@ -122,8 +122,8 @@
         "eyebrow": "",
         "heading": "Kylie's summer faves",
         "subtext": "<p>discover her go-tos this summer – including the new watermelon lip butter and hydrating lip essentials.</p>",
-        "heading_color": "#EFD7E5",
-        "text_color": "#FFFCFE",
+        "heading_color": "#efd7e5",
+        "text_color": "#fffcfe",
         "text_align_h": "left",
         "text_align_v": "bottom",
         "link": "/collections/summer-essentials",
@@ -332,6 +332,55 @@
     },
     "shop_our_ig": {
       "type": "foursixty",
+      "blocks": {
+        "post_Nz9VqP": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/pexels-amaria-11259997.jpg",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_cnVgXc": {
+          "type": "post",
+          "settings": {
+            "video": "shopify://files/videos/7677261-hd_1920_1080_25fps.mp4",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_Ld4GMr": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/neroli-flower-realistic.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_jKnxLN": {
+          "type": "post",
+          "settings": {
+            "video": "shopify://files/videos/Pillowta-1.mp4",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_ccmLP6": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "post_Nz9VqP",
+        "post_cnVgXc",
+        "post_Ld4GMr",
+        "post_jKnxLN",
+        "post_ccmLP6"
+      ],
       "settings": {
         "title": "SHOP OUR IG",
         "columns_desktop": 7,
