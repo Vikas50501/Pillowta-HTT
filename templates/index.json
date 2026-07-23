@@ -122,7 +122,7 @@
         "eyebrow": "",
         "heading": "Kylie'ssummer faves",
         "subtext": "<p>discover her go-tos this summer – including the new watermelon lip butter and hydrating lip essentials.</p>",
-        "heading_color": "#f8f1f4",
+        "heading_color": "#FFFFFF",
         "text_color": "#f8f1f4",
         "text_align_h": "right",
         "text_align_v": "center",
@@ -132,7 +132,7 @@
         "button_style": "primary",
         "button2_text": "",
         "link2": "",
-        "button2_style": "secondary",
+        "button2_style": "primary",
         "font_override": "inherit"
       }
     },
