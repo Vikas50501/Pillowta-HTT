@@ -26,13 +26,13 @@
         "text_align_h": "center",
         "text_align_v": "center",
         "link": "https://kyliecosmetics.attn.tv/p/29F/mood-stones",
-        "button_text": "get notified",
+        "button_text": "SHOP NOW",
         "mobile_button_text": "",
         "button_style": "primary",
         "button2_text": "",
         "link2": "",
         "button2_style": "secondary",
-        "font_override": "inherit"
+        "font_override": "accent"
       }
     },
     "featured_content_summer_look": {

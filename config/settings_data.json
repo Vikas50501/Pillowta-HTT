@@ -9,14 +9,14 @@
  */
 {
   "current": {
-    "font_heading_source": "brand",
+    "font_heading_source": "tan_aegean",
     "font_heading_shopify": "helvetica_n7",
     "font_heading_scale": 100,
-    "font_body_source": "brand",
+    "font_body_source": "tex_gyre_termes",
     "font_body_shopify": "helvetica_n4",
     "font_body_scale": 100,
     "line_height_base": 150,
-    "font_accent_source": "brand",
+    "font_accent_source": "bogart",
     "font_accent_shopify": "helvetica_n4",
     "font_condensed_source": "brand",
     "font_condensed_shopify": "helvetica_n4",
