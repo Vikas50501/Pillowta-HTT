@@ -69,7 +69,7 @@
     "social_tiktok": "https://www.tiktok.com/@kyliecosmetics?lang=en",
     "social_facebook": "https://www.facebook.com/KylieCosmetics/",
     "social_twitter": "https://twitter.com/kyliecosmetics",
-    "social_youtube": "",
+    "social_youtube": "#",
     "sections": {
       "cart-drawer": {
         "type": "cart-drawer",
