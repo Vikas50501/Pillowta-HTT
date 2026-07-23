@@ -138,9 +138,76 @@
     },
     "fireworks_cosmic": {
       "type": "fireworks",
+      "blocks": {
+        "video_7exjmE": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/longhaired-female-rider-wild-and-fast-riding-black-2026-06-29-16-25-17-utc.mov",
+            "caption": "Testing",
+            "link": ""
+          }
+        },
+        "video_XxPwYr": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/longhaired-female-rider-wild-and-fast-riding-black-2026-06-29-16-25-17-utc.mov",
+            "caption": "Testing",
+            "link": ""
+          }
+        },
+        "video_DAhMc9": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/longhaired-female-rider-wild-and-fast-riding-black-2026-06-29-16-25-17-utc.mov",
+            "caption": "Testing",
+            "link": ""
+          }
+        },
+        "video_ABhf6T": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/longhaired-female-rider-wild-and-fast-riding-black-2026-06-29-16-25-17-utc.mov",
+            "caption": "Testing",
+            "link": ""
+          }
+        },
+        "video_6xaNJb": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/longhaired-female-rider-wild-and-fast-riding-black-2026-06-29-16-25-17-utc.mov",
+            "caption": "Testing",
+            "link": ""
+          }
+        },
+        "video_j63Hyw": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/longhaired-female-rider-wild-and-fast-riding-black-2026-06-29-16-25-17-utc.mov",
+            "caption": "Testing",
+            "link": ""
+          }
+        },
+        "video_9fJYqF": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/longhaired-female-rider-wild-and-fast-riding-black-2026-06-29-16-25-17-utc.mov",
+            "caption": "Testing",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_7exjmE",
+        "video_XxPwYr",
+        "video_DAhMc9",
+        "video_ABhf6T",
+        "video_6xaNJb",
+        "video_j63Hyw",
+        "video_9fJYqF"
+      ],
       "settings": {
         "title": "LOVE FOR COSMIC",
-        "mode": "grid",
+        "mode": "row",
         "columns_desktop": 5,
         "columns_mobile": 2,
         "tile_gap": 16,
@@ -336,6 +403,15 @@
         "columns_desktop": 3,
         "columns_mobile": 2,
         "enable_hover_media": true,
+        "tile_aspect_ratio": "100%",
+        "tile_gap": 16,
+        "tile_radius": 10,
+        "title_position": "center",
+        "title_color": "#ffffff",
+        "title_font_size": 24,
+        "title_text_transform": "uppercase",
+        "overlay_color": "#000000",
+        "overlay_opacity": 35,
         "font_override": "inherit"
       }
     },
@@ -465,6 +541,8 @@
         "title": "SHOP OUR IG",
         "columns_desktop": 5,
         "columns_mobile": 3,
+        "tile_gap": 8,
+        "tile_radius": 12,
         "font_override": "inherit"
       }
     },
