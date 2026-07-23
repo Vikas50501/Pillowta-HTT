@@ -13,7 +13,7 @@
       "type": "hero",
       "settings": {
         "height_desktop": 100,
-        "height_mobile": 75,
+        "height_mobile": 95,
         "desktop_video": "shopify://files/videos/Pillowta-1.mp4",
         "mobile_layout": "below-image",
         "overlay_color": "#000000",
