@@ -20,8 +20,11 @@
     {%- if section.settings.tile_background_color != blank -%}
     --featured-content-tile-bg: {{ section.settings.tile_background_color }};
     {%- endif -%}
-    --featured-content-tile-padding-y: {{ section.settings.tile_padding_y }}px;
-    --featured-content-tile-padding-x: {{ section.settings.tile_padding_x }}px;
+    --featured-content-tile-max-width: {{ section.settings.tile_max_width }}px;
+    --featured-content-tile-padding-top: {{ section.settings.tile_padding_top }}px;
+    --featured-content-tile-padding-bottom: {{ section.settings.tile_padding_bottom }}px;
+    --featured-content-tile-padding-left: {{ section.settings.tile_padding_left }}px;
+    --featured-content-tile-padding-right: {{ section.settings.tile_padding_right }}px;
     --featured-content-tile-radius: {{ section.settings.tile_radius }}px;
   "
 >
@@ -88,11 +91,12 @@
      wins over the shared global .page-width padding rule regardless of CSS
      load order, since both are otherwise equal specificity. */
   .featured-content__tile.page-width {
+    max-width: var(--featured-content-tile-max-width, var(--container-max-width));
     background-color: var(--featured-content-tile-bg, transparent);
-    padding-top: var(--featured-content-tile-padding-y, 0px);
-    padding-bottom: var(--featured-content-tile-padding-y, 0px);
-    padding-left: var(--featured-content-tile-padding-x, var(--container-padding));
-    padding-right: var(--featured-content-tile-padding-x, var(--container-padding));
+    padding-top: var(--featured-content-tile-padding-top, 0px);
+    padding-bottom: var(--featured-content-tile-padding-bottom, 0px);
+    padding-left: var(--featured-content-tile-padding-left, var(--container-padding));
+    padding-right: var(--featured-content-tile-padding-right, var(--container-padding));
     border-radius: var(--featured-content-tile-radius, 0px);
   }
 
@@ -195,10 +199,10 @@
     /* Scale the tile's own horizontal/vertical padding down on mobile so a
        desktop value like 80px doesn't eat most of a small viewport's width. */
     .featured-content__tile.page-width {
-      padding-top: calc(var(--featured-content-tile-padding-y, 0px) * .6);
-      padding-bottom: calc(var(--featured-content-tile-padding-y, 0px) * .6);
-      padding-left: calc(var(--featured-content-tile-padding-x, var(--container-padding)) * .4);
-      padding-right: calc(var(--featured-content-tile-padding-x, var(--container-padding)) * .4);
+      padding-top: calc(var(--featured-content-tile-padding-top, 0px) * .6);
+      padding-bottom: calc(var(--featured-content-tile-padding-bottom, 0px) * .6);
+      padding-left: calc(var(--featured-content-tile-padding-left, var(--container-padding)) * .4);
+      padding-right: calc(var(--featured-content-tile-padding-right, var(--container-padding)) * .4);
     }
   }
 {% endstylesheet %}
@@ -294,23 +298,53 @@
     },
     {
       "type": "range",
-      "id": "tile_padding_y",
+      "id": "tile_max_width",
+      "min": 600,
+      "max": 1728,
+      "step": 8,
+      "unit": "px",
+      "default": 1728,
+      "label": "t:sections.featured-content.tile_max_width.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_top",
       "min": 0,
       "max": 100,
       "step": 4,
       "unit": "px",
       "default": 40,
-      "label": "t:sections.featured-content.tile_padding_y.label"
+      "label": "t:sections.featured-content.tile_padding_top.label"
     },
     {
       "type": "range",
-      "id": "tile_padding_x",
+      "id": "tile_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40,
+      "label": "t:sections.featured-content.tile_padding_bottom.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_left",
       "min": 0,
       "max": 120,
       "step": 4,
       "unit": "px",
       "default": 80,
-      "label": "t:sections.featured-content.tile_padding_x.label"
+      "label": "t:sections.featured-content.tile_padding_left.label"
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_right",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "t:sections.featured-content.tile_padding_right.label"
     },
     {
       "type": "range",
