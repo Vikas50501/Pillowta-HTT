@@ -369,24 +369,6 @@
             "link": ""
           }
         },
-        "post_ccmLP6": {
-          "type": "post",
-          "settings": {
-            "featured": false,
-            "image": "shopify://shop_images/rati-sensual-oil.png",
-            "alt": "",
-            "link": ""
-          }
-        },
-        "post_NNrBjn": {
-          "type": "post",
-          "settings": {
-            "featured": false,
-            "image": "shopify://shop_images/rati-sensual-oil.png",
-            "alt": "",
-            "link": ""
-          }
-        },
         "post_LWDaAP": {
           "type": "post",
           "settings": {
@@ -404,6 +386,33 @@
             "alt": "",
             "link": ""
           }
+        },
+        "post_kgVBhW": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_y3ztwN": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
+        },
+        "post_LcedEb": {
+          "type": "post",
+          "settings": {
+            "featured": false,
+            "image": "shopify://shop_images/rati-sensual-oil.png",
+            "alt": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
@@ -411,10 +420,11 @@
         "post_cnVgXc",
         "post_FmCqVz",
         "post_Ld4GMr",
-        "post_ccmLP6",
-        "post_NNrBjn",
         "post_LWDaAP",
-        "post_jKnxLN"
+        "post_jKnxLN",
+        "post_kgVBhW",
+        "post_y3ztwN",
+        "post_LcedEb"
       ],
       "settings": {
         "title": "SHOP OUR IG",
