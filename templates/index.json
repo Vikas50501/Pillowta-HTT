@@ -40,7 +40,7 @@
       "settings": {
         "video": "shopify://files/videos/Pillowta vi.mp4",
         "reverse": true,
-        "media_aspect_ratio": "3 / 4",
+        "media_aspect_ratio": "1 / 1",
         "media_radius": 10,
         "color_background": "#F8F1F4",
         "color_heading": "#b3848f",
