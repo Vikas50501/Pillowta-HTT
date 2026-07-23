@@ -22,6 +22,9 @@
         "brand_tt_chocolate": "Brand font (Tt-Chocolate)",
         "brand_script_412": "Brand font (script412displayregular)",
         "brand_univers_condensed": "Brand font (UniversLTCondensed)",
+        "tan_aegean": "Custom font (TAN Aegean)",
+        "tex_gyre_termes": "Custom font (Tex Gyre Termes)",
+        "bogart": "Custom font (Bogart) — trial license, not for commercial use yet",
         "shopify_library": "Choose from Shopify's font library instead"
       },
       "font_heading": {

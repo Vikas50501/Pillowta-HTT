@@ -23,6 +23,9 @@
         "id": "font_heading_source",
         "options": [
           { "value": "brand", "label": "t:settings.typography.source.brand_univers" },
+          { "value": "tan_aegean", "label": "t:settings.typography.source.tan_aegean" },
+          { "value": "tex_gyre_termes", "label": "t:settings.typography.source.tex_gyre_termes" },
+          { "value": "bogart", "label": "t:settings.typography.source.bogart" },
           { "value": "shopify", "label": "t:settings.typography.source.shopify_library" }
         ],
         "default": "brand",
@@ -55,6 +58,9 @@
         "id": "font_body_source",
         "options": [
           { "value": "brand", "label": "t:settings.typography.source.brand_tt_chocolate" },
+          { "value": "tan_aegean", "label": "t:settings.typography.source.tan_aegean" },
+          { "value": "tex_gyre_termes", "label": "t:settings.typography.source.tex_gyre_termes" },
+          { "value": "bogart", "label": "t:settings.typography.source.bogart" },
           { "value": "shopify", "label": "t:settings.typography.source.shopify_library" }
         ],
         "default": "brand",
@@ -97,6 +103,9 @@
         "id": "font_accent_source",
         "options": [
           { "value": "brand", "label": "t:settings.typography.source.brand_script_412" },
+          { "value": "tan_aegean", "label": "t:settings.typography.source.tan_aegean" },
+          { "value": "tex_gyre_termes", "label": "t:settings.typography.source.tex_gyre_termes" },
+          { "value": "bogart", "label": "t:settings.typography.source.bogart" },
           { "value": "shopify", "label": "t:settings.typography.source.shopify_library" }
         ],
         "default": "brand",
@@ -123,6 +132,9 @@
         "id": "font_condensed_source",
         "options": [
           { "value": "brand", "label": "t:settings.typography.source.brand_univers_condensed" },
+          { "value": "tan_aegean", "label": "t:settings.typography.source.tan_aegean" },
+          { "value": "tex_gyre_termes", "label": "t:settings.typography.source.tex_gyre_termes" },
+          { "value": "bogart", "label": "t:settings.typography.source.bogart" },
           { "value": "shopify", "label": "t:settings.typography.source.shopify_library" }
         ],
         "default": "brand",

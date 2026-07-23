@@ -75,8 +75,79 @@
     }
 
     {%- comment -%}
-      Font role resolution: brand (custom @font-face above) vs shopify (font_picker library font).
-      Cascades site-wide since every section reads var(--font-heading|body|accent|condensed).
+      Additional custom brand fonts, selectable per role (heading/body/accent/condensed)
+      alongside the original brand fonts above and Shopify's font library.
+      NOTE: Bogart's files are Zetafonts TRIAL fonts (non-commercial license) — the merchant
+      must replace them with a purchased commercial license before using this font live.
+    {%- endcomment -%}
+    @font-face {
+      font-family: 'TAN-Aegean';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url({{ 'tan-aegean-regular.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'TeXGyreTermes';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url({{ 'tex-gyre-termes-regular.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'TeXGyreTermes';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url({{ 'tex-gyre-termes-italic.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'TeXGyreTermes';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url({{ 'tex-gyre-termes-bold.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'TeXGyreTermes';
+      font-style: italic;
+      font-weight: 700;
+      font-display: swap;
+      src: url({{ 'tex-gyre-termes-bolditalic.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'Bogart';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url({{ 'bogart-regular.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'Bogart';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url({{ 'bogart-italic.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'Bogart';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url({{ 'bogart-bold.woff2' | asset_url }}) format('woff2');
+    }
+    @font-face {
+      font-family: 'Bogart';
+      font-style: italic;
+      font-weight: 700;
+      font-display: swap;
+      src: url({{ 'bogart-bolditalic.woff2' | asset_url }}) format('woff2');
+    }
+
+    {%- comment -%}
+      Font role resolution: brand (custom @font-face above), shopify (font_picker library
+      font), or one of the additional custom fonts. Cascades site-wide since every section
+      reads var(--font-heading|body|accent|condensed).
     {%- endcomment -%}
     {%- if settings.font_heading_source == 'shopify' -%}
       {{ settings.font_heading_shopify | font_face: font_display: 'swap' }}
@@ -91,13 +162,77 @@
       {{ settings.font_condensed_shopify | font_face: font_display: 'swap' }}
     {%- endif -%}
 
+    {%- liquid
+      case settings.font_heading_source
+        when 'shopify'
+          assign font_heading_family = settings.font_heading_shopify.family | append: ', ' | append: settings.font_heading_shopify.fallback_families
+          assign font_heading_weight = settings.font_heading_shopify.weight
+        when 'tan_aegean'
+          assign font_heading_family = "'TAN-Aegean', Arial, sans-serif"
+          assign font_heading_weight = 400
+        when 'tex_gyre_termes'
+          assign font_heading_family = "'TeXGyreTermes', Georgia, serif"
+          assign font_heading_weight = 700
+        when 'bogart'
+          assign font_heading_family = "'Bogart', Georgia, serif"
+          assign font_heading_weight = 700
+        else
+          assign font_heading_family = "'UniversLTStd-Bold', Arial, sans-serif"
+          assign font_heading_weight = 700
+      endcase
+
+      case settings.font_body_source
+        when 'shopify'
+          assign font_body_family = settings.font_body_shopify.family | append: ', ' | append: settings.font_body_shopify.fallback_families
+          assign font_body_weight = settings.font_body_shopify.weight
+        when 'tan_aegean'
+          assign font_body_family = "'TAN-Aegean', Arial, sans-serif"
+          assign font_body_weight = 400
+        when 'tex_gyre_termes'
+          assign font_body_family = "'TeXGyreTermes', Georgia, serif"
+          assign font_body_weight = 400
+        when 'bogart'
+          assign font_body_family = "'Bogart', Georgia, serif"
+          assign font_body_weight = 400
+        else
+          assign font_body_family = "'Tt-Chocolate', Arial, sans-serif"
+          assign font_body_weight = 400
+      endcase
+
+      case settings.font_accent_source
+        when 'shopify'
+          assign font_accent_family = settings.font_accent_shopify.family | append: ', ' | append: settings.font_accent_shopify.fallback_families
+        when 'tan_aegean'
+          assign font_accent_family = "'TAN-Aegean', cursive"
+        when 'tex_gyre_termes'
+          assign font_accent_family = "'TeXGyreTermes', cursive"
+        when 'bogart'
+          assign font_accent_family = "'Bogart', cursive"
+        else
+          assign font_accent_family = "'script412displayregular', cursive"
+      endcase
+
+      case settings.font_condensed_source
+        when 'shopify'
+          assign font_condensed_family = settings.font_condensed_shopify.family | append: ', ' | append: settings.font_condensed_shopify.fallback_families
+        when 'tan_aegean'
+          assign font_condensed_family = "'TAN-Aegean', Arial, sans-serif"
+        when 'tex_gyre_termes'
+          assign font_condensed_family = "'TeXGyreTermes', Georgia, serif"
+        when 'bogart'
+          assign font_condensed_family = "'Bogart', Georgia, serif"
+        else
+          assign font_condensed_family = "'UniversLTCondensed', Arial, sans-serif"
+      endcase
+    -%}
+
     :root {
-      --font-heading: {% if settings.font_heading_source == 'shopify' %}{{ settings.font_heading_shopify.family }}, {{ settings.font_heading_shopify.fallback_families }}{% else %}'UniversLTStd-Bold', Arial, sans-serif{% endif %};
-      --font-heading-weight: {% if settings.font_heading_source == 'shopify' %}{{ settings.font_heading_shopify.weight }}{% else %}700{% endif %};
-      --font-body: {% if settings.font_body_source == 'shopify' %}{{ settings.font_body_shopify.family }}, {{ settings.font_body_shopify.fallback_families }}{% else %}'Tt-Chocolate', Arial, sans-serif{% endif %};
-      --font-body-weight: {% if settings.font_body_source == 'shopify' %}{{ settings.font_body_shopify.weight }}{% else %}400{% endif %};
-      --font-accent: {% if settings.font_accent_source == 'shopify' %}{{ settings.font_accent_shopify.family }}, {{ settings.font_accent_shopify.fallback_families }}{% else %}'script412displayregular', cursive{% endif %};
-      --font-condensed: {% if settings.font_condensed_source == 'shopify' %}{{ settings.font_condensed_shopify.family }}, {{ settings.font_condensed_shopify.fallback_families }}{% else %}'UniversLTCondensed', Arial, sans-serif{% endif %};
+      --font-heading: {{ font_heading_family }};
+      --font-heading-weight: {{ font_heading_weight }};
+      --font-body: {{ font_body_family }};
+      --font-body-weight: {{ font_body_weight }};
+      --font-accent: {{ font_accent_family }};
+      --font-condensed: {{ font_condensed_family }};
 
       --font-size-body: {{ 1.0625 | times: settings.font_body_scale | divided_by: 100.0 }}rem;
       --line-height-base: {{ settings.line_height_base | divided_by: 100.0 }};
