@@ -469,6 +469,42 @@
       "settings": {
         "font_override": "inherit"
       }
+    },
+    "faq_accordion_xb33Ne": {
+      "type": "faq-accordion",
+      "blocks": {
+        "qa_6EGjY3": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I cancel my order?",
+            "answer": ""
+          }
+        },
+        "qa_JddaEP": {
+          "type": "qa",
+          "settings": {
+            "question": "How can I track my package?",
+            "answer": ""
+          }
+        },
+        "qa_U3CCY8": {
+          "type": "qa",
+          "settings": {
+            "question": "Do you offer returns?",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "qa_6EGjY3",
+        "qa_JddaEP",
+        "qa_U3CCY8"
+      ],
+      "name": "t:sections.faq-accordion.name",
+      "settings": {
+        "category_title": "ORDERS",
+        "font_override": "inherit"
+      }
     }
   },
   "order": [
@@ -482,6 +518,7 @@
     "shop_by_category",
     "hero_vto",
     "shop_our_ig",
-    "brand_principles"
+    "brand_principles",
+    "faq_accordion_xb33Ne"
   ]
 }
