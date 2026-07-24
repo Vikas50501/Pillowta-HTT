@@ -606,14 +606,32 @@
     },
     "main-product": {
       "name": "Product information",
+      "subtitle": { "label": "Subtitle / tagline" },
       "max_quantity": { "label": "Maximum quantity per order" },
       "show_reviews_summary": { "label": "Show star rating summary near title" },
       "enable_shade_finder": { "label": "Enable \"find my shade\" popup", "info": "Only shows if the product has a Shade option." },
+      "enable_buy_now": { "label": "Show dynamic checkout button", "info": "Adds a \"Buy it now\" style button (e.g. Shop Pay) below Add to cart." },
+      "size_note": { "label": "Size / tax note", "info": "e.g. \"60ml · Inclusive of all taxes\"" },
+      "short_description": { "label": "Short description" },
+      "style_header": "Colors",
+      "background_color": { "label": "Background color" },
+      "text_color": { "label": "Text color" },
+      "heading_color": { "label": "Heading color" },
+      "price_color": { "label": "Price color" },
+      "accent_color": { "label": "Accent color", "info": "Used for the promo banner background." },
+      "layout_header": "Layout & spacing",
+      "gallery_max_width": { "label": "Product image max width" },
+      "section_padding_top": { "label": "Section padding top" },
+      "section_padding_bottom": { "label": "Section padding bottom" },
+      "block_gap": { "label": "Space between blocks" },
+      "border_radius": { "label": "Corner radius" },
       "engraving_header": "Engraving",
       "enable_engraving": { "label": "Enable custom engraving", "info": "Only shows if the product is tagged \"engravable\"." },
       "engraving_button_text": { "label": "Engraving button text" },
       "engraving_terms_text": { "label": "Engraving terms text" },
       "engraving_fee_variant": { "label": "Engraving fee product", "info": "A separate product/variant representing the engraving fee line item." },
+      "custom_css_header": "Custom CSS",
+      "custom_css": { "label": "Custom CSS", "info": "Advanced — raw CSS injected into this section only." },
       "blocks": {
         "accordion": {
           "name": "Accordion",
@@ -631,6 +649,24 @@
           "name": "Trust icon",
           "icon_asset": { "label": "Icon asset filename", "info": "e.g. icon-vegan.png — must already be uploaded to the theme's assets." },
           "title": { "label": "Label" }
+        },
+        "promo_banner": {
+          "name": "Promo banner",
+          "message": { "label": "Message" },
+          "code": { "label": "Discount code" },
+          "show_copy_button": { "label": "Show copy code button" }
+        },
+        "feature_chip": {
+          "name": "Feature chip",
+          "label_field": { "label": "Label" },
+          "link": { "label": "Link" }
+        },
+        "certification": {
+          "name": "Certification",
+          "image": { "label": "Badge image" },
+          "name_field": { "label": "Name" },
+          "validity": { "label": "Validity", "info": "e.g. \"Valid until 2027\"" },
+          "note": { "label": "Note" }
         }
       }
     },
