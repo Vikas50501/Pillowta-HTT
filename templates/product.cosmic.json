@@ -441,6 +441,7 @@
     },
     "related": {
       "type": "featured-products",
+      "disabled": true,
       "settings": {
         "title": "you may also like",
         "view_all_text": "",
