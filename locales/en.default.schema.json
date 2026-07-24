@@ -738,6 +738,14 @@
       "title_color": { "label": "Title color" },
       "title_font_size": { "label": "Title size" },
       "card_style_header": "Card style",
+      "image_aspect_ratio": {
+        "label": "Image shape",
+        "info": "All card images crop to this same shape so cards line up evenly.",
+        "landscape": "Landscape",
+        "square": "Square",
+        "portrait": "Portrait",
+        "tall": "Tall portrait"
+      },
       "card_gap": { "label": "Space between cards" },
       "card_image_radius": { "label": "Image corner radius" },
       "card_title_color": { "label": "Card title color" },
