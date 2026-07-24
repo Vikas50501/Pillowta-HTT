@@ -652,6 +652,30 @@
     "ingredient-tiles": {
       "name": "Ingredient tiles",
       "title": { "label": "Heading" },
+      "section_style_header": "Section style",
+      "section_background_color": { "label": "Section background", "info": "Leave blank to match the page background." },
+      "section_padding_top": { "label": "Section padding top" },
+      "section_padding_bottom": { "label": "Section padding bottom" },
+      "column_gap": { "label": "Space between columns" },
+      "item_gap": { "label": "Space between items" },
+      "title_style_header": "Title style",
+      "title_color": { "label": "Title color" },
+      "title_font_size": { "label": "Title size" },
+      "group_label_style_header": "Group label style",
+      "group_label_color": { "label": "Group label color" },
+      "group_label_font_size": { "label": "Group label size" },
+      "group_label_letter_spacing": { "label": "Group label letter spacing" },
+      "image_style_header": "Image style",
+      "image_shape": {
+        "label": "Image shape",
+        "circle": "Circle",
+        "square": "Square"
+      },
+      "image_size": { "label": "Image size" },
+      "item_name_style_header": "Item name style",
+      "item_name_color": { "label": "Item name color" },
+      "item_name_font_size": { "label": "Item name size" },
+      "item_name_text_transform": { "label": "Item name text case" },
       "blocks": {
         "note": {
           "name": "Item",

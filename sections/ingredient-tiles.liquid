@@ -6,9 +6,27 @@
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
-  class="ingredient-tiles{% if section.settings.font_override != 'inherit' %} ingredient-tiles--font-{{ section.settings.font_override }}{% endif %}"
+  class="ingredient-tiles ingredient-tiles--image-{{ section.settings.image_shape }}{% if section.settings.font_override != 'inherit' %} ingredient-tiles--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="ingredient-tiles"
+  style="
+    {%- if section.settings.section_background_color != blank -%}
+    --ingredient-tiles-bg: {{ section.settings.section_background_color }};
+    {%- endif -%}
+    --ingredient-tiles-padding-top: {{ section.settings.section_padding_top }}px;
+    --ingredient-tiles-padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    --ingredient-tiles-column-gap: {{ section.settings.column_gap }}px;
+    --ingredient-tiles-item-gap: {{ section.settings.item_gap }}px;
+    --ingredient-tiles-title-color: {{ section.settings.title_color }};
+    --ingredient-tiles-title-size: {{ section.settings.title_font_size }}px;
+    --ingredient-tiles-group-label-color: {{ section.settings.group_label_color }};
+    --ingredient-tiles-group-label-size: {{ section.settings.group_label_font_size }}px;
+    --ingredient-tiles-group-label-spacing: {{ section.settings.group_label_letter_spacing }}px;
+    --ingredient-tiles-image-size: {{ section.settings.image_size }}px;
+    --ingredient-tiles-item-name-color: {{ section.settings.item_name_color }};
+    --ingredient-tiles-item-name-size: {{ section.settings.item_name_font_size }}px;
+    --ingredient-tiles-item-name-transform: {{ section.settings.item_name_text_transform }};
+  "
 >
   {%- if section.settings.title != blank -%}
     <h2 class="ingredient-tiles__title page-width">{{ section.settings.title }}</h2>
@@ -24,7 +42,7 @@
             {%- if block.settings.group_label == group -%}
               <div class="ingredient-tiles__item" {{ block.shopify_attributes }}>
                 {%- if block.settings.image != blank -%}
-                  <div class="aspect-ratio" style="--aspect-ratio: 100%;">
+                  <div class="ingredient-tiles__image aspect-ratio" style="--aspect-ratio: 100%;">
                     {{ block.settings.image | image_url: width: 300 | image_tag: widths: '150,300', alt: block.settings.name, loading: 'lazy' }}
                   </div>
                 {%- endif -%}
@@ -40,7 +58,9 @@
 
 {% stylesheet %}
   .ingredient-tiles {
-    padding-block: var(--section-spacing);
+    padding-top: var(--ingredient-tiles-padding-top, var(--section-spacing));
+    padding-bottom: var(--ingredient-tiles-padding-bottom, var(--section-spacing));
+    background-color: var(--ingredient-tiles-bg, transparent);
   }
 
   .ingredient-tiles__title {
@@ -48,26 +68,29 @@
     text-transform: uppercase;
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
+    font-size: var(--ingredient-tiles-title-size, var(--font-size-h2));
+    color: var(--ingredient-tiles-title-color, inherit);
     margin-bottom: 2rem;
   }
 
   .ingredient-tiles__groups {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gutter);
+    gap: var(--ingredient-tiles-column-gap, var(--grid-gutter));
   }
 
   .ingredient-tiles__group-label {
     text-align: center;
     text-transform: uppercase;
-    font-size: var(--font-size-small);
-    letter-spacing: .05em;
+    font-size: var(--ingredient-tiles-group-label-size, var(--font-size-small));
+    color: var(--ingredient-tiles-group-label-color, inherit);
+    letter-spacing: var(--ingredient-tiles-group-label-spacing, .05em);
     margin-bottom: 1rem;
   }
 
   .ingredient-tiles__items {
     display: flex;
-    gap: 1rem;
+    gap: var(--ingredient-tiles-item-gap, 1rem);
   }
 
   .ingredient-tiles__item {
@@ -75,10 +98,21 @@
     text-align: center;
   }
 
+  .ingredient-tiles__image {
+    max-width: var(--ingredient-tiles-image-size, none);
+    margin-inline: auto;
+  }
+
+  .ingredient-tiles--image-circle .ingredient-tiles__image {
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
   .ingredient-tiles__item-name {
     margin-top: .5rem;
-    font-size: var(--font-size-caption);
-    text-transform: lowercase;
+    font-size: var(--ingredient-tiles-item-name-size, var(--font-size-caption));
+    color: var(--ingredient-tiles-item-name-color, inherit);
+    text-transform: var(--ingredient-tiles-item-name-transform, lowercase);
   }
 
   @media screen and (max-width: 59.99em) {
@@ -97,6 +131,159 @@
       "type": "text",
       "id": "title",
       "label": "t:sections.ingredient-tiles.title.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredient-tiles.section_style_header"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "t:sections.ingredient-tiles.section_background_color.label",
+      "info": "t:sections.ingredient-tiles.section_background_color.info"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.ingredient-tiles.section_padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.ingredient-tiles.section_padding_bottom.label"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 32,
+      "label": "t:sections.ingredient-tiles.column_gap.label"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16,
+      "label": "t:sections.ingredient-tiles.item_gap.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredient-tiles.title_style_header"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "t:sections.ingredient-tiles.title_color.label"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 20,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 28,
+      "label": "t:sections.ingredient-tiles.title_font_size.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredient-tiles.group_label_style_header"
+    },
+    {
+      "type": "color",
+      "id": "group_label_color",
+      "label": "t:sections.ingredient-tiles.group_label_color.label"
+    },
+    {
+      "type": "range",
+      "id": "group_label_font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "label": "t:sections.ingredient-tiles.group_label_font_size.label"
+    },
+    {
+      "type": "range",
+      "id": "group_label_letter_spacing",
+      "min": 0,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "label": "t:sections.ingredient-tiles.group_label_letter_spacing.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredient-tiles.image_style_header"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        { "value": "circle", "label": "t:sections.ingredient-tiles.image_shape.circle" },
+        { "value": "square", "label": "t:sections.ingredient-tiles.image_shape.square" }
+      ],
+      "default": "circle",
+      "label": "t:sections.ingredient-tiles.image_shape.label"
+    },
+    {
+      "type": "range",
+      "id": "image_size",
+      "min": 60,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 140,
+      "label": "t:sections.ingredient-tiles.image_size.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredient-tiles.item_name_style_header"
+    },
+    {
+      "type": "color",
+      "id": "item_name_color",
+      "label": "t:sections.ingredient-tiles.item_name_color.label"
+    },
+    {
+      "type": "range",
+      "id": "item_name_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "label": "t:sections.ingredient-tiles.item_name_font_size.label"
+    },
+    {
+      "type": "select",
+      "id": "item_name_text_transform",
+      "options": [
+        { "value": "lowercase", "label": "t:sections.common.text_transform.lowercase" },
+        { "value": "uppercase", "label": "t:sections.common.text_transform.uppercase" },
+        { "value": "capitalize", "label": "t:sections.common.text_transform.capitalize" },
+        { "value": "none", "label": "t:sections.common.text_transform.none" }
+      ],
+      "default": "lowercase",
+      "label": "t:sections.ingredient-tiles.item_name_text_transform.label"
     },
     {
       "type": "select",
