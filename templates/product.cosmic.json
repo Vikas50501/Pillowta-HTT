@@ -21,6 +21,14 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "promo_banner_Rzd3C9": {
+          "type": "promo_banner",
+          "settings": {
+            "message": "First Order: Use Code for 20% Off",
+            "code": "RATI20",
+            "show_copy_button": true
+          }
+        },
         "feature_chip_mcQ4eV": {
           "type": "feature_chip",
           "settings": {
@@ -104,6 +112,7 @@
         }
       },
       "block_order": [
+        "promo_banner_Rzd3C9",
         "feature_chip_mcQ4eV",
         "feature_chip_gNyEbP",
         "feature_chip_PUp9Rx",
