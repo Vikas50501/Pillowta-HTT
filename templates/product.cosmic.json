@@ -149,6 +149,21 @@
       ],
       "settings": {
         "title": "the ingredients",
+        "section_background_color": "#CE3C2D",
+        "section_padding_top": 48,
+        "section_padding_bottom": 48,
+        "column_gap": 32,
+        "item_gap": 16,
+        "title_color": "#FFFFFF",
+        "title_font_size": 28,
+        "group_label_color": "#EFD7E5",
+        "group_label_font_size": 14,
+        "group_label_letter_spacing": 1,
+        "image_shape": "square",
+        "image_size": 200,
+        "item_name_color": "#EFD7E5",
+        "item_name_font_size": 12,
+        "item_name_text_transform": "uppercase",
         "font_override": "inherit"
       }
     },
@@ -219,7 +234,7 @@
         "the_sizes"
       ],
       "settings": {
-        "section_background_color": "#CE3C2D",
+        "section_background_color": "#ce3c2d",
         "section_padding_top": 48,
         "section_padding_bottom": 48,
         "tile_gap": 32,
