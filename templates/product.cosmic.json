@@ -73,8 +73,8 @@
         "description": {
           "type": "accordion",
           "settings": {
-            "title": "description",
-            "content": "",
+            "title": "Description",
+            "content": "<p>Rati is our original pre-intimacy massage oil. Made for before. Created to help the body ease into intimacy rather than perform it.</p><p>It starts with the nervous system. The blend of Clary Sage, sandalwood, neroli, and patchouli calms cortisol, lifts mood, and draws attention fully into the body. When the nervous system is settled, the body opens naturally. That is what Rati does.</p><p>Apply it as a body massage oil across shoulders, back, or neck. Or use it directly on the lingam or yoni for heightened sensitivity and natural warmth. The oil absorbs completely in 1 minute, no residue, no interference.</p><p>Rati does not create desire. It removes what is in the way of it.</p>",
             "page": ""
           }
         },
@@ -117,17 +117,17 @@
         "shipping"
       ],
       "settings": {
-        "subtitle": "",
-        "max_quantity": 10,
+        "subtitle": "The Ritual",
+        "max_quantity": 100,
         "show_reviews_summary": true,
         "enable_shade_finder": false,
         "enable_buy_now": true,
-        "size_note": "",
-        "short_description": "",
+        "size_note": "50ml | Inclusive of all taxes",
+        "short_description": "<p>Rati makes you present — in your body, in the moment, with whoever you are with. A pre-intimacy massage oil that calms the nervous system, softens tension, and prepares the body to receive. Light on skin, absorbs in 1 minute, no greasiness. Real essential oils — sandalwood, neroli, patchouli, and Clary Sage at the heart of it. Works for full-body massage, lingam massage, and yoni massage. No parabens. No mineral oil. No silicones.</p>",
         "background_color": "",
         "text_color": "",
         "heading_color": "",
-        "price_color": "",
+        "price_color": "#CE3C2D",
         "accent_color": "",
         "gallery_max_width": 480,
         "section_padding_top": 48,
