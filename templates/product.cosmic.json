@@ -21,6 +21,49 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "promo_banner_Rzd3C9": {
+          "type": "promo_banner",
+          "settings": {
+            "message": "First Order: Use Code for 20% Off",
+            "code": "RATI20",
+            "show_copy_button": true
+          }
+        },
+        "feature_chip_mcQ4eV": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Presence over performance",
+            "link": ""
+          }
+        },
+        "feature_chip_gNyEbP": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Rati is for all",
+            "link": ""
+          }
+        },
+        "feature_chip_PUp9Rx": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Beat the stress",
+            "link": ""
+          }
+        },
+        "feature_chip_GMkn8T": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Make the first move",
+            "link": ""
+          }
+        },
+        "feature_chip_eHHCNH": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Unfreeze the moment",
+            "link": ""
+          }
+        },
         "trust_vegan": {
           "type": "trust_icon",
           "settings": {
@@ -38,8 +81,8 @@
         "description": {
           "type": "accordion",
           "settings": {
-            "title": "description",
-            "content": "",
+            "title": "Description",
+            "content": "<p>Rati is our original pre-intimacy massage oil. Made for before. Created to help the body ease into intimacy rather than perform it.</p><p>It starts with the nervous system. The blend of Clary Sage, sandalwood, neroli, and patchouli calms cortisol, lifts mood, and draws attention fully into the body. When the nervous system is settled, the body opens naturally. That is what Rati does.</p><p>Apply it as a body massage oil across shoulders, back, or neck. Or use it directly on the lingam or yoni for heightened sensitivity and natural warmth. The oil absorbs completely in 1 minute, no residue, no interference.</p><p>Rati does not create desire. It removes what is in the way of it.</p>",
             "page": ""
           }
         },
@@ -69,6 +112,12 @@
         }
       },
       "block_order": [
+        "promo_banner_Rzd3C9",
+        "feature_chip_mcQ4eV",
+        "feature_chip_gNyEbP",
+        "feature_chip_PUp9Rx",
+        "feature_chip_GMkn8T",
+        "feature_chip_eHHCNH",
         "trust_vegan",
         "trust_cruelty_free",
         "description",
@@ -77,14 +126,29 @@
         "shipping"
       ],
       "settings": {
-        "max_quantity": 10,
+        "subtitle": "The Ritual",
+        "max_quantity": 100,
         "show_reviews_summary": true,
         "enable_shade_finder": false,
+        "enable_buy_now": true,
+        "size_note": "50ml | Inclusive of all taxes",
+        "short_description": "<p>Rati makes you present — in your body, in the moment, with whoever you are with. A pre-intimacy massage oil that calms the nervous system, softens tension, and prepares the body to receive. Light on skin, absorbs in 1 minute, no greasiness. Real essential oils — sandalwood, neroli, patchouli, and Clary Sage at the heart of it. Works for full-body massage, lingam massage, and yoni massage. No parabens. No mineral oil. No silicones.</p>",
+        "background_color": "",
+        "text_color": "",
+        "heading_color": "",
+        "price_color": "#CE3C2D",
+        "accent_color": "",
+        "gallery_max_width": 480,
+        "section_padding_top": 48,
+        "section_padding_bottom": 48,
+        "block_gap": 16,
+        "border_radius": 10,
         "enable_engraving": true,
         "engraving_button_text": "Engrave your bottle",
         "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing.",
         "engraving_fee_variant": "",
-        "font_override": "inherit"
+        "font_override": "inherit",
+        "custom_css": ""
       }
     },
     "ingredient_tiles": {
@@ -299,7 +363,7 @@
         "background_type": "gradient",
         "background_color": "#f8f1f4",
         "gradient_color_from": "#c53627",
-        "gradient_color_to": "#F8F1F4",
+        "gradient_color_to": "#f8f1f4",
         "gradient_angle": 180,
         "section_padding_top": 48,
         "section_padding_bottom": 48,
