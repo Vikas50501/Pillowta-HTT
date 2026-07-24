@@ -75,8 +75,10 @@
       "type": "foursixty",
       "settings": {
         "title": "on social",
-        "feed_id": "kylie_1",
-        "page_size": 8,
+        "columns_desktop": 7,
+        "columns_mobile": 3,
+        "tile_gap": 8,
+        "tile_radius": 12,
         "font_override": "inherit"
       }
     },
