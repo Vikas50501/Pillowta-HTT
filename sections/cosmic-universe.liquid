@@ -96,7 +96,8 @@
 
   .cosmic-universe__nav {
     position: absolute;
-    top: 35%;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 1;
     display: flex;
     align-items: center;
@@ -177,6 +178,26 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    document.querySelectorAll('[data-section-type="cosmic-universe"]').forEach((section) => {
+      const image = section.querySelector('.cosmic-universe__image');
+      const navs = section.querySelectorAll('.cosmic-universe__nav');
+      if (!image || !navs.length) return;
+
+      function positionNavs() {
+        const top = image.offsetHeight / 2;
+        navs.forEach((nav) => {
+          nav.style.top = top + 'px';
+        });
+      }
+
+      positionNavs();
+      window.addEventListener('resize', positionNavs);
+    });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
