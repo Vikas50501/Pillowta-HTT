@@ -21,6 +21,41 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "feature_chip_mcQ4eV": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Presence over performance",
+            "link": ""
+          }
+        },
+        "feature_chip_gNyEbP": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Rati is for all",
+            "link": ""
+          }
+        },
+        "feature_chip_PUp9Rx": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Beat the stress",
+            "link": ""
+          }
+        },
+        "feature_chip_GMkn8T": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Make the first move",
+            "link": ""
+          }
+        },
+        "feature_chip_eHHCNH": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "Unfreeze the moment",
+            "link": ""
+          }
+        },
         "trust_vegan": {
           "type": "trust_icon",
           "settings": {
@@ -69,6 +104,11 @@
         }
       },
       "block_order": [
+        "feature_chip_mcQ4eV",
+        "feature_chip_gNyEbP",
+        "feature_chip_PUp9Rx",
+        "feature_chip_GMkn8T",
+        "feature_chip_eHHCNH",
         "trust_vegan",
         "trust_cruelty_free",
         "description",
@@ -77,14 +117,29 @@
         "shipping"
       ],
       "settings": {
+        "subtitle": "",
         "max_quantity": 10,
         "show_reviews_summary": true,
         "enable_shade_finder": false,
+        "enable_buy_now": true,
+        "size_note": "",
+        "short_description": "",
+        "background_color": "",
+        "text_color": "",
+        "heading_color": "",
+        "price_color": "",
+        "accent_color": "",
+        "gallery_max_width": 480,
+        "section_padding_top": 48,
+        "section_padding_bottom": 48,
+        "block_gap": 16,
+        "border_radius": 10,
         "enable_engraving": true,
         "engraving_button_text": "Engrave your bottle",
         "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing.",
         "engraving_fee_variant": "",
-        "font_override": "inherit"
+        "font_override": "inherit",
+        "custom_css": ""
       }
     },
     "ingredient_tiles": {
@@ -299,7 +354,7 @@
         "background_type": "gradient",
         "background_color": "#f8f1f4",
         "gradient_color_from": "#c53627",
-        "gradient_color_to": "#F8F1F4",
+        "gradient_color_to": "#f8f1f4",
         "gradient_angle": 180,
         "section_padding_top": 48,
         "section_padding_bottom": 48,
