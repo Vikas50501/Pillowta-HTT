@@ -9,6 +9,27 @@
   class="cosmic-universe{% if section.settings.font_override != 'inherit' %} cosmic-universe--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="cosmic-universe"
+  style="
+    {%- if section.settings.background_type == 'gradient' -%}
+    --cosmic-universe-bg: linear-gradient({{ section.settings.gradient_angle }}deg, {{ section.settings.gradient_color_from }}, {{ section.settings.gradient_color_to }});
+    {%- else -%}
+    --cosmic-universe-bg: {{ section.settings.background_color }};
+    {%- endif -%}
+    --cosmic-universe-padding-top: {{ section.settings.section_padding_top }}px;
+    --cosmic-universe-padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    --cosmic-universe-title-color: {{ section.settings.title_color }};
+    --cosmic-universe-title-size: {{ section.settings.title_font_size }}px;
+    --cosmic-universe-card-gap: {{ section.settings.card_gap }}px;
+    --cosmic-universe-image-radius: {{ section.settings.card_image_radius }}px;
+    --cosmic-universe-card-title-color: {{ section.settings.card_title_color }};
+    --cosmic-universe-card-title-size: {{ section.settings.card_title_font_size }}px;
+    --cosmic-universe-card-family-color: {{ section.settings.card_family_color }};
+    --cosmic-universe-card-family-size: {{ section.settings.card_family_font_size }}px;
+    --cosmic-universe-card-about-color: {{ section.settings.card_about_color }};
+    --cosmic-universe-card-about-size: {{ section.settings.card_about_font_size }}px;
+    --cosmic-universe-card-notes-color: {{ section.settings.card_notes_color }};
+    --cosmic-universe-card-notes-size: {{ section.settings.card_notes_font_size }}px;
+  "
 >
   {%- if section.settings.title != blank -%}
     <h2 class="cosmic-universe__title page-width">{{ section.settings.title }}</h2>
@@ -37,13 +58,16 @@
         <button type="button" class="carousel__dot" data-carousel-dot aria-label="{{ 'general.slide' | t }} {{ forloop.index }}"></button>
       {%- endfor -%}
     </div>
+    <button type="button" class="cosmic-universe__nav cosmic-universe__nav--prev" data-carousel-prev aria-label="{{ 'accessibility.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+    <button type="button" class="cosmic-universe__nav cosmic-universe__nav--next" data-carousel-next aria-label="{{ 'accessibility.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
   </product-carousel>
 </div>
 
 {% stylesheet %}
   .cosmic-universe {
-    padding-block: var(--section-spacing);
-    background-color: rgb(var(--color-background-alt));
+    padding-top: var(--cosmic-universe-padding-top, var(--section-spacing));
+    padding-bottom: var(--cosmic-universe-padding-bottom, var(--section-spacing));
+    background: var(--cosmic-universe-bg, rgb(var(--color-background-alt)));
   }
 
   .cosmic-universe__title {
@@ -51,15 +75,45 @@
     text-transform: uppercase;
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
+    font-size: var(--cosmic-universe-title-size, var(--font-size-h2));
+    color: var(--cosmic-universe-title-color, inherit);
     margin-bottom: 1.5rem;
+  }
+
+  .cosmic-universe__carousel {
+    position: relative;
   }
 
   .cosmic-universe__carousel .carousel__track {
     display: flex;
-    gap: 1rem;
+    gap: var(--cosmic-universe-card-gap, 1rem);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+  }
+
+  .cosmic-universe__nav {
+    position: absolute;
+    top: 35%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--color-background));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+  }
+
+  .cosmic-universe__nav--prev { left: -1.25rem; }
+  .cosmic-universe__nav--next { right: -1.25rem; }
+
+  @media screen and (max-width: 44.99em) {
+    .cosmic-universe__nav {
+      display: none;
+    }
   }
 
   .cosmic-universe__card {
@@ -69,22 +123,34 @@
     color: rgb(var(--color-text));
   }
 
+  .cosmic-universe__card img {
+    border-radius: var(--cosmic-universe-image-radius, 0px);
+  }
+
   .cosmic-universe__card-title {
     font-weight: var(--font-body-weight-demibold);
+    font-size: var(--cosmic-universe-card-title-size, var(--font-size-body));
+    color: var(--cosmic-universe-card-title-color, inherit);
     margin-top: .75rem;
     text-transform: lowercase;
   }
 
   .cosmic-universe__card-family {
-    font-size: var(--font-size-caption);
+    font-size: var(--cosmic-universe-card-family-size, var(--font-size-caption));
+    color: var(--cosmic-universe-card-family-color, rgba(var(--color-text), .7));
     text-transform: uppercase;
     letter-spacing: .05em;
-    color: rgba(var(--color-text), .7);
   }
 
-  .cosmic-universe__card-about,
+  .cosmic-universe__card-about {
+    font-size: var(--cosmic-universe-card-about-size, var(--font-size-small));
+    color: var(--cosmic-universe-card-about-color, inherit);
+    margin-top: .25rem;
+  }
+
   .cosmic-universe__card-notes {
-    font-size: var(--font-size-small);
+    font-size: var(--cosmic-universe-card-notes-size, var(--font-size-small));
+    color: var(--cosmic-universe-card-notes-color, inherit);
     margin-top: .25rem;
   }
 
@@ -104,6 +170,173 @@
       "id": "title",
       "default": "THE COSMIC UNIVERSE",
       "label": "t:sections.cosmic-universe.title.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.cosmic-universe.section_style_header"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "options": [
+        { "value": "solid", "label": "t:sections.cosmic-universe.background_type.solid" },
+        { "value": "gradient", "label": "t:sections.cosmic-universe.background_type.gradient" }
+      ],
+      "default": "solid",
+      "label": "t:sections.cosmic-universe.background_type.label"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#F8F1F4",
+      "label": "t:sections.cosmic-universe.background_color.label",
+      "info": "t:sections.cosmic-universe.background_color.info"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color_from",
+      "default": "#C53627",
+      "label": "t:sections.cosmic-universe.gradient_color_from.label"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color_to",
+      "default": "#F8EDEB",
+      "label": "t:sections.cosmic-universe.gradient_color_to.label"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "default": 180,
+      "label": "t:sections.cosmic-universe.gradient_angle.label",
+      "info": "t:sections.cosmic-universe.gradient_angle.info"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.cosmic-universe.section_padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "t:sections.cosmic-universe.section_padding_bottom.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.cosmic-universe.title_style_header"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "t:sections.cosmic-universe.title_color.label"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 20,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 28,
+      "label": "t:sections.cosmic-universe.title_font_size.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.cosmic-universe.card_style_header"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16,
+      "label": "t:sections.cosmic-universe.card_gap.label"
+    },
+    {
+      "type": "range",
+      "id": "card_image_radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "label": "t:sections.cosmic-universe.card_image_radius.label"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "t:sections.cosmic-universe.card_title_color.label"
+    },
+    {
+      "type": "range",
+      "id": "card_title_font_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 17,
+      "label": "t:sections.cosmic-universe.card_title_font_size.label"
+    },
+    {
+      "type": "color",
+      "id": "card_family_color",
+      "label": "t:sections.cosmic-universe.card_family_color.label"
+    },
+    {
+      "type": "range",
+      "id": "card_family_font_size",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "label": "t:sections.cosmic-universe.card_family_font_size.label"
+    },
+    {
+      "type": "color",
+      "id": "card_about_color",
+      "label": "t:sections.cosmic-universe.card_about_color.label"
+    },
+    {
+      "type": "range",
+      "id": "card_about_font_size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "label": "t:sections.cosmic-universe.card_about_font_size.label"
+    },
+    {
+      "type": "color",
+      "id": "card_notes_color",
+      "label": "t:sections.cosmic-universe.card_notes_color.label"
+    },
+    {
+      "type": "range",
+      "id": "card_notes_font_size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "label": "t:sections.cosmic-universe.card_notes_font_size.label"
     },
     {
       "type": "select",

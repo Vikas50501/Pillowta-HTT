@@ -722,6 +722,32 @@
     "cosmic-universe": {
       "name": "Related fragrances carousel",
       "title": { "label": "Heading" },
+      "section_style_header": "Section style",
+      "background_type": {
+        "label": "Background type",
+        "solid": "Solid color",
+        "gradient": "Gradient"
+      },
+      "background_color": { "label": "Background color", "info": "Used when background type is solid." },
+      "gradient_color_from": { "label": "Gradient start color" },
+      "gradient_color_to": { "label": "Gradient end color" },
+      "gradient_angle": { "label": "Gradient angle", "info": "180° fades top to bottom, 90° fades left to right." },
+      "section_padding_top": { "label": "Section padding top" },
+      "section_padding_bottom": { "label": "Section padding bottom" },
+      "title_style_header": "Title style",
+      "title_color": { "label": "Title color" },
+      "title_font_size": { "label": "Title size" },
+      "card_style_header": "Card style",
+      "card_gap": { "label": "Space between cards" },
+      "card_image_radius": { "label": "Image corner radius" },
+      "card_title_color": { "label": "Card title color" },
+      "card_title_font_size": { "label": "Card title size" },
+      "card_family_color": { "label": "Fragrance family color" },
+      "card_family_font_size": { "label": "Fragrance family size" },
+      "card_about_color": { "label": "\"About the scent\" color" },
+      "card_about_font_size": { "label": "\"About the scent\" size" },
+      "card_notes_color": { "label": "Key notes color" },
+      "card_notes_font_size": { "label": "Key notes size" },
       "blocks": {
         "fragrance_card": {
           "name": "Fragrance",
