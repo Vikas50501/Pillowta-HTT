@@ -44,6 +44,8 @@
         <button type="button" class="carousel__dot" data-carousel-dot aria-label="{{ 'general.slide' | t: default: 'Slide' }} {{ forloop.index }}"></button>
       {%- endfor -%}
     </div>
+    <button type="button" class="featured-products__nav featured-products__nav--prev" data-carousel-prev aria-label="{{ 'accessibility.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+    <button type="button" class="featured-products__nav featured-products__nav--next" data-carousel-next aria-label="{{ 'accessibility.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
   </product-carousel>
 </div>
 
@@ -65,6 +67,10 @@
     font-size: var(--font-size-h2);
   }
 
+  .featured-products__carousel {
+    position: relative;
+  }
+
   .featured-products__carousel .carousel__track {
     display: flex;
     gap: 1rem;
@@ -72,6 +78,30 @@
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     padding-bottom: .5rem;
+  }
+
+  .featured-products__nav {
+    position: absolute;
+    top: 40%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--color-background));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+  }
+
+  .featured-products__nav--prev { left: -1.25rem; }
+  .featured-products__nav--next { right: -1.25rem; }
+
+  @media screen and (max-width: 44.99em) {
+    .featured-products__nav {
+      display: none;
+    }
   }
 
   .featured-products__carousel .carousel__track::-webkit-scrollbar {

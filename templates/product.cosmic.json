@@ -63,9 +63,25 @@
             "content": "",
             "page": ""
           }
+        },
+        "trust_vegan": {
+          "type": "trust_icon",
+          "settings": {
+            "icon_asset": "icon-vegan.png",
+            "title": "vegan"
+          }
+        },
+        "trust_cruelty_free": {
+          "type": "trust_icon",
+          "settings": {
+            "icon_asset": "icon-cruelty-free.png",
+            "title": "cruelty free"
+          }
         }
       },
       "block_order": [
+        "trust_vegan",
+        "trust_cruelty_free",
         "description",
         "ingredients",
         "how_to_use",
@@ -254,16 +270,25 @@
       "settings": {
         "background_color": "#f8f1f4"
       }
+    },
+    "related": {
+      "type": "featured-products",
+      "settings": {
+        "title": "you may also like",
+        "collection": "frontpage",
+        "font_override": "inherit"
+      }
     }
   },
   "order": [
     "gradient",
-    "hero",
     "main",
     "ingredient_tiles",
     "marketing_tiles",
+    "hero",
     "cosmic_universe",
     "social",
-    "reviews"
+    "reviews",
+    "related"
   ]
 }

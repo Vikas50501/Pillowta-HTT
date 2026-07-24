@@ -26,7 +26,11 @@
       const stop = isMobile ? el.dataset.stopMobile : el.dataset.stopDesktop;
       main.style.background = `linear-gradient(180deg, ${el.dataset.colorFrom} ${stop}%, ${el.dataset.colorTo} 100%)`;
       main.style.backgroundRepeat = 'no-repeat';
-      const firstBlock = main.children[0];
+      {%- comment -%}
+        This section itself renders an empty (0-height) div, so the wash must be
+        sized against the section that actually follows it, not its own element.
+      {%- endcomment -%}
+      const firstBlock = el.nextElementSibling;
       if (firstBlock) main.style.backgroundSize = `100% ${firstBlock.offsetHeight}px`;
     });
   })();

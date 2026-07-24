@@ -132,6 +132,22 @@
         </button>
       {% endform %}
 
+      {%- liquid
+        assign trust_icon_blocks = section.blocks | where: 'type', 'trust_icon'
+      -%}
+      {%- if trust_icon_blocks.size > 0 -%}
+        <ul class="main-product__trust-icons">
+          {%- for block in trust_icon_blocks -%}
+            <li class="main-product__trust-icon" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon_asset != blank -%}
+                <img src="{{ block.settings.icon_asset | asset_url }}" width="32" height="32" alt="{{ block.settings.title }}" loading="lazy">
+              {%- endif -%}
+              <span>{{ block.settings.title }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
       <div class="main-product__accordions">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
@@ -347,6 +363,34 @@
 
   .main-product__engraving {
     margin-bottom: 1rem;
+  }
+
+  .main-product__trust-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .main-product__trust-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .375rem;
+    width: 5rem;
+    text-align: center;
+  }
+
+  .main-product__trust-icon img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+  }
+
+  .main-product__trust-icon span {
+    font-size: var(--font-size-caption);
+    text-transform: lowercase;
+    color: rgb(var(--color-text));
   }
 
   .main-product__accordions {
@@ -712,9 +756,26 @@
           "label": "t:sections.main-product.blocks.product_tip.tip_product.label"
         }
       ]
+    },
+    {
+      "type": "trust_icon",
+      "name": "t:sections.main-product.blocks.trust_icon.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon_asset",
+          "label": "t:sections.main-product.blocks.trust_icon.icon_asset.label",
+          "info": "t:sections.main-product.blocks.trust_icon.icon_asset.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.main-product.blocks.trust_icon.title.label"
+        }
+      ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 16,
   "presets": [
     {
       "name": "t:sections.main-product.name",

@@ -626,6 +626,11 @@
           "title": { "label": "Title" },
           "text": { "label": "Text" },
           "tip_product": { "label": "Product" }
+        },
+        "trust_icon": {
+          "name": "Trust icon",
+          "icon_asset": { "label": "Icon asset filename", "info": "e.g. icon-vegan.png — must already be uploaded to the theme's assets." },
+          "title": { "label": "Label" }
         }
       }
     },
