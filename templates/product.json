@@ -12,11 +12,53 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "trust_vegan": {
+          "type": "trust_icon",
+          "settings": {
+            "icon_asset": "icon-vegan.png",
+            "title": "vegan"
+          }
+        },
+        "trust_cruelty_free": {
+          "type": "trust_icon",
+          "settings": {
+            "icon_asset": "icon-cruelty-free.png",
+            "title": "cruelty free"
+          }
+        },
+        "chip_no_parabens": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "no parabens",
+            "link": ""
+          }
+        },
+        "chip_no_mineral_oil": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "no mineral oil",
+            "link": ""
+          }
+        },
+        "chip_no_silicones": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "no silicones",
+            "link": ""
+          }
+        },
+        "chip_absorbs_fast": {
+          "type": "feature_chip",
+          "settings": {
+            "label": "absorbs in 60 seconds",
+            "link": ""
+          }
+        },
         "description": {
           "type": "accordion",
           "settings": {
             "title": "description",
-            "content": "<p><br/>description<br/><br/></p>",
+            "content": "<p>Rati makes you present — in your body, in the moment, with whoever you are with. A pre-intimacy massage oil that calms the nervous system, softens tension, and prepares the body to receive. Light on skin, absorbs in 1 minute, no greasiness.</p>",
             "page": ""
           }
         },
@@ -24,7 +66,7 @@
           "type": "accordion",
           "settings": {
             "title": "ingredients",
-            "content": "<p><br/>ingredients<br/><br/></p>",
+            "content": "<p>Real essential oils — sandalwood, neroli, patchouli, and Clary Sage at the heart of it. No parabens. No mineral oil. No silicones.</p>",
             "page": ""
           }
         },
@@ -32,7 +74,7 @@
           "type": "accordion",
           "settings": {
             "title": "how to use",
-            "content": "<p><br/>how to use<br/><br/></p>",
+            "content": "<p>Warm a few drops between your palms and massage slowly into skin. Works for full-body massage, lingam massage, and yoni massage.</p>",
             "page": ""
           }
         },
@@ -54,6 +96,12 @@
         }
       },
       "block_order": [
+        "trust_vegan",
+        "trust_cruelty_free",
+        "chip_no_parabens",
+        "chip_no_mineral_oil",
+        "chip_no_silicones",
+        "chip_absorbs_fast",
         "description",
         "ingredients",
         "how_to_use",
@@ -61,9 +109,13 @@
         "tip"
       ],
       "settings": {
+        "subtitle": "the ritual",
+        "size_note": "Inclusive of all taxes",
+        "short_description": "<p>A pre-intimacy massage oil that calms the nervous system, softens tension, and prepares the body to receive — light on skin, absorbs in under a minute, with zero greasiness.</p>",
         "max_quantity": 10,
         "show_reviews_summary": true,
         "enable_shade_finder": true,
+        "enable_buy_now": true,
         "enable_engraving": false,
         "engraving_button_text": "Engrave your bottle",
         "engraving_terms_text": "by selecting this box, you acknowledge your personalized message is correct, no changes can be made after your order has been submitted, and your order cannot be returned. please allow 2 to 3 days for additional processing.",
