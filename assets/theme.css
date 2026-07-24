@@ -52,6 +52,15 @@ product-carousel {
   padding-right: var(--container-padding);
 }
 
+/* Product page (any product.*.json template) reads narrower than the rest of
+   the site — every section's .page-width container caps at 1300px here
+   instead of the global --container-max-width, so the request only narrows
+   the product template rather than home/collection pages too. */
+body.template-product .page-width,
+body.template-product .container {
+  max-width: 81.25rem; /* 1300px */
+}
+
 .section-spacing {
   padding-top: var(--section-spacing);
   padding-bottom: var(--section-spacing);
