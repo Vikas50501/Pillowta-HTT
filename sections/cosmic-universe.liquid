@@ -55,13 +55,6 @@
         </div>
       {%- endfor -%}
     </div>
-    <div class="carousel__dots" role="tablist">
-      {%- for block in section.blocks -%}
-        <button type="button" class="carousel__dot" data-carousel-dot aria-label="{{ 'general.slide' | t }} {{ forloop.index }}"></button>
-      {%- endfor -%}
-    </div>
-    <button type="button" class="cosmic-universe__nav cosmic-universe__nav--prev" data-carousel-prev aria-label="{{ 'accessibility.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
-    <button type="button" class="cosmic-universe__nav cosmic-universe__nav--next" data-carousel-next aria-label="{{ 'accessibility.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
   </product-carousel>
 </div>
 
@@ -92,31 +85,7 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-  }
-
-  .cosmic-universe__nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    background: rgb(var(--color-background));
-    border: 1px solid rgb(var(--color-border));
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    cursor: pointer;
-  }
-
-  .cosmic-universe__nav--prev { left: -1.25rem; }
-  .cosmic-universe__nav--next { right: -1.25rem; }
-
-  @media screen and (max-width: 44.99em) {
-    .cosmic-universe__nav {
-      display: none;
-    }
   }
 
   .cosmic-universe__card {
@@ -178,26 +147,6 @@
     }
   }
 {% endstylesheet %}
-
-{% javascript %}
-  (function () {
-    document.querySelectorAll('[data-section-type="cosmic-universe"]').forEach((section) => {
-      const image = section.querySelector('.cosmic-universe__image');
-      const navs = section.querySelectorAll('.cosmic-universe__nav');
-      if (!image || !navs.length) return;
-
-      function positionNavs() {
-        const top = image.offsetHeight / 2;
-        navs.forEach((nav) => {
-          nav.style.top = top + 'px';
-        });
-      }
-
-      positionNavs();
-      window.addEventListener('resize', positionNavs);
-    });
-  })();
-{% endjavascript %}
 
 {% schema %}
 {
