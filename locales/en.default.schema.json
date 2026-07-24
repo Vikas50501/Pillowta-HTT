@@ -663,6 +663,11 @@
     },
     "marketing-tiles": {
       "name": "Marketing tiles",
+      "section_style_header": "Section style",
+      "section_background_color": { "label": "Section background", "info": "Leave blank to match the page background." },
+      "section_padding_top": { "label": "Section padding top" },
+      "section_padding_bottom": { "label": "Section padding bottom" },
+      "tile_gap": { "label": "Space between tiles" },
       "blocks": {
         "tile": {
           "name": "Tile",
@@ -674,8 +679,19 @@
           "image": { "label": "Image" },
           "title": { "label": "Title" },
           "text": { "label": "Text" },
-          "background_color": { "label": "Background color" },
-          "text_color": { "label": "Text color" }
+          "colors_header": "Colors",
+          "background_color": { "label": "Background color", "info": "Only visible where no image covers it." },
+          "text_color": { "label": "Text color" },
+          "overlay_color": { "label": "Image overlay color", "info": "Darkens the image so text stays readable." },
+          "overlay_opacity": { "label": "Image overlay strength" },
+          "layout_header": "Layout",
+          "tile_radius": { "label": "Corner radius" },
+          "tile_min_height": { "label": "Minimum height" },
+          "content_align_h": { "label": "Content horizontal position" },
+          "content_align_v": { "label": "Content vertical position" },
+          "typography_header": "Typography",
+          "title_font_size": { "label": "Title size" },
+          "text_font_size": { "label": "Text size" }
         }
       }
     },
