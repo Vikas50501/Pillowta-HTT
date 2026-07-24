@@ -55,9 +55,12 @@ product-carousel {
 /* Product page (any product.*.json template) reads narrower than the rest of
    the site — every section's .page-width container caps at 1300px here
    instead of the global --container-max-width, so the request only narrows
-   the product template rather than home/collection pages too. */
-body.template-product .page-width,
-body.template-product .container {
+   the product template's own sections. Scoped to #MainContent (not just
+   body.template-product) so the header/footer groups — rendered outside
+   content_for_layout but still inside the same <body> — keep the site-wide
+   width instead of shrinking along with the product content. */
+body.template-product #MainContent .page-width,
+body.template-product #MainContent .container {
   max-width: 81.25rem; /* 1300px */
 }
 
