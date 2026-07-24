@@ -24,8 +24,8 @@
         "promo_banner_Rzd3C9": {
           "type": "promo_banner",
           "settings": {
-            "message": "First Order: Use Code for 20% Off",
-            "code": "RATI20",
+            "message": "First Order: Use Code RATI20 for 20% Off",
+            "code": "",
             "show_copy_button": true
           }
         },
@@ -136,7 +136,7 @@
         "background_color": "",
         "text_color": "",
         "heading_color": "",
-        "price_color": "#CE3C2D",
+        "price_color": "#ce3c2d",
         "accent_color": "",
         "gallery_max_width": 480,
         "section_padding_top": 48,
