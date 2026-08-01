@@ -38,7 +38,7 @@
   {%- endif -%}
 
   <div class="main-product__layout page-width">
-    <div class="main-product__gallery"{% if section.settings.enable_scroll_reveal %} data-scroll-reveal{% endif %}>
+    <div class="main-product__gallery">
       <div class="product-gallery{% if product.media.size > 1 %} product-gallery--has-thumbs{% endif %}" data-product-gallery>
         {%- if product.media.size > 1 -%}
           <div class="product-gallery__thumbs" data-gallery-thumbs>
