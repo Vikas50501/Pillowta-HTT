@@ -12,6 +12,9 @@
   class="rewards-steps{% if section.settings.font_override != 'inherit' %} rewards-steps--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="rewards-steps"
+  {%- if section.settings.background_color != blank -%}
+    style="--rewards-steps-bg: {{ section.settings.background_color }};"
+  {%- endif -%}
 >
   <div class="rewards-steps__inner page-width">
     {%- if section.settings.title != blank -%}
@@ -36,6 +39,7 @@
 {% stylesheet %}
   .rewards-steps {
     padding-block: var(--section-spacing);
+    background-color: var(--rewards-steps-bg, transparent);
   }
 
   .rewards-steps__title {
@@ -88,6 +92,12 @@
       "type": "text",
       "id": "title",
       "label": "t:sections.rewards-steps.title.label"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:sections.rewards-steps.background_color.label",
+      "info": "t:sections.rewards-steps.background_color.info"
     },
     {
       "type": "range",

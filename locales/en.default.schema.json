@@ -542,6 +542,7 @@
     "foursixty": {
       "name": "Instagram gallery",
       "title": { "label": "Title" },
+      "background_color": { "label": "Background color", "info": "Leave blank to match the page background." },
       "columns_desktop": { "label": "Columns (desktop)" },
       "columns_mobile": { "label": "Columns (mobile)" },
       "tile_gap": { "label": "Tile spacing" },
@@ -871,6 +872,7 @@
     "rewards-steps": {
       "name": "Rewards steps/points list",
       "title": { "label": "Heading" },
+      "background_color": { "label": "Background color", "info": "Leave blank to match the page background." },
       "columns": { "label": "Columns" },
       "blocks": {
         "item": {

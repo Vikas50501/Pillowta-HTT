@@ -10,6 +10,9 @@
   class="foursixty{% if section.settings.font_override != 'inherit' %} foursixty--font-{{ section.settings.font_override }}{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="foursixty"
+  {%- if section.settings.background_color != blank -%}
+    style="--foursixty-bg: {{ section.settings.background_color }};"
+  {%- endif -%}
 >
   {%- if section.settings.title != blank -%}
     <h2 class="foursixty__title page-width">{{ section.settings.title }}</h2>
@@ -47,6 +50,7 @@
 {% stylesheet %}
   .foursixty {
     padding-block: var(--section-spacing);
+    background-color: var(--foursixty-bg, transparent);
   }
 
   .foursixty__title {
@@ -126,6 +130,12 @@
       "id": "title",
       "default": "SHOP OUR IG",
       "label": "t:sections.foursixty.title.label"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:sections.foursixty.background_color.label",
+      "info": "t:sections.foursixty.background_color.info"
     },
     {
       "type": "range",
