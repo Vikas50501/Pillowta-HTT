@@ -586,13 +586,15 @@
     position: relative;
     height: var(--main-product-button-height, 2.5rem);
     background-color: var(--main-product-button-bg, rgb(var(--color-button-primary-bg)));
-    border-color: var(--main-product-button-bg, rgb(var(--color-button-primary-bg)));
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--main-product-button-text, rgb(var(--color-button-primary-text)));
     color: var(--main-product-button-text, rgb(var(--color-button-primary-text)));
   }
 
   .main-product__add-to-cart:hover:not(:disabled) {
     background-color: var(--main-product-button-bg-hover, rgb(var(--color-button-primary-bg-hover)));
-    border-color: var(--main-product-button-bg-hover, rgb(var(--color-button-primary-bg-hover)));
+    border-color: var(--main-product-button-text-hover, rgb(var(--color-button-primary-text-hover)));
     color: var(--main-product-button-text-hover, rgb(var(--color-button-primary-text-hover)));
   }
 
@@ -804,6 +806,11 @@
 
   .form__field--quantity {
     margin-bottom: 1.25rem;
+  }
+
+  .form__field--quantity .quantity-selector {
+    border: 0;
+    background: rgb(var(--color-background-alt));
   }
 
   .main-product__engraving {
