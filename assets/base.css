@@ -17,11 +17,18 @@ html {
   text-size-adjust: 100%;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* Setting only overflow-x forces the browser to compute the unset
+     overflow-y as "auto" instead of "visible" (CSS Overflow spec's
+     visible/non-visible pairing rule) — that silently breaks
+     position: sticky for every descendant on the page. Pin overflow-y
+     explicitly so the horizontal clip doesn't carry that side effect. */
+  overflow-y: visible;
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
+  overflow-y: visible;
   font-family: var(--font-body);
   font-size: var(--font-size-body);
   line-height: var(--line-height-base);
