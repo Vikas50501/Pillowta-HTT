@@ -16,18 +16,19 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  /* Setting only overflow-x forces the browser to compute the unset
-     overflow-y as "auto" instead of "visible" (CSS Overflow spec's
-     visible/non-visible pairing rule) — that silently breaks
-     position: sticky for every descendant on the page. Pin overflow-y
-     explicitly so the horizontal clip doesn't carry that side effect. */
+  /* `clip` instead of `hidden`: per the CSS Overflow spec, pairing a
+     non-visible overflow-x with overflow-y: visible forces overflow-y
+     to compute as "auto" too - even when visible is set explicitly -
+     which silently breaks position: sticky for every descendant on
+     the page. `clip` is exempt from that pairing rule, so it keeps
+     the horizontal-scrollbar prevention without the side effect. */
+  overflow-x: clip;
   overflow-y: visible;
 }
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: visible;
   font-family: var(--font-body);
   font-size: var(--font-size-body);
