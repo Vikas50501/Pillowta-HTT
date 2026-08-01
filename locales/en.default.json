@@ -116,6 +116,11 @@
   "products": {
     "quick_add": "quick add",
     "add_to_cart": "add to cart",
+    "sold_out": "sold out",
+    "selling_plans": {
+      "label": "Purchase options",
+      "one_time": "One-time purchase"
+    },
     "badges": {
       "best_seller": "best seller",
       "new": "new",
