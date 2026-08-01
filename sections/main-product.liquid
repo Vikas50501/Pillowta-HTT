@@ -578,13 +578,14 @@
   }
 
   .main-product__actions .shopify-payment-button__button {
-    border-radius: var(--main-product-radius, var(--button-radius));
+    border-radius: var(--radius-full);
     height: var(--main-product-button-height, auto);
   }
 
   .action--primary.main-product__add-to-cart {
     position: relative;
     height: var(--main-product-button-height, 2.5rem);
+    border-radius: var(--radius-full);
     background-color: var(--main-product-button-bg, rgb(var(--color-button-primary-bg)));
     border-width: 1px;
     border-style: solid;
@@ -809,12 +810,32 @@
   }
 
   .form__field--quantity .quantity-selector {
-    border: 0;
-    background: rgb(var(--color-background-alt));
+    height: var(--main-product-button-height, 2.5rem);
+    padding-inline: 1rem;
+    background: transparent;
+    border: 1px solid var(--main-product-accent-color, rgb(var(--color-accent)));
+    border-radius: var(--radius-full);
+    color: var(--main-product-accent-color, rgb(var(--color-accent)));
+  }
+
+  .form__field--quantity .quantity-selector__button {
+    color: inherit;
   }
 
   .main-product__engraving {
     margin-bottom: 1rem;
+  }
+
+  .action--secondary.main-product__engraving-toggle {
+    border-radius: var(--radius-full);
+    border-color: var(--main-product-accent-color, rgb(var(--color-accent)));
+    color: var(--main-product-accent-color, rgb(var(--color-accent)));
+  }
+
+  .action--secondary.main-product__engraving-toggle:hover {
+    background-color: var(--main-product-accent-color, rgb(var(--color-accent)));
+    border-color: var(--main-product-accent-color, rgb(var(--color-accent)));
+    color: rgb(var(--color-background));
   }
 
   .main-product__trust-icons {
@@ -834,8 +855,8 @@
   }
 
   .main-product__trust-icon img {
-    width: 2rem;
-    height: 2rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: var(--radius-full);
   }
 
