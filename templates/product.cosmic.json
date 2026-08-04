@@ -138,7 +138,7 @@
         "variant_style": "auto",
         "size_note": "50ml | Inclusive of all taxes",
         "short_description": "<p>Rati makes you present — in your body, in the moment, with whoever you are with. A pre-intimacy massage oil that calms the nervous system, softens tension, and prepares the body to receive. Light on skin, absorbs in 1 minute, no greasiness. Real essential oils — sandalwood, neroli, patchouli, and Clary Sage at the heart of it. Works for full-body massage, lingam massage, and yoni massage. No parabens. No mineral oil. No silicones.</p>",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "text_color": "",
         "heading_color": "",
         "price_color": "#ce3c2d",
@@ -483,6 +483,7 @@
       ],
       "settings": {
         "title": "on social",
+        "background_color": "#F8F1F4",
         "columns_desktop": 7,
         "columns_mobile": 3,
         "tile_gap": 8,
@@ -571,6 +572,7 @@
       "name": "t:sections.rewards-steps.name",
       "settings": {
         "title": "how it works",
+        "background_color": "#F8F1F4",
         "columns": 4,
         "font_override": "inherit"
       }
@@ -583,7 +585,7 @@
         "reverse": true,
         "media_aspect_ratio": "4 / 3",
         "media_radius": 20,
-        "color_background": "",
+        "color_background": "#F8F1F4",
         "color_heading": "#b3848f",
         "color_text": "#393939",
         "heading_font_size": 34,
