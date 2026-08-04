@@ -145,7 +145,7 @@
         "accent_color": "",
         "button_background_color": "#393939",
         "button_background_hover_color": "",
-        "button_text_color": "",
+        "button_text_color": "#ffffff",
         "button_text_hover_color": "",
         "gallery_max_width": 480,
         "thumbnail_size": 64,
