@@ -113,7 +113,7 @@
     "hero_summer_faves": {
       "type": "hero",
       "settings": {
-        "height_desktop": 85,
+        "height_desktop": 90,
         "height_mobile": 75,
         "desktop_video": "shopify://files/videos/Pillowta vi.mp4",
         "mobile_layout": "over-image",
