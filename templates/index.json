@@ -261,38 +261,6 @@
         "font_override": "inherit"
       }
     },
-    "featured_content_MM8prR": {
-      "type": "featured-content",
-      "settings": {
-        "video": "shopify://files/videos/Pillowta vi.mp4",
-        "reverse": true,
-        "media_aspect_ratio": "1 / 1",
-        "media_radius": 20,
-        "color_background": "#f8f1f4",
-        "color_heading": "#b3848f",
-        "color_text": "#393939",
-        "heading_font_size": 34,
-        "section_padding_left": 50,
-        "section_padding_right": 50,
-        "tile_background_color": "#ffffff",
-        "tile_max_width": 1728,
-        "tile_padding_top": 0,
-        "tile_padding_bottom": 0,
-        "tile_padding_left": 80,
-        "tile_padding_right": 0,
-        "tile_radius": 20,
-        "heading": "Be the First. Shape What Comes Next.",
-        "subtext": "<p>Before Pillowta launches, we are inviting real people to experience the ritual, give us honest feedback, and directly shape what we build next. Not testing a product. Building one together.</p>",
-        "text_align": "center",
-        "button_text": "CO CREATE WITH US",
-        "link": "/products/kylie-s-summer-look-bundle",
-        "button_style": "secondary",
-        "show_product_rail": false,
-        "collection": "",
-        "product_limit": 4,
-        "font_override": "inherit"
-      }
-    },
     "hero_scent_of_summer": {
       "type": "hero",
       "disabled": true,
@@ -634,7 +602,6 @@
     "hero_summer_faves",
     "fireworks_cosmic",
     "featured_products_2",
-    "featured_content_MM8prR",
     "hero_scent_of_summer",
     "shop_by_category",
     "hero_vto",
