@@ -115,8 +115,8 @@
       "settings": {
         "height_desktop": 85,
         "height_mobile": 75,
-        "desktop_image": "shopify://shop_images/pexels-amaria-11259997.jpg",
-        "mobile_layout": "below-image",
+        "desktop_video": "shopify://files/videos/Pillowta vi.mp4",
+        "mobile_layout": "over-image",
         "overlay_color": "#000000",
         "overlay_opacity": 0,
         "eyebrow": "",
