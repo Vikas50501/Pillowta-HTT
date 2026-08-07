@@ -907,6 +907,45 @@
         }
       }
     },
+    "story-content": {
+      "name": "Story content",
+      "header_content_header": "Page header",
+      "eyebrow": { "label": "Eyebrow" },
+      "heading": { "label": "Heading" },
+      "intro": { "label": "Intro text" },
+      "colors_header": "Colors",
+      "background_color": { "label": "Background color" },
+      "heading_color": { "label": "Heading color" },
+      "text_color": { "label": "Text color" },
+      "accent_color": { "label": "Accent color", "info": "Used for the eyebrow, chapter numbers, and pull-quote border." },
+      "layout_header": "Layout & spacing",
+      "content_max_width": { "label": "Content width" },
+      "chapter_gap": { "label": "Space between blocks" },
+      "section_padding_top": { "label": "Section padding top" },
+      "section_padding_bottom": { "label": "Section padding bottom" },
+      "blocks": {
+        "chapter": {
+          "name": "Chapter",
+          "number": { "label": "Number", "info": "e.g. \"01\" — leave blank to hide." },
+          "eyebrow": { "label": "Eyebrow" },
+          "heading": { "label": "Heading" },
+          "body": { "label": "Body text" },
+          "pull_quote": { "label": "Pull-quote", "info": "Optional large quote shown at the end of this chapter." }
+        },
+        "highlight": {
+          "name": "Highlight card",
+          "title": { "label": "Title" },
+          "text": { "label": "Text" }
+        },
+        "quote_cta": {
+          "name": "Quote + call to action",
+          "quote": { "label": "Quote" },
+          "attribution": { "label": "Attribution" },
+          "button_text": { "label": "Button text" },
+          "button_link": { "label": "Button link" }
+        }
+      }
+    },
     "shipping-tabs": {
       "name": "Shipping info tabs",
       "title": { "label": "Banner title" },

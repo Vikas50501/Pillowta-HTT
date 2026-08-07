@@ -1,0 +1,86 @@
+{
+  "sections": {
+    "main": {
+      "type": "story-content",
+      "blocks": {
+        "chapter_01": {
+          "type": "chapter",
+          "settings": {
+            "number": "01",
+            "eyebrow": "why we exist",
+            "heading": "the problem no one was talking about.",
+            "body": "<p>The Kamasutra was never just about sex positions. It was a science of relationships. A guide to understanding our own desires, your partner's body, and the art of being fully present.</p><p>Our ancestors built that knowledge deliberately, and treated it with reverence. We live in its birthplace and know almost none of it.</p><p>The result is chronic dissatisfaction: partners feeling disconnected, people carrying shame around their own pleasure, and an entire conversation that never happens.</p>",
+            "pull_quote": "We live in its birthplace and know almost none of it. This is the problem we were built to solve."
+          }
+        },
+        "quote_cta_01": {
+          "type": "quote_cta",
+          "settings": {
+            "quote": "Our ancestors had answers. We're just translating them.",
+            "attribution": "Pillowta Founders",
+            "button_text": "Join the community",
+            "button_link": ""
+          }
+        },
+        "chapter_02": {
+          "type": "chapter",
+          "settings": {
+            "number": "02",
+            "eyebrow": "",
+            "heading": "why ancient wisdom.",
+            "body": "<p>We didn't need to import a framework for sex. Intimacy wasn't always reduced to technique or outcome. There was a time when it was understood as something deeper, something to be explored, not rushed.</p><p>Our own tradition, which saw sex as science, poetry, and self-knowledge, was quietly buried. The Kamasutra was not lost. It was colonised out of our consciousness.</p><p>Pillowta exists to bring it back. Not as a museum exhibit, but as living, practical wisdom for the problems of modern intimacy.</p>",
+            "pull_quote": ""
+          }
+        },
+        "highlight_01": {
+          "type": "highlight",
+          "settings": {
+            "title": "Living, Not Museum",
+            "text": "<p>We're not preserving history. We're translating it into something you can use today.</p>"
+          }
+        },
+        "highlight_02": {
+          "type": "highlight",
+          "settings": {
+            "title": "Science of Relationships",
+            "text": "<p>The Kamasutra codified desire, presence, and mutual understanding centuries before modern psychology existed.</p>"
+          }
+        },
+        "quote_cta_02": {
+          "type": "quote_cta",
+          "settings": {
+            "quote": "Our ancestors had answers. We're just translating them.",
+            "attribution": "Pillowta Founders",
+            "button_text": "Join the community",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "chapter_01",
+        "quote_cta_01",
+        "chapter_02",
+        "highlight_01",
+        "highlight_02",
+        "quote_cta_02"
+      ],
+      "settings": {
+        "eyebrow": "our story",
+        "heading": "We inherited extraordinary. And forgot it.",
+        "intro": "<p>India gave the world the Kamasutra. A philosophy of desire, presence, and intimacy as art. Somewhere along the way, we decided to be ashamed of it. Our ancestors built that knowledge deliberately, and treated it with reverence.</p>",
+        "background_color": "",
+        "heading_color": "",
+        "text_color": "",
+        "accent_color": "",
+        "content_max_width": 760,
+        "chapter_gap": 64,
+        "section_padding_top": 64,
+        "section_padding_bottom": 64,
+        "font_override": "inherit"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
