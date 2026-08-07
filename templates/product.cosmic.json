@@ -483,7 +483,7 @@
       ],
       "settings": {
         "title": "on social",
-        "background_color": "#F8F1F4",
+        "background_color": "#f8f1f4",
         "columns_desktop": 7,
         "columns_mobile": 3,
         "tile_gap": 8,
@@ -514,6 +514,7 @@
       "block_order": [
         "judge_me_reviews_review_widget_NcQmpp"
       ],
+      "disabled": true,
       "settings": {}
     },
     "related": {
@@ -572,7 +573,7 @@
       "name": "t:sections.rewards-steps.name",
       "settings": {
         "title": "how it works",
-        "background_color": "#F8F1F4",
+        "background_color": "#f8f1f4",
         "columns": 4,
         "font_override": "inherit"
       }
@@ -585,7 +586,7 @@
         "reverse": true,
         "media_aspect_ratio": "4 / 3",
         "media_radius": 20,
-        "color_background": "#F8F1F4",
+        "color_background": "#f8f1f4",
         "color_heading": "#b3848f",
         "color_text": "#393939",
         "heading_font_size": 34,
