@@ -42,8 +42,9 @@
       {%- liquid
         assign prev_type = ''
         assign next_type = ''
+        assign prev_index = forloop.index0 | minus: 1
         if forloop.index0 > 0
-          assign prev_block = section.blocks[forloop.index0 | minus: 1]
+          assign prev_block = section.blocks[prev_index]
           assign prev_type = prev_block.type
         endif
         if forloop.index < section.blocks.size
