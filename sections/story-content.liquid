@@ -108,9 +108,10 @@
 
           {%- when 'highlight' -%}
             {%- if prev_type != 'highlight' -%}<div class="story-content__highlights">{%- endif -%}
+              {%- assign highlight_icon = block.settings.icon | default: 'spark' -%}
               <div class="story-content__highlight" {{ block.shopify_attributes }}>
                 <span class="story-content__highlight-icon">
-                  {%- render 'icon', name: block.settings.icon | default: 'spark', icon_size: 24 -%}
+                  {%- render 'icon', name: highlight_icon, icon_size: 24 -%}
                 </span>
                 {%- if block.settings.title != blank -%}
                   <p class="story-content__highlight-title">{{ block.settings.title }}</p>
