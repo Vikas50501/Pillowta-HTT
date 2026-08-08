@@ -44,6 +44,7 @@
         "highlight_01": {
           "type": "highlight",
           "settings": {
+            "icon": "spark",
             "title": "Living, Not Museum",
             "text": "<p>We're not preserving history. We're translating it into something you can use today.</p>"
           }
@@ -51,6 +52,7 @@
         "highlight_02": {
           "type": "highlight",
           "settings": {
+            "icon": "wishlist",
             "title": "Science of Relationships",
             "text": "<p>The Kamasutra codified desire, presence, and mutual understanding centuries before modern psychology existed.</p>"
           }
@@ -77,6 +79,7 @@
         "eyebrow": "our story",
         "heading": "We inherited extraordinary. And forgot it.",
         "intro": "<p>India gave the world the Kamasutra. A philosophy of desire, presence, and intimacy as art. Somewhere along the way, we decided to be ashamed of it. Our ancestors built that knowledge deliberately, and treated it with reverence.</p>",
+        "header_image": "shopify://shop_images/WhatsApp_Image_2026-04-25_at_3.56.32_PM.jpg",
         "background_color": "",
         "heading_color": "",
         "text_color": "",
