@@ -913,6 +913,7 @@
       "eyebrow": { "label": "Eyebrow" },
       "heading": { "label": "Heading" },
       "intro": { "label": "Intro text" },
+      "header_image": { "label": "Header image", "info": "Optional — shows a two-column layout with this image beside the intro text. Leave blank for a centered text-only header." },
       "colors_header": "Colors",
       "background_color": { "label": "Background color" },
       "heading_color": { "label": "Heading color" },
@@ -929,11 +930,19 @@
           "number": { "label": "Number", "info": "e.g. \"01\" — leave blank to hide." },
           "eyebrow": { "label": "Eyebrow" },
           "heading": { "label": "Heading" },
+          "image": { "label": "Image", "info": "Optional lead image, reveals with a wipe animation on scroll." },
           "body": { "label": "Body text" },
           "pull_quote": { "label": "Pull-quote", "info": "Optional large quote shown at the end of this chapter." }
         },
         "highlight": {
           "name": "Highlight card",
+          "icon": {
+            "label": "Icon",
+            "spark": "Spark",
+            "book": "Book",
+            "heart": "Heart",
+            "check": "Checkmark"
+          },
           "title": { "label": "Title" },
           "text": { "label": "Text" }
         },

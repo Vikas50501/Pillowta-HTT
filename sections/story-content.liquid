@@ -1,11 +1,14 @@
 {% comment %}
   Reusable long-form editorial/brand-story section. Built for the "Our Story"
-  page: a short page header (eyebrow + heading + intro) followed by a mixed
-  sequence of blocks — numbered `chapter`s (heading + body + optional
-  pull-quote), `highlight` cards (auto-grouped into a grid when they appear
-  back-to-back), and a signature `quote_cta` callout — so merchants can
-  reorder, add, or remove any of them without touching markup. Any other
-  long-form content page can reuse this section the same way.
+  page as a set of deliberately different visual treatments per block type,
+  not one repeated card pattern: `chapter` blocks run down a timeline rail
+  (badge + connecting line) with an optional scroll-revealed lead image,
+  `highlight` blocks are hover-interactive icon cards grouped into a grid
+  when they appear back-to-back, and `quote_cta` blocks are layered
+  signature-quote callouts that alternate a plain/tinted background so two
+  in a row don't look identical. Colors/spacing are schema-driven so it
+  stays on the theme's existing design tokens. Any other long-form content
+  page can reuse this section the same way.
 {% endcomment %}
 <div
   id="shopify-section-{{ section.id }}"
@@ -25,85 +28,120 @@
 >
   <div class="story-content__inner page-width">
     {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.intro != blank -%}
-      <header class="story-content__header" data-scroll-reveal>
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="story-content__eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h1 class="story-content__heading">{{ section.settings.heading }}</h1>
-        {%- endif -%}
-        {%- if section.settings.intro != blank -%}
-          <div class="story-content__intro">{{ section.settings.intro }}</div>
+      <header class="story-content__header{% if section.settings.header_image != blank %} story-content__header--split{% endif %}" data-scroll-reveal>
+        <span class="story-content__header-glow" aria-hidden="true"></span>
+        <div class="story-content__header-text">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="story-content__eyebrow">
+              {%- render 'icon', name: 'spark', icon_size: 14 -%}
+              {{ section.settings.eyebrow }}
+            </p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h1 class="story-content__heading">{{ section.settings.heading }}</h1>
+          {%- endif -%}
+          {%- if section.settings.intro != blank -%}
+            <div class="story-content__intro">{{ section.settings.intro }}</div>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.header_image != blank -%}
+          <div class="story-content__header-image">
+            {{ section.settings.header_image | image_url: width: 900 | image_tag: widths: '450,700,900', alt: section.settings.heading | default: '', loading: 'lazy' }}
+          </div>
         {%- endif -%}
       </header>
     {%- endif -%}
 
-    {%- for block in section.blocks -%}
+    <div class="story-content__timeline">
       {%- liquid
-        assign prev_type = ''
-        assign next_type = ''
-        assign prev_index = forloop.index0 | minus: 1
-        if forloop.index0 > 0
-          assign prev_block = section.blocks[prev_index]
-          assign prev_type = prev_block.type
-        endif
-        if forloop.index < section.blocks.size
-          assign next_block = section.blocks[forloop.index]
-          assign next_type = next_block.type
-        endif
+        assign chapter_count = 0
+        assign quote_count = 0
       -%}
-      {%- case block.type -%}
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign prev_type = ''
+          assign next_type = ''
+          assign prev_index = forloop.index0 | minus: 1
+          if forloop.index0 > 0
+            assign prev_block = section.blocks[prev_index]
+            assign prev_type = prev_block.type
+          endif
+          if forloop.index < section.blocks.size
+            assign next_block = section.blocks[forloop.index]
+            assign next_type = next_block.type
+          endif
+        -%}
+        {%- case block.type -%}
 
-        {%- when 'chapter' -%}
-          <article class="story-content__chapter" data-scroll-reveal {{ block.shopify_attributes }}>
-            {%- if block.settings.number != blank -%}
-              <span class="story-content__chapter-number" aria-hidden="true">{{ block.settings.number }}</span>
-            {%- endif -%}
-            <div class="story-content__chapter-body">
-              {%- if block.settings.eyebrow != blank -%}
-                <p class="story-content__chapter-eyebrow">{{ block.settings.eyebrow }}</p>
+          {%- when 'chapter' -%}
+            {%- assign chapter_count = chapter_count | plus: 1 -%}
+            <article class="story-content__chapter{% if forloop.last %} story-content__chapter--last{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
+              <div class="story-content__rail" aria-hidden="true">
+                <span class="story-content__badge">{{ block.settings.number | default: chapter_count }}</span>
+                <span class="story-content__rail-line"></span>
+              </div>
+              <div class="story-content__chapter-content">
+                {%- if block.settings.eyebrow != blank -%}
+                  <p class="story-content__chapter-eyebrow">{{ block.settings.eyebrow }}</p>
+                {%- endif -%}
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="story-content__chapter-heading">{{ block.settings.heading }}</h2>
+                {%- endif -%}
+                {%- if block.settings.image != blank -%}
+                  <div class="story-content__chapter-image">
+                    <div class="story-content__chapter-image-mask">
+                      {{ block.settings.image | image_url: width: 900 | image_tag: widths: '450,700,900', alt: block.settings.heading | default: '', loading: 'lazy' }}
+                    </div>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.body != blank -%}
+                  <div class="story-content__chapter-text">{{ block.settings.body }}</div>
+                {%- endif -%}
+                {%- if block.settings.pull_quote != blank -%}
+                  <blockquote class="story-content__pull-quote">
+                    <span class="story-content__pull-quote-mark" aria-hidden="true">&ldquo;</span>
+                    {{ block.settings.pull_quote }}
+                  </blockquote>
+                {%- endif -%}
+              </div>
+            </article>
+
+          {%- when 'highlight' -%}
+            {%- if prev_type != 'highlight' -%}<div class="story-content__highlights">{%- endif -%}
+              <div class="story-content__highlight" {{ block.shopify_attributes }}>
+                <span class="story-content__highlight-icon">
+                  {%- render 'icon', name: block.settings.icon | default: 'spark', icon_size: 24 -%}
+                </span>
+                {%- if block.settings.title != blank -%}
+                  <p class="story-content__highlight-title">{{ block.settings.title }}</p>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="story-content__highlight-text">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+            {%- if next_type != 'highlight' -%}</div>{%- endif -%}
+
+          {%- when 'quote_cta' -%}
+            {%- assign quote_count = quote_count | plus: 1 -%}
+            <div class="story-content__signature{% if quote_count | modulo: 2 == 0 %} story-content__signature--tinted{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
+              <span class="story-content__signature-mark" aria-hidden="true">&ldquo;</span>
+              {%- if block.settings.quote != blank -%}
+                <p class="story-content__signature-quote">{{ block.settings.quote }}</p>
               {%- endif -%}
-              {%- if block.settings.heading != blank -%}
-                <h2 class="story-content__chapter-heading">{{ block.settings.heading }}</h2>
+              {%- if block.settings.attribution != blank -%}
+                <p class="story-content__signature-attribution">{{ block.settings.attribution }}</p>
               {%- endif -%}
-              {%- if block.settings.body != blank -%}
-                <div class="story-content__chapter-text">{{ block.settings.body }}</div>
-              {%- endif -%}
-              {%- if block.settings.pull_quote != blank -%}
-                <blockquote class="story-content__pull-quote">{{ block.settings.pull_quote }}</blockquote>
+              {%- if block.settings.button_text != blank -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="action action--secondary story-content__signature-button">
+                  <span>{{ block.settings.button_text }}</span>
+                  {%- render 'icon', name: 'arrow-right', icon_size: 14 -%}
+                </a>
               {%- endif -%}
             </div>
-          </article>
 
-        {%- when 'highlight' -%}
-          {%- if prev_type != 'highlight' -%}<div class="story-content__highlights">{%- endif -%}
-            <div class="story-content__highlight" {{ block.shopify_attributes }}>
-              {%- if block.settings.title != blank -%}
-                <p class="story-content__highlight-title">{{ block.settings.title }}</p>
-              {%- endif -%}
-              {%- if block.settings.text != blank -%}
-                <div class="story-content__highlight-text">{{ block.settings.text }}</div>
-              {%- endif -%}
-            </div>
-          {%- if next_type != 'highlight' -%}</div>{%- endif -%}
-
-        {%- when 'quote_cta' -%}
-          <div class="story-content__signature" {{ block.shopify_attributes }}>
-            {%- if block.settings.quote != blank -%}
-              <p class="story-content__signature-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
-            {%- endif -%}
-            {%- if block.settings.attribution != blank -%}
-              <p class="story-content__signature-attribution">{{ block.settings.attribution }}</p>
-            {%- endif -%}
-            {%- if block.settings.button_text != blank -%}
-              <a href="{{ block.settings.button_link | default: '#' }}" class="action action--secondary story-content__signature-button">
-                {{ block.settings.button_text }}
-              </a>
-            {%- endif -%}
-          </div>
-
-      {%- endcase -%}
-    {%- endfor -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
   </div>
 </div>
 
@@ -113,24 +151,78 @@
     padding-bottom: var(--story-padding-bottom, var(--section-spacing));
     background-color: var(--story-bg, transparent);
     color: var(--story-text-color, inherit);
+    overflow: hidden;
   }
 
   .story-content__inner {
     max-width: var(--story-content-width, 47.5rem);
+    position: relative;
   }
 
+  /* ---- Header ---- */
   .story-content__header {
+    position: relative;
     text-align: center;
     margin-bottom: var(--story-chapter-gap, 4rem);
   }
 
-  .story-content__eyebrow,
-  .story-content__chapter-eyebrow {
+  .story-content__header-glow {
+    position: absolute;
+    top: -6rem;
+    left: 50%;
+    width: 26rem;
+    height: 26rem;
+    margin-left: -13rem;
+    border-radius: 50%;
+    background: var(--story-accent-color, rgb(var(--color-accent)));
+    opacity: .12;
+    filter: blur(70px);
+    z-index: -1;
+    animation: story-glow-float 14s ease-in-out infinite;
+  }
+
+  .story-content__header--split {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    text-align: left;
+    max-width: none;
+  }
+
+  .story-content__header--split .story-content__header-text {
+    flex: 1;
+  }
+
+  .story-content__header-image {
+    flex: 0 0 40%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transform: rotate(-1.5deg);
+    transition: transform var(--transition-medium);
+  }
+
+  .story-content__header-image:hover {
+    transform: rotate(0deg) scale(1.02);
+  }
+
+  .story-content__header-image img {
+    width: 100%;
+    display: block;
+  }
+
+  .story-content__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
     font-size: var(--font-size-small);
     text-transform: uppercase;
     letter-spacing: .08em;
     color: var(--story-accent-color, rgb(var(--color-accent)));
     margin: 0 0 .75rem;
+  }
+
+  .story-content__eyebrow svg {
+    flex-shrink: 0;
   }
 
   .story-content__heading {
@@ -147,20 +239,62 @@
     color: rgba(var(--color-text), .75);
   }
 
+  /* ---- Timeline / chapters ---- */
+  .story-content__timeline {
+    position: relative;
+  }
+
   .story-content__chapter {
-    display: grid;
-    grid-template-columns: 4.5rem minmax(0, 1fr);
-    gap: 1.5rem;
+    display: flex;
+    gap: 1.75rem;
     margin-bottom: var(--story-chapter-gap, 4rem);
   }
 
-  .story-content__chapter-number {
+  .story-content__rail {
+    flex: 0 0 2.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .story-content__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--story-accent-color, rgb(var(--color-accent)));
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
-    font-size: 3rem;
-    line-height: 1;
+    font-size: var(--font-size-small);
     color: var(--story-accent-color, rgb(var(--color-accent)));
-    opacity: .35;
+    flex-shrink: 0;
+  }
+
+  .story-content__rail-line {
+    flex: 1;
+    width: 1px;
+    margin-top: .75rem;
+    background: linear-gradient(to bottom, var(--story-accent-color, rgb(var(--color-accent))), transparent);
+    opacity: .4;
+  }
+
+  .story-content__chapter--last .story-content__rail-line {
+    display: none;
+  }
+
+  .story-content__chapter-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .story-content__chapter-eyebrow {
+    font-size: var(--font-size-small);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--story-accent-color, rgb(var(--color-accent)));
+    margin: 0 0 .5rem;
   }
 
   .story-content__chapter-heading {
@@ -170,6 +304,26 @@
     color: var(--story-heading-color, rgb(var(--color-heading)));
     margin: 0 0 1rem;
     text-transform: lowercase;
+  }
+
+  .story-content__chapter-image {
+    margin: 0 0 1.25rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .story-content__chapter-image-mask {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s var(--transition-medium, ease);
+  }
+
+  .story-content__chapter.is-revealed .story-content__chapter-image-mask {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .story-content__chapter-image img {
+    width: 100%;
+    display: block;
   }
 
   .story-content__chapter-text {
@@ -182,15 +336,31 @@
   }
 
   .story-content__pull-quote {
+    position: relative;
     margin: 1.5rem 0 0;
-    padding-left: 1.25rem;
+    padding: 1.25rem 1.5rem 1.25rem 1.75rem;
+    background: rgb(var(--color-background-alt));
     border-left: 3px solid var(--story-accent-color, rgb(var(--color-accent)));
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
     font-size: var(--font-size-h3);
     line-height: 1.4;
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
   }
 
+  .story-content__pull-quote:hover {
+    transform: translateX(4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .06);
+  }
+
+  .story-content__pull-quote-mark {
+    color: var(--story-accent-color, rgb(var(--color-accent)));
+    opacity: .5;
+    margin-right: .15em;
+  }
+
+  /* ---- Highlight cards ---- */
   .story-content__highlights {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -199,9 +369,34 @@
   }
 
   .story-content__highlight {
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem;
     background: rgb(var(--color-background-alt));
+    border: 1px solid transparent;
     border-radius: var(--radius-lg);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+  }
+
+  .story-content__highlight:hover {
+    transform: translateY(-6px);
+    border-color: var(--story-accent-color, rgb(var(--color-accent)));
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .08);
+  }
+
+  .story-content__highlight-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    background: rgb(var(--color-background));
+    color: var(--story-accent-color, rgb(var(--color-accent)));
+    transition: transform var(--transition-medium);
+  }
+
+  .story-content__highlight:hover .story-content__highlight-icon {
+    transform: rotate(-8deg) scale(1.08);
   }
 
   .story-content__highlight-title {
@@ -217,15 +412,37 @@
     color: rgba(var(--color-text), .75);
   }
 
+  /* ---- Signature quote / CTA ---- */
   .story-content__signature {
+    position: relative;
     text-align: center;
-    padding: 3rem 0;
+    padding: 3.5rem 2rem;
     margin-bottom: var(--story-chapter-gap, 4rem);
-    border-top: 1px solid rgb(var(--color-border));
-    border-bottom: 1px solid rgb(var(--color-border));
+    border-radius: var(--radius-lg);
+    border: 1px solid rgb(var(--color-border));
+    overflow: hidden;
+  }
+
+  .story-content__signature--tinted {
+    background: rgba(var(--color-accent), .06);
+    border-color: transparent;
+  }
+
+  .story-content__signature-mark {
+    position: absolute;
+    top: -.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 7rem;
+    line-height: 1;
+    color: var(--story-accent-color, rgb(var(--color-accent)));
+    opacity: .12;
   }
 
   .story-content__signature-quote {
+    position: relative;
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
     font-size: var(--font-size-h2);
@@ -241,15 +458,41 @@
     margin: 0 0 1.5rem;
   }
 
+  .story-content__signature-button {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .story-content__signature-button svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .story-content__signature-button:hover svg {
+    transform: translateX(4px);
+  }
+
+  @keyframes story-glow-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(1.5rem, 1rem) scale(1.1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .story-content__header-glow {
+      animation: none;
+    }
+  }
+
   @media screen and (max-width: 59.99em) {
-    .story-content__chapter {
-      grid-template-columns: 1fr;
-      gap: .5rem;
+    .story-content__header--split {
+      flex-direction: column;
+      text-align: center;
     }
 
-    .story-content__chapter-number {
-      font-size: 2rem;
-      opacity: .3;
+    .story-content__header-image {
+      flex: none;
+      width: 100%;
+      order: -1;
     }
 
     .story-content__highlights {
@@ -262,6 +505,26 @@
 
     .story-content__intro {
       font-size: var(--font-size-body);
+    }
+
+    .story-content__signature-mark {
+      font-size: 5rem;
+    }
+  }
+
+  @media screen and (max-width: 34.99em) {
+    .story-content__chapter {
+      gap: 1rem;
+    }
+
+    .story-content__rail {
+      flex: 0 0 2rem;
+    }
+
+    .story-content__badge {
+      width: 2rem;
+      height: 2rem;
+      font-size: var(--font-size-caption);
     }
   }
 {% endstylesheet %}
@@ -288,6 +551,12 @@
       "type": "richtext",
       "id": "intro",
       "label": "t:sections.story-content.intro.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "header_image",
+      "label": "t:sections.story-content.header_image.label",
+      "info": "t:sections.story-content.header_image.info"
     },
     {
       "type": "header",
@@ -393,6 +662,12 @@
           "label": "t:sections.story-content.blocks.chapter.heading.label"
         },
         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.story-content.blocks.chapter.image.label",
+          "info": "t:sections.story-content.blocks.chapter.image.info"
+        },
+        {
           "type": "richtext",
           "id": "body",
           "label": "t:sections.story-content.blocks.chapter.body.label"
@@ -408,6 +683,18 @@
       "type": "highlight",
       "name": "t:sections.story-content.blocks.highlight.name",
       "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            { "value": "spark", "label": "t:sections.story-content.blocks.highlight.icon.spark" },
+            { "value": "book", "label": "t:sections.story-content.blocks.highlight.icon.book" },
+            { "value": "wishlist", "label": "t:sections.story-content.blocks.highlight.icon.heart" },
+            { "value": "check", "label": "t:sections.story-content.blocks.highlight.icon.check" }
+          ],
+          "default": "spark",
+          "label": "t:sections.story-content.blocks.highlight.icon.label"
+        },
         {
           "type": "text",
           "id": "title",
@@ -486,6 +773,7 @@
         {
           "type": "highlight",
           "settings": {
+            "icon": "book",
             "title": "Living, Not Museum",
             "text": "<p>We're not preserving history. We're translating it into something you can use today.</p>"
           }
@@ -493,6 +781,7 @@
         {
           "type": "highlight",
           "settings": {
+            "icon": "spark",
             "title": "Science of Relationships",
             "text": "<p>The Kamasutra codified desire, presence, and mutual understanding centuries before modern psychology existed.</p>"
           }
