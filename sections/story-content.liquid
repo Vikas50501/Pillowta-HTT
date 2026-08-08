@@ -124,7 +124,8 @@
 
           {%- when 'quote_cta' -%}
             {%- assign quote_count = quote_count | plus: 1 -%}
-            <div class="story-content__signature{% if quote_count | modulo: 2 == 0 %} story-content__signature--tinted{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
+            {%- assign quote_is_even = quote_count | modulo: 2 -%}
+            <div class="story-content__signature{% if quote_is_even == 0 %} story-content__signature--tinted{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
               <span class="story-content__signature-mark" aria-hidden="true">&ldquo;</span>
               {%- if block.settings.quote != blank -%}
                 <p class="story-content__signature-quote">{{ block.settings.quote }}</p>
