@@ -123,22 +123,60 @@
             {%- if next_type != 'highlight' -%}</div>{%- endif -%}
 
           {%- when 'quote_cta' -%}
-            {%- assign quote_count = quote_count | plus: 1 -%}
-            {%- assign quote_is_even = quote_count | modulo: 2 -%}
-            <div class="story-content__signature{% if quote_is_even == 0 %} story-content__signature--tinted{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
-              <span class="story-content__signature-mark" aria-hidden="true">&ldquo;</span>
-              {%- if block.settings.quote != blank -%}
-                <p class="story-content__signature-quote">{{ block.settings.quote }}</p>
+            {%- liquid
+              assign quote_count = quote_count | plus: 1
+              assign quote_is_even = quote_count | modulo: 2
+              assign quote_reverse = false
+              if quote_is_even == 0
+                assign quote_reverse = true
+              endif
+              assign quote_has_media = false
+              if block.settings.background_image != blank or block.settings.background_video != blank
+                assign quote_has_media = true
+              endif
+              assign quote_tinted = false
+              if quote_reverse and quote_has_media == false
+                assign quote_tinted = true
+              endif
+            -%}
+            <div
+              class="story-signature{% if quote_reverse %} story-signature--reverse{% endif %}{% if quote_has_media %} story-signature--media{% endif %}{% if quote_tinted %} story-signature--tinted{% endif %}"
+              data-scroll-reveal
+              data-story-signature
+              {{ block.shopify_attributes }}
+            >
+              {%- if quote_has_media -%}
+                <div class="story-signature__media" data-story-signature-media>
+                  {%- if block.settings.background_video != blank -%}
+                    {{ block.settings.background_video | video_tag: image_size: '1600x', autoplay: true, loop: true, muted: true, controls: false, class: 'story-signature__media-el' }}
+                  {%- else -%}
+                    {{ block.settings.background_image | image_url: width: 1600 | image_tag: widths: '800,1200,1600', alt: '', loading: 'lazy', class: 'story-signature__media-el' }}
+                  {%- endif -%}
+                  <span class="story-signature__overlay" aria-hidden="true"></span>
+                </div>
               {%- endif -%}
-              {%- if block.settings.attribution != blank -%}
-                <p class="story-content__signature-attribution">{{ block.settings.attribution }}</p>
-              {%- endif -%}
-              {%- if block.settings.button_text != blank -%}
-                <a href="{{ block.settings.button_link | default: '#' }}" class="action action--secondary story-content__signature-button">
-                  <span>{{ block.settings.button_text }}</span>
-                  {%- render 'icon', name: 'arrow-right', icon_size: 14 -%}
-                </a>
-              {%- endif -%}
+
+              <span class="story-signature__blob story-signature__blob--a" aria-hidden="true"></span>
+              <span class="story-signature__blob story-signature__blob--b" aria-hidden="true"></span>
+              <span class="story-signature__spotlight" data-story-signature-spotlight aria-hidden="true"></span>
+
+              <div class="story-signature__content">
+                <svg class="story-signature__mark" viewBox="0 0 48 32" aria-hidden="true" focusable="false">
+                  <path d="M4 32V19.4C4 9.3 9.9 2.4 20 0l1.6 4.7C15 6.8 11.6 11 11.6 16.8h7.9V32H4Zm22 0V19.4C26 9.3 31.9 2.4 42 0l1.6 4.7C37 6.8 33.6 11 33.6 16.8h7.9V32H26Z"/>
+                </svg>
+                {%- if block.settings.quote != blank -%}
+                  <p class="story-signature__quote">{{ block.settings.quote }}</p>
+                {%- endif -%}
+                {%- if block.settings.attribution != blank -%}
+                  <p class="story-signature__attribution">{{ block.settings.attribution }}</p>
+                {%- endif -%}
+                {%- if block.settings.button_text != blank -%}
+                  <a href="{{ block.settings.button_link | default: '#' }}" class="action action--secondary story-signature__button" data-magnetic-button>
+                    <span class="story-signature__button-label">{{ block.settings.button_text }}</span>
+                    {%- render 'icon', name: 'arrow-right', icon_size: 14 -%}
+                  </a>
+                {%- endif -%}
+              </div>
             </div>
 
         {%- endcase -%}
@@ -415,8 +453,9 @@
   }
 
   /* ---- Signature quote / CTA ---- */
-  .story-content__signature {
+  .story-signature {
     position: relative;
+    isolation: isolate;
     text-align: center;
     padding: 3.5rem 2rem;
     margin-bottom: var(--story-chapter-gap, 4rem);
@@ -425,34 +464,145 @@
     overflow: hidden;
   }
 
-  .story-content__signature--tinted {
+  .story-signature--tinted {
     background: rgba(var(--color-accent), .06);
     border-color: transparent;
   }
 
-  .story-content__signature-mark {
-    position: absolute;
-    top: -.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-heading);
-    font-weight: var(--font-heading-weight);
-    font-size: 7rem;
-    line-height: 1;
-    color: var(--story-accent-color, rgb(var(--color-accent)));
-    opacity: .12;
+  .story-signature--media {
+    min-height: 26rem;
+    display: flex;
+    align-items: center;
+    padding: 5rem 2.5rem;
+    border: 0;
+    color: #fff;
+    text-align: left;
   }
 
-  .story-content__signature-quote {
+  .story-signature__media {
+    position: absolute;
+    inset: -12% 0;
+    z-index: -2;
+  }
+
+  .story-signature__media-el {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+  }
+
+  .story-signature__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .3), rgba(0, 0, 0, .6));
+  }
+
+  .story-signature__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .16;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .story-signature__blob--a {
+    top: -4rem;
+    left: -3rem;
+    width: 14rem;
+    height: 14rem;
+    background: var(--story-accent-color, rgb(var(--color-accent)));
+    animation: story-glow-float 16s ease-in-out infinite;
+  }
+
+  .story-signature__blob--b {
+    bottom: -5rem;
+    right: -4rem;
+    width: 18rem;
+    height: 18rem;
+    background: var(--story-accent-color, rgb(var(--color-accent)));
+    animation: story-glow-float 20s ease-in-out infinite reverse;
+  }
+
+  .story-signature--media .story-signature__blob {
+    display: none;
+  }
+
+  .story-signature__spotlight {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(18rem circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255, 255, 255, .16), transparent 70%);
+    transition: opacity .3s ease;
+  }
+
+  .story-signature--media .story-signature__spotlight {
+    display: block;
+  }
+
+  .story-signature--media:hover .story-signature__spotlight {
+    opacity: 1;
+  }
+
+  .story-signature__content {
+    position: relative;
+    z-index: 1;
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .story-signature--media .story-signature__content {
+    margin-inline: 0 auto;
+  }
+
+  .story-signature--media.story-signature--reverse .story-signature__content {
+    margin-inline: auto 0;
+    text-align: right;
+  }
+
+  .story-signature__mark {
+    width: 2.75rem;
+    height: 1.85rem;
+    margin-bottom: 1rem;
+    fill: currentColor;
+    color: var(--story-accent-color, rgb(var(--color-accent)));
+    opacity: 0;
+    transform: scale(.5);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+
+  .story-signature--media .story-signature__mark {
+    color: #fff;
+  }
+
+  .story-signature.is-revealed .story-signature__mark {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .story-signature__quote {
     position: relative;
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
     font-size: var(--font-size-h2);
     line-height: 1.4;
     margin: 0 0 1rem;
+    opacity: 0;
+    transform: scale(.96);
+    transition: opacity .8s ease .1s, transform .8s ease .1s;
   }
 
-  .story-content__signature-attribution {
+  .story-signature.is-revealed .story-signature__quote {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .story-signature__attribution {
     font-size: var(--font-size-caption);
     text-transform: uppercase;
     letter-spacing: .08em;
@@ -460,18 +610,46 @@
     margin: 0 0 1.5rem;
   }
 
-  .story-content__signature-button {
+  .story-signature--media .story-signature__attribution {
+    color: rgba(255, 255, 255, .75);
+  }
+
+  .story-signature__button {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: .5rem;
+    overflow: hidden;
+    transition: transform .2s ease;
   }
 
-  .story-content__signature-button svg {
+  .story-signature__button svg {
     transition: transform var(--transition-fast);
   }
 
-  .story-content__signature-button:hover svg {
+  .story-signature__button:hover svg {
     transform: translateX(4px);
+  }
+
+  .story-signature__button-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(var(--color-text), .25);
+    transform: scale(0);
+    opacity: .6;
+    pointer-events: none;
+    animation: story-signature-ripple .6s ease-out forwards;
+  }
+
+  .story-signature--media .story-signature__button-ripple {
+    background: rgba(255, 255, 255, .5);
+  }
+
+  @keyframes story-signature-ripple {
+    to {
+      transform: scale(3);
+      opacity: 0;
+    }
   }
 
   @keyframes story-glow-float {
@@ -480,8 +658,14 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .story-content__header-glow {
+    .story-content__header-glow,
+    .story-signature__blob {
       animation: none;
+    }
+
+    .story-signature__mark,
+    .story-signature__quote {
+      transition: none;
     }
   }
 
@@ -509,8 +693,16 @@
       font-size: var(--font-size-body);
     }
 
-    .story-content__signature-mark {
-      font-size: 5rem;
+    .story-signature--media {
+      min-height: 20rem;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .story-signature--media .story-signature__content,
+    .story-signature--media.story-signature--reverse .story-signature__content {
+      margin-inline: auto;
+      text-align: center;
     }
   }
 
@@ -530,6 +722,88 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    document.querySelectorAll('[data-story-signature]').forEach(function (card) {
+      var mediaWrap = card.querySelector('[data-story-signature-media]');
+      var mediaEl = mediaWrap ? mediaWrap.querySelector('img, video') : null;
+
+      if (mediaEl && !prefersReducedMotion) {
+        var ticking = false;
+        var updateParallax = function () {
+          var rect = card.getBoundingClientRect();
+          var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          var progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+          var offset = (progress - 0.5) * 40;
+          mediaEl.style.transform = 'translateY(' + offset + 'px)';
+          ticking = false;
+        };
+        var onScroll = function () {
+          if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(updateParallax);
+          }
+        };
+        var parallaxObserver = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            updateParallax();
+            window.addEventListener('scroll', onScroll, { passive: true });
+          } else {
+            window.removeEventListener('scroll', onScroll);
+          }
+        });
+        parallaxObserver.observe(card);
+      }
+
+      if (canHover) {
+        var spotlight = card.querySelector('[data-story-signature-spotlight]');
+        if (spotlight) {
+          card.addEventListener('mousemove', function (e) {
+            var rect = card.getBoundingClientRect();
+            var x = ((e.clientX - rect.left) / rect.width) * 100;
+            var y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--spot-x', x + '%');
+            card.style.setProperty('--spot-y', y + '%');
+          });
+        }
+      }
+
+      var button = card.querySelector('[data-magnetic-button]');
+      if (button) {
+        if (canHover && !prefersReducedMotion) {
+          button.addEventListener('mousemove', function (e) {
+            var rect = button.getBoundingClientRect();
+            var x = e.clientX - rect.left - rect.width / 2;
+            var y = e.clientY - rect.top - rect.height / 2;
+            button.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.25) + 'px)';
+          });
+          button.addEventListener('mouseleave', function () {
+            button.style.transform = 'translate(0, 0)';
+          });
+        }
+
+        button.addEventListener('click', function (e) {
+          var rect = button.getBoundingClientRect();
+          var size = Math.max(rect.width, rect.height);
+          var ripple = document.createElement('span');
+          ripple.className = 'story-signature__button-ripple';
+          ripple.style.width = size + 'px';
+          ripple.style.height = size + 'px';
+          ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+          ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+          button.appendChild(ripple);
+          ripple.addEventListener('animationend', function () {
+            ripple.remove();
+          });
+        });
+      }
+    });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
@@ -732,6 +1006,22 @@
           "type": "url",
           "id": "button_link",
           "label": "t:sections.story-content.blocks.quote_cta.button_link.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.story-content.blocks.quote_cta.media_header"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "t:sections.story-content.blocks.quote_cta.background_image.label",
+          "info": "t:sections.story-content.blocks.quote_cta.background_image.info"
+        },
+        {
+          "type": "video",
+          "id": "background_video",
+          "label": "t:sections.story-content.blocks.quote_cta.background_video.label",
+          "info": "t:sections.story-content.blocks.quote_cta.background_video.info"
         }
       ]
     }

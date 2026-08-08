@@ -951,7 +951,10 @@
           "quote": { "label": "Quote" },
           "attribution": { "label": "Attribution" },
           "button_text": { "label": "Button text" },
-          "button_link": { "label": "Button link" }
+          "button_link": { "label": "Button link" },
+          "media_header": "Background (optional)",
+          "background_image": { "label": "Background image", "info": "Turns this into a full-bleed parallax quote banner instead of a plain card." },
+          "background_video": { "label": "Background video", "info": "Overrides the image if set." }
         }
       }
     },
