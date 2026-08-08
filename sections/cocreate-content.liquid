@@ -30,7 +30,11 @@
   <div class="cocreate__inner page-width">
 
     {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
-      <div class="cocreate__hero" data-scroll-reveal>
+      {%- assign hero_has_image = false -%}
+      {%- if section.settings.hero_image != blank -%}{%- assign hero_has_image = true -%}{%- endif -%}
+      <div class="cocreate__hero{% if hero_has_image %} cocreate__hero--with-image{% endif %}" data-scroll-reveal>
+        <span class="cocreate__hero-blob cocreate__hero-blob--a" aria-hidden="true"></span>
+        <span class="cocreate__hero-blob cocreate__hero-blob--b" aria-hidden="true"></span>
         <div class="cocreate__hero-text">
           {%- if section.settings.eyebrow != blank -%}
             <p class="cocreate__eyebrow">{{ section.settings.eyebrow }}</p>
@@ -46,15 +50,28 @@
               {{ section.settings.survey_button_text }}
             </a>
           {%- endif -%}
+          {%- if hero_has_image == false and section.settings.stat_number != blank -%}
+            <div class="cocreate__stat cocreate__stat--inline">
+              <span class="cocreate__stat-number" data-cocreate-stat="{{ section.settings.stat_number }}">{{ section.settings.stat_number }}</span>
+              {%- if section.settings.stat_label != blank -%}
+                <p class="cocreate__stat-label">{{ section.settings.stat_label }}</p>
+              {%- endif -%}
+              {%- if section.settings.stat_caption != blank -%}
+                <p class="cocreate__stat-caption">{{ section.settings.stat_caption }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         </div>
-        {%- if section.settings.stat_number != blank -%}
-          <div class="cocreate__stat">
-            <span class="cocreate__stat-number" data-cocreate-stat="{{ section.settings.stat_number }}">{{ section.settings.stat_number }}</span>
-            {%- if section.settings.stat_label != blank -%}
-              <p class="cocreate__stat-label">{{ section.settings.stat_label }}</p>
-            {%- endif -%}
-            {%- if section.settings.stat_caption != blank -%}
-              <p class="cocreate__stat-caption">{{ section.settings.stat_caption }}</p>
+        {%- if hero_has_image -%}
+          <div class="cocreate__hero-media">
+            {{ section.settings.hero_image | image_url: width: 900 | image_tag: widths: '450,700,900', alt: section.settings.heading | default: '', loading: 'lazy', class: 'cocreate__hero-image' }}
+            {%- if section.settings.stat_number != blank -%}
+              <div class="cocreate__stat cocreate__stat--floating">
+                <span class="cocreate__stat-number" data-cocreate-stat="{{ section.settings.stat_number }}">{{ section.settings.stat_number }}</span>
+                {%- if section.settings.stat_label != blank -%}
+                  <p class="cocreate__stat-label">{{ section.settings.stat_label }}</p>
+                {%- endif -%}
+              </div>
             {%- endif -%}
           </div>
         {%- endif -%}
@@ -78,22 +95,43 @@
       {%- case block.type -%}
 
         {%- when 'intro_statement' -%}
-          <div class="cocreate__statement" data-scroll-reveal {{ block.shopify_attributes }}>
-            {%- if block.settings.heading != blank -%}
-              <h2 class="cocreate__statement-heading">{{ block.settings.heading }}</h2>
+          {%- assign statement_has_image = false -%}
+          {%- if block.settings.image != blank -%}{%- assign statement_has_image = true -%}{%- endif -%}
+          <div class="cocreate__statement{% if statement_has_image %} cocreate__statement--with-image{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
+            {%- if statement_has_image -%}
+              <div class="cocreate__statement-media">
+                {{ block.settings.image | image_url: width: 700 | image_tag: widths: '350,500,700', alt: block.settings.heading | default: '', loading: 'lazy' }}
+              </div>
             {%- endif -%}
-            {%- if block.settings.body != blank -%}
-              <div class="cocreate__statement-body">{{ block.settings.body }}</div>
-            {%- endif -%}
+            <div class="cocreate__statement-copy">
+              <span class="cocreate__statement-mark" aria-hidden="true">&ldquo;</span>
+              {%- if block.settings.heading != blank -%}
+                <h2 class="cocreate__statement-heading">{{ block.settings.heading }}</h2>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="cocreate__statement-body">{{ block.settings.body }}</div>
+              {%- endif -%}
+            </div>
           </div>
 
         {%- when 'value_prop' -%}
-          {%- if prev_type != 'value_prop' -%}<div class="cocreate__values" data-scroll-reveal>{%- endif -%}
-            <div class="cocreate__value" {{ block.shopify_attributes }}>
-              {%- if block.settings.icon != blank -%}
-                <span class="cocreate__value-icon" aria-hidden="true">{{ block.settings.icon }}</span>
+          {%- if prev_type != 'value_prop' -%}
+            <div class="cocreate__values" data-scroll-reveal>
+            {%- assign value_index = 0 -%}
+          {%- endif -%}
+            {%- assign value_index = value_index | plus: 1 -%}
+            {%- assign value_has_image = false -%}
+            {%- if block.settings.image != blank -%}{%- assign value_has_image = true -%}{%- endif -%}
+            <div class="cocreate__value{% if value_index == 1 %} cocreate__value--featured{% endif %}{% if value_has_image %} cocreate__value--with-image{% endif %}" {{ block.shopify_attributes }}>
+              {%- if value_has_image -%}
+                <div class="cocreate__value-media">
+                  {{ block.settings.image | image_url: width: 500 | image_tag: widths: '250,400,500', alt: block.settings.lead | default: '', loading: 'lazy' }}
+                </div>
               {%- endif -%}
               <div class="cocreate__value-copy">
+                {%- if block.settings.icon != blank -%}
+                  <span class="cocreate__value-icon" aria-hidden="true">{{ block.settings.icon }}</span>
+                {%- endif -%}
                 {%- if block.settings.lead != blank -%}
                   <span class="cocreate__value-lead">{{ block.settings.lead }}</span>
                 {%- endif -%}
@@ -111,45 +149,72 @@
             {%- endif -%}
             <div class="cocreate__process">
           {%- endif -%}
-            <div class="cocreate__step" data-scroll-reveal {{ block.shopify_attributes }}>
-              {%- if block.settings.number != blank -%}
+            {%- assign step_has_image = false -%}
+            {%- if block.settings.image != blank -%}{%- assign step_has_image = true -%}{%- endif -%}
+            <div class="cocreate__step{% if step_has_image %} cocreate__step--with-image{% endif %}{% if next_type != 'process_step' %} cocreate__step--last{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
+              {%- if step_has_image -%}
+                <div class="cocreate__step-media">
+                  {{ block.settings.image | image_url: width: 500 | image_tag: widths: '250,400,500', alt: block.settings.title | default: '', loading: 'lazy' }}
+                </div>
+              {%- endif -%}
+              <div class="cocreate__step-rail" aria-hidden="true">
                 <span class="cocreate__step-number">{{ block.settings.number }}</span>
-              {%- endif -%}
-              {%- if block.settings.title != blank -%}
-                <p class="cocreate__step-title">{{ block.settings.title }}</p>
-              {%- endif -%}
-              {%- if block.settings.subtitle != blank -%}
-                <p class="cocreate__step-subtitle">{{ block.settings.subtitle }}</p>
-              {%- endif -%}
-              {%- if block.settings.description != blank -%}
-                <div class="cocreate__step-description">{{ block.settings.description }}</div>
-              {%- endif -%}
+                <span class="cocreate__step-line"></span>
+              </div>
+              <div class="cocreate__step-copy">
+                {%- if block.settings.title != blank -%}
+                  <p class="cocreate__step-title">{{ block.settings.title }}</p>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                  <p class="cocreate__step-subtitle">{{ block.settings.subtitle }}</p>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <div class="cocreate__step-description">{{ block.settings.description }}</div>
+                {%- endif -%}
+              </div>
             </div>
           {%- if next_type != 'process_step' -%}</div>{%- endif -%}
 
         {%- when 'testimonial' -%}
-          <blockquote class="cocreate__testimonial" data-scroll-reveal {{ block.shopify_attributes }}>
-            {%- if block.settings.quote != blank -%}
-              <p class="cocreate__testimonial-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+          <div class="cocreate__testimonial-wrap" data-scroll-reveal {{ block.shopify_attributes }}>
+            <span class="cocreate__testimonial-shape" aria-hidden="true"></span>
+            {%- if block.settings.image != blank -%}
+              <div class="cocreate__testimonial-portrait">
+                {{ block.settings.image | image_url: width: 160 | image_tag: widths: '80,160', alt: block.settings.attribution | default: '', loading: 'lazy' }}
+              </div>
             {%- endif -%}
-            {%- if block.settings.attribution != blank -%}
-              <cite class="cocreate__testimonial-attribution">{{ block.settings.attribution }}</cite>
-            {%- endif -%}
-          </blockquote>
+            <blockquote class="cocreate__testimonial">
+              {%- if block.settings.quote != blank -%}
+                <p class="cocreate__testimonial-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+              {%- endif -%}
+              {%- if block.settings.attribution != blank -%}
+                <cite class="cocreate__testimonial-attribution">{{ block.settings.attribution }}</cite>
+              {%- endif -%}
+            </blockquote>
+          </div>
 
         {%- when 'spotlight_cta' -%}
-          <div class="cocreate__spotlight{% if block.settings.image == blank %} cocreate__spotlight--no-image{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}
-              <div class="cocreate__spotlight-media">
-                {{ block.settings.image | image_url: width: 900 | image_tag: widths: '450,700,900', alt: block.settings.badge_title | default: '', loading: 'lazy' }}
-                {%- if block.settings.badge_icon != blank -%}
-                  <span class="cocreate__spotlight-badge">
-                    <span class="cocreate__spotlight-badge-icon" aria-hidden="true">{{ block.settings.badge_icon }}</span>
-                    {%- if block.settings.badge_title != blank -%}
-                      <span class="cocreate__spotlight-badge-title">{{ block.settings.badge_title }}</span>
-                    {%- endif -%}
-                  </span>
+          {%- assign spotlight_has_image = false -%}
+          {%- if block.settings.image != blank -%}{%- assign spotlight_has_image = true -%}{%- endif -%}
+          <div class="cocreate__spotlight{% if spotlight_has_image == false %} cocreate__spotlight--no-image{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
+            {%- if spotlight_has_image -%}
+              <div class="cocreate__spotlight-media{% if block.settings.image_2 != blank %} cocreate__spotlight-media--stacked{% endif %}">
+                {%- if block.settings.image_2 != blank -%}
+                  <div class="cocreate__spotlight-media-back">
+                    {{ block.settings.image_2 | image_url: width: 900 | image_tag: widths: '450,700,900', alt: '', loading: 'lazy' }}
+                  </div>
                 {%- endif -%}
+                <div class="cocreate__spotlight-media-front">
+                  {{ block.settings.image | image_url: width: 900 | image_tag: widths: '450,700,900', alt: block.settings.badge_title | default: '', loading: 'lazy' }}
+                  {%- if block.settings.badge_icon != blank -%}
+                    <span class="cocreate__spotlight-badge">
+                      <span class="cocreate__spotlight-badge-icon" aria-hidden="true">{{ block.settings.badge_icon }}</span>
+                      {%- if block.settings.badge_title != blank -%}
+                        <span class="cocreate__spotlight-badge-title">{{ block.settings.badge_title }}</span>
+                      {%- endif -%}
+                    </span>
+                  {%- endif -%}
+                </div>
               </div>
             {%- endif -%}
             <div class="cocreate__spotlight-content">
@@ -183,13 +248,15 @@
 
         {%- when 'privacy_item' -%}
           {%- if prev_type != 'privacy_item' -%}
-            {%- if block.settings.heading != blank -%}
-              <h2 class="cocreate__section-heading">{{ block.settings.heading }}</h2>
-            {%- endif -%}
-            {%- if block.settings.subheading != blank -%}
-              <p class="cocreate__section-subheading">{{ block.settings.subheading }}</p>
-            {%- endif -%}
-            <div class="cocreate__privacy-grid" data-scroll-reveal>
+            <div class="cocreate__privacy-section">
+              <span class="cocreate__privacy-texture" aria-hidden="true"></span>
+              {%- if block.settings.heading != blank -%}
+                <h2 class="cocreate__section-heading">{{ block.settings.heading }}</h2>
+              {%- endif -%}
+              {%- if block.settings.subheading != blank -%}
+                <p class="cocreate__section-subheading">{{ block.settings.subheading }}</p>
+              {%- endif -%}
+              <div class="cocreate__privacy-grid" data-scroll-reveal>
           {%- endif -%}
             <div class="cocreate__privacy-item" {{ block.shopify_attributes }}>
               {%- if block.settings.icon != blank -%}
@@ -202,7 +269,10 @@
                 <div class="cocreate__privacy-text">{{ block.settings.text }}</div>
               {%- endif -%}
             </div>
-          {%- if next_type != 'privacy_item' -%}</div>{%- endif -%}
+          {%- if next_type != 'privacy_item' -%}
+              </div>
+            </div>
+          {%- endif -%}
 
         {%- when 'faq_item' -%}
           {%- if prev_type != 'faq_item' -%}
@@ -223,6 +293,7 @@
         {%- when 'cta_banner' -%}
           {%- if section.settings.survey_button_text != blank -%}
             <div class="cocreate__cta-banner" data-scroll-reveal {{ block.shopify_attributes }}>
+              <span class="cocreate__cta-banner-glow" aria-hidden="true"></span>
               <a href="{{ section.settings.survey_link | default: '#' }}" class="action action--primary">
                 {{ section.settings.survey_button_text }}
               </a>
@@ -251,8 +322,21 @@
     margin-top: 1.5rem;
   }
 
+  @keyframes cocreate-blob-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(1.25rem, 1rem) scale(1.08); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cocreate__hero-blob,
+    .cocreate__cta-banner-glow {
+      animation: none;
+    }
+  }
+
   /* ---- Hero ---- */
   .cocreate__hero {
+    position: relative;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -260,7 +344,39 @@
     margin-bottom: var(--cocreate-block-gap, 4rem);
   }
 
+  .cocreate__hero--with-image {
+    align-items: center;
+  }
+
+  .cocreate__hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .14;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--cocreate-accent-color, rgb(var(--color-accent)));
+  }
+
+  .cocreate__hero-blob--a {
+    top: -3rem;
+    left: -2rem;
+    width: 16rem;
+    height: 16rem;
+    animation: cocreate-blob-float 15s ease-in-out infinite;
+  }
+
+  .cocreate__hero-blob--b {
+    bottom: -4rem;
+    right: 10%;
+    width: 12rem;
+    height: 12rem;
+    animation: cocreate-blob-float 18s ease-in-out infinite reverse;
+  }
+
   .cocreate__hero-text {
+    position: relative;
+    z-index: 1;
     flex: 1;
     max-width: 34rem;
   }
@@ -291,11 +407,45 @@
     display: inline-flex;
   }
 
-  .cocreate__stat {
+  .cocreate__hero-media {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 26rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, .12);
+    transform: rotate(-1.5deg);
+    transition: transform var(--transition-medium);
+  }
+
+  .cocreate__hero-media:hover {
+    transform: rotate(0deg) scale(1.015);
+  }
+
+  .cocreate__hero-image {
+    width: 100%;
+    display: block;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .cocreate__stat--inline {
     flex: 0 0 auto;
     text-align: right;
+    margin-top: 1.5rem;
     padding-left: 2rem;
     border-left: 1px solid rgb(var(--color-border));
+  }
+
+  .cocreate__stat--floating {
+    position: absolute;
+    bottom: 1.25rem;
+    left: -1.5rem;
+    max-width: 11rem;
+    padding: 1rem 1.25rem;
+    background: rgb(var(--color-background));
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .16);
   }
 
   .cocreate__stat-number {
@@ -305,6 +455,10 @@
     font-size: 3.5rem;
     line-height: 1;
     color: var(--cocreate-accent-color, rgb(var(--color-accent)));
+  }
+
+  .cocreate__stat--floating .cocreate__stat-number {
+    font-size: 2.25rem;
   }
 
   .cocreate__stat-label {
@@ -320,11 +474,65 @@
     margin: .5rem 0 0;
   }
 
-  /* ---- Statement ---- */
+  /* ---- Statement (overlapping layered composition) ---- */
   .cocreate__statement {
-    text-align: center;
+    position: relative;
     max-width: 40rem;
     margin: 0 auto var(--cocreate-block-gap, 4rem);
+    padding-top: 1rem;
+  }
+
+  .cocreate__statement--with-image {
+    padding-left: 3rem;
+    padding-top: 2.5rem;
+  }
+
+  .cocreate__statement-media {
+    position: absolute;
+    top: 0;
+    left: -1rem;
+    width: 8rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transform: rotate(-6deg);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .14);
+    z-index: 0;
+  }
+
+  .cocreate__statement-media img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .cocreate__statement-copy {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    background: rgb(var(--color-background));
+    border-radius: var(--radius-lg);
+  }
+
+  .cocreate__statement--with-image .cocreate__statement-copy {
+    text-align: left;
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .08);
+  }
+
+  .cocreate__statement-mark {
+    display: none;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--cocreate-accent-color, rgb(var(--color-accent)));
+    opacity: .35;
+  }
+
+  .cocreate__statement--with-image .cocreate__statement-mark {
+    display: block;
+    margin-bottom: -.5rem;
   }
 
   .cocreate__statement-heading {
@@ -341,30 +549,67 @@
     color: rgba(var(--color-text), .75);
   }
 
-  /* ---- Value props ---- */
+  /* ---- Value props (bento grid) ---- */
   .cocreate__values {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
     margin-bottom: var(--cocreate-block-gap, 4rem);
   }
 
   .cocreate__value {
     display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
+    flex-direction: column;
     padding: 1.5rem;
     border-radius: var(--radius-lg);
+    border: 1px solid rgb(var(--color-border));
     background: rgb(var(--color-background-alt));
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+  }
+
+  .cocreate__value:hover {
+    transform: translateY(-4px);
+    border-color: var(--cocreate-accent-color, rgb(var(--color-accent)));
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .08);
+  }
+
+  .cocreate__value--featured {
+    grid-column: span 2;
+  }
+
+  .cocreate__value--with-image {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .cocreate__value-media {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .cocreate__value-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-medium);
+  }
+
+  .cocreate__value:hover .cocreate__value-media img {
+    transform: scale(1.05);
+  }
+
+  .cocreate__value--with-image .cocreate__value-copy {
+    padding: 1.5rem;
   }
 
   .cocreate__value-icon {
-    flex-shrink: 0;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 2.75rem;
     height: 2.75rem;
+    margin-bottom: 1rem;
     border-radius: 50%;
     background: rgb(var(--color-background));
     font-size: 1.25rem;
@@ -384,7 +629,7 @@
     color: rgba(var(--color-text), .75);
   }
 
-  /* ---- Process flow ---- */
+  /* ---- Process flow (vertical timeline) ---- */
   .cocreate__section-heading {
     text-align: center;
     font-family: var(--font-heading);
@@ -403,42 +648,78 @@
   }
 
   .cocreate__process {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-bottom: var(--cocreate-block-gap, 4rem);
+    display: flex;
+    flex-direction: column;
+    max-width: 44rem;
+    margin: 0 auto var(--cocreate-block-gap, 4rem);
   }
 
   .cocreate__step {
-    position: relative;
-    padding: 1.75rem 1.5rem;
-    border-radius: var(--radius-lg);
-    border: 1px solid rgb(var(--color-border));
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 2.5rem;
   }
 
-  .cocreate__step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 2.25rem;
-    right: -1.75rem;
-    width: 1.25rem;
-    height: 1px;
-    background: rgb(var(--color-border));
+  .cocreate__step-rail {
+    order: 0;
+    flex: 0 0 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cocreate__step-media {
+    order: 1;
+    flex: 0 0 6rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .cocreate__step-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cocreate__step-copy {
+    order: 2;
+    flex: 1;
+    min-width: 0;
+    padding-top: .25rem;
   }
 
   .cocreate__step-number {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    margin-bottom: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
     border-radius: 50%;
     border: 1px solid var(--cocreate-accent-color, rgb(var(--color-accent)));
     color: var(--cocreate-accent-color, rgb(var(--color-accent)));
     font-family: var(--font-heading);
     font-weight: var(--font-heading-weight);
     font-size: var(--font-size-small);
+  }
+
+  .cocreate__step-line {
+    flex: 1;
+    width: 2px;
+    margin-top: .5rem;
+    background: rgb(var(--color-border));
+    transition: background var(--transition-medium) .15s;
+  }
+
+  .cocreate__step.is-revealed .cocreate__step-line {
+    background: var(--cocreate-accent-color, rgb(var(--color-accent)));
+  }
+
+  .cocreate__step--last .cocreate__step-line {
+    display: none;
   }
 
   .cocreate__step-title {
@@ -460,14 +741,53 @@
     color: rgba(var(--color-text), .75);
   }
 
-  /* ---- Testimonial ---- */
-  .cocreate__testimonial {
-    text-align: center;
+  /* ---- Testimonial (layered depth card) ---- */
+  .cocreate__testimonial-wrap {
+    position: relative;
     max-width: 42rem;
     margin: 0 auto var(--cocreate-block-gap, 4rem);
-    padding: 3rem 2rem;
-    background: rgba(var(--color-accent), .06);
+    padding-top: 1.5rem;
+  }
+
+  .cocreate__testimonial-shape {
+    position: absolute;
+    inset: 1.5rem -1rem -1rem 1rem;
+    background: rgba(var(--color-accent), .08);
     border-radius: var(--radius-lg);
+    z-index: 0;
+  }
+
+  .cocreate__testimonial-portrait {
+    position: relative;
+    z-index: 2;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin: 0 auto -2.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgb(var(--color-background));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .14);
+  }
+
+  .cocreate__testimonial-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cocreate__testimonial {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgb(var(--color-background));
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .06);
+  }
+
+  .cocreate__testimonial-wrap:has(.cocreate__testimonial-portrait) .cocreate__testimonial {
+    padding-top: 3.5rem;
   }
 
   .cocreate__testimonial-quote {
@@ -509,7 +829,43 @@
 
   .cocreate__spotlight-media img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
+  }
+
+  .cocreate__spotlight-media--stacked {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: visible;
+  }
+
+  .cocreate__spotlight-media-back {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    opacity: .85;
+    transform: translate(10%, 7%) rotate(4deg);
+    transition: transform var(--transition-medium);
+  }
+
+  .cocreate__spotlight-media--stacked .cocreate__spotlight-media-front {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--transition-medium);
+  }
+
+  .cocreate__spotlight-media--stacked:hover .cocreate__spotlight-media-back {
+    transform: translate(14%, 10%) rotate(6deg);
+  }
+
+  .cocreate__spotlight-media--stacked:hover .cocreate__spotlight-media-front {
+    transform: translate(-3%, -3%);
   }
 
   .cocreate__spotlight-badge {
@@ -584,17 +940,52 @@
     color: rgba(var(--color-text), .7);
   }
 
-  /* ---- Privacy grid ---- */
+  /* ---- Privacy grid (glassmorphism) ---- */
+  .cocreate__privacy-section {
+    position: relative;
+    padding: 3rem 2rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--cocreate-block-gap, 4rem);
+    background: rgb(var(--color-background-alt));
+  }
+
+  .cocreate__privacy-texture {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: .5;
+    background-image: radial-gradient(rgba(var(--color-accent), .35) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .cocreate__privacy-section .cocreate__section-heading,
+  .cocreate__privacy-section .cocreate__section-subheading {
+    position: relative;
+    z-index: 1;
+  }
+
   .cocreate__privacy-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-bottom: var(--cocreate-block-gap, 4rem);
+    gap: 1.25rem;
   }
 
   .cocreate__privacy-item {
     text-align: center;
     padding: 1.75rem 1.25rem;
+    background: rgba(var(--color-background), .6);
+    border: 1px solid rgba(var(--color-text), .08);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(10px);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  }
+
+  .cocreate__privacy-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .1);
   }
 
   .cocreate__privacy-icon {
@@ -605,7 +996,7 @@
     height: 3.25rem;
     margin: 0 auto 1rem;
     border-radius: 50%;
-    background: rgb(var(--color-background-alt));
+    background: rgb(var(--color-background));
     font-size: 1.4rem;
   }
 
@@ -694,18 +1085,47 @@
 
   /* ---- Standalone CTA banner ---- */
   .cocreate__cta-banner {
+    position: relative;
     text-align: center;
+    padding: 2.5rem 2rem;
     margin-bottom: var(--cocreate-block-gap, 4rem);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .cocreate__cta-banner-glow {
+    position: absolute;
+    inset: -60% -10%;
+    z-index: 0;
+    background: radial-gradient(ellipse at center, rgba(var(--color-accent), .12), transparent 65%);
+    animation: cocreate-blob-float 20s ease-in-out infinite;
+  }
+
+  .cocreate__cta-banner .action--primary {
+    position: relative;
+    z-index: 1;
   }
 
   @media screen and (max-width: 59.99em) {
-    .cocreate__hero {
+    .cocreate__hero,
+    .cocreate__hero--with-image {
       flex-direction: column;
       align-items: flex-start;
       gap: 2rem;
     }
 
-    .cocreate__stat {
+    .cocreate__hero-media {
+      flex: none;
+      width: 100%;
+      max-width: 22rem;
+      align-self: center;
+    }
+
+    .cocreate__stat--floating {
+      left: 1rem;
+    }
+
+    .cocreate__stat--inline {
       text-align: left;
       padding-left: 0;
       border-left: 0;
@@ -717,24 +1137,66 @@
       font-size: var(--font-size-h1-mobile);
     }
 
-    .cocreate__process,
+    .cocreate__values,
     .cocreate__privacy-grid {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .cocreate__step::after {
-      display: none;
+    .cocreate__value--featured {
+      grid-column: span 2;
     }
 
     .cocreate__spotlight {
       grid-template-columns: 1fr;
     }
+
+    .cocreate__statement--with-image {
+      padding-left: 0;
+      padding-top: 3.5rem;
+      text-align: center;
+    }
+
+    .cocreate__statement-media {
+      left: 50%;
+      transform: translateX(-50%) rotate(-4deg);
+    }
+
+    .cocreate__statement--with-image .cocreate__statement-copy {
+      text-align: center;
+    }
   }
 
-  @media screen and (max-width: 34.99em) {
-    .cocreate__process,
+  @media screen and (max-width: 44.99em) {
+    .cocreate__values,
     .cocreate__privacy-grid {
-      grid-template-columns: 1fr;
+      display: flex;
+      grid-template-columns: none;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 1rem;
+      padding-bottom: .5rem;
+      margin-inline: -1rem;
+      padding-inline: 1rem;
+    }
+
+    .cocreate__value,
+    .cocreate__privacy-item {
+      flex: 0 0 82%;
+      scroll-snap-align: start;
+    }
+
+    .cocreate__value--featured {
+      grid-column: unset;
+    }
+
+    .cocreate__step {
+      gap: 1rem;
+    }
+
+    .cocreate__step-media {
+      flex: 0 0 4.5rem;
+      width: 4.5rem;
+      height: 4.5rem;
     }
   }
 {% endstylesheet %}
@@ -820,6 +1282,12 @@
       "type": "richtext",
       "id": "subtext",
       "label": "t:sections.cocreate-content.subtext.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "t:sections.cocreate-content.hero_image.label",
+      "info": "t:sections.cocreate-content.hero_image.info"
     },
     {
       "type": "header",
@@ -951,6 +1419,11 @@
           "type": "richtext",
           "id": "body",
           "label": "t:sections.cocreate-content.blocks.intro_statement.body.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.cocreate-content.blocks.intro_statement.image.label"
         }
       ]
     },
@@ -973,6 +1446,12 @@
           "type": "richtext",
           "id": "text",
           "label": "t:sections.cocreate-content.blocks.value_prop.text.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.cocreate-content.blocks.value_prop.image.label",
+          "info": "t:sections.cocreate-content.blocks.value_prop.image.info"
         }
       ]
     },
@@ -1005,6 +1484,11 @@
           "type": "richtext",
           "id": "description",
           "label": "t:sections.cocreate-content.blocks.process_step.description.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.cocreate-content.blocks.process_step.image.label"
         }
       ]
     },
@@ -1021,6 +1505,12 @@
           "type": "text",
           "id": "attribution",
           "label": "t:sections.cocreate-content.blocks.testimonial.attribution.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.cocreate-content.blocks.testimonial.image.label",
+          "info": "t:sections.cocreate-content.blocks.testimonial.image.info"
         }
       ]
     },
@@ -1032,6 +1522,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.cocreate-content.blocks.spotlight_cta.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.image_2.label",
+          "info": "t:sections.cocreate-content.blocks.spotlight_cta.image_2.info"
         },
         {
           "type": "text",

@@ -590,6 +590,7 @@
       "eyebrow": { "label": "Eyebrow" },
       "heading": { "label": "Heading" },
       "subtext": { "label": "Subtext" },
+      "hero_image": { "label": "Hero image", "info": "Optional — shows a layered image with a floating stat badge instead of the plain inline statistic." },
       "stat_header": "Statistic",
       "stat_number": { "label": "Number", "info": "e.g. \"200+\" — animates counting up to this value when scrolled into view." },
       "stat_label": { "label": "Label" },
@@ -611,13 +612,15 @@
         "intro_statement": {
           "name": "Statement",
           "heading": { "label": "Heading" },
-          "body": { "label": "Body text" }
+          "body": { "label": "Body text" },
+          "image": { "label": "Image", "info": "Optional — shows as a rotated card overlapping the text." }
         },
         "value_prop": {
           "name": "Value prop",
           "icon": { "label": "Icon", "info": "Emoji or short glyph." },
           "lead": { "label": "Lead-in phrase" },
-          "text": { "label": "Description" }
+          "text": { "label": "Description" },
+          "image": { "label": "Image", "info": "Optional supporting photo shown above the text." }
         },
         "process_step": {
           "name": "Process step",
@@ -625,16 +628,19 @@
           "number": { "label": "Number" },
           "title": { "label": "Title" },
           "subtitle": { "label": "Subtitle" },
-          "description": { "label": "Description" }
+          "description": { "label": "Description" },
+          "image": { "label": "Image", "info": "Optional thumbnail shown alongside this step on the timeline." }
         },
         "testimonial": {
           "name": "Testimonial",
           "quote": { "label": "Quote" },
-          "attribution": { "label": "Attribution" }
+          "attribution": { "label": "Attribution" },
+          "image": { "label": "Portrait", "info": "Optional — shows as a small circular photo overlapping the quote card." }
         },
         "spotlight_cta": {
           "name": "Spotlight CTA (image + badge)",
           "image": { "label": "Image" },
+          "image_2": { "label": "Second image", "info": "Optional — adds a second photo peeking out behind the first for a stacked effect." },
           "badge_icon": { "label": "Badge icon", "info": "Emoji shown on the floating badge over the image." },
           "badge_title": { "label": "Badge title" },
           "badge_subtext": { "label": "Subtext" },
