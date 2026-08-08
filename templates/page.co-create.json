@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -92,7 +101,7 @@
         "spotlight_01": {
           "type": "spotlight_cta",
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/full-dark-black-hexa-type.png",
             "badge_icon": "🎁",
             "badge_title": "20% off",
             "badge_subtext": "Locked in when you complete the survey.",
