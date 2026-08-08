@@ -22,15 +22,6 @@
             "pull_quote": "We live in its birthplace and know almost none of it. This is the problem we were built to solve."
           }
         },
-        "quote_cta_01": {
-          "type": "quote_cta",
-          "settings": {
-            "quote": "Our ancestors had answers. We're just translating them.",
-            "attribution": "Pillowta Founders",
-            "button_text": "Join the community",
-            "button_link": ""
-          }
-        },
         "chapter_02": {
           "type": "chapter",
           "settings": {
@@ -57,8 +48,19 @@
             "text": "<p>The Kamasutra codified desire, presence, and mutual understanding centuries before modern psychology existed.</p>"
           }
         },
+        "quote_cta_01": {
+          "type": "quote_cta",
+          "settings": {
+            "quote": "Our ancestors had answers. We're just translating them.",
+            "attribution": "Pillowta Founders",
+            "button_text": "Join the community",
+            "button_link": "",
+            "background_image": "shopify://shop_images/pexels-alice-c-70978593-8761243.jpg"
+          }
+        },
         "quote_cta_02": {
           "type": "quote_cta",
+          "disabled": true,
           "settings": {
             "quote": "Our ancestors had answers. We're just translating them.",
             "attribution": "Pillowta Founders",
@@ -69,10 +71,10 @@
       },
       "block_order": [
         "chapter_01",
-        "quote_cta_01",
         "chapter_02",
         "highlight_01",
         "highlight_02",
+        "quote_cta_01",
         "quote_cta_02"
       ],
       "settings": {
