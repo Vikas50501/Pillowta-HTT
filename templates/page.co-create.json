@@ -1,0 +1,249 @@
+{
+  "sections": {
+    "main": {
+      "type": "cocreate-content",
+      "blocks": {
+        "statement_01": {
+          "type": "intro_statement",
+          "settings": {
+            "heading": "This isn't a waitlist. It's a workshop.",
+            "body": "<p>Most brands build in silence, then ask for reviews. We do it differently. You tell us what's missing, what you actually want, and what nobody is making yet. We build it. You get it first — at 20% off, because you helped make it.</p>"
+          }
+        },
+        "cta_01": {
+          "type": "cta_banner",
+          "settings": {}
+        },
+        "value_01": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🤝",
+            "lead": "Co-create, don't just consume",
+            "text": "<p>Your stories and feedback shape our final formulas, scents, and rituals.</p>"
+          }
+        },
+        "value_02": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🌈",
+            "lead": "Safe, inclusive space",
+            "text": "<p>Open to women, men, non-binary and queer folks, couples and solo explorers.</p>"
+          }
+        },
+        "value_03": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🪽",
+            "lead": "Beyond \"perfect\" moments",
+            "text": "<p>We're interested in tenderness, awkwardness, healing, and rediscovering pleasure on your own terms.</p>"
+          }
+        },
+        "step_01": {
+          "type": "process_step",
+          "settings": {
+            "heading": "How the co-creation works",
+            "number": "01",
+            "title": "Your Voice",
+            "subtitle": "Tell Us What You Actually Want",
+            "description": "<p>Fill a short survey about your desires, needs, and what's missing. No right answers. Just real ones. Takes under 10 minutes.</p>"
+          }
+        },
+        "step_02": {
+          "type": "process_step",
+          "settings": {
+            "heading": "",
+            "number": "02",
+            "title": "You Shape It",
+            "subtitle": "Your Answers Influence the Product",
+            "description": "<p>We read every response. The patterns you reveal — scents, textures, rituals, gaps — directly inform what we create next.</p>"
+          }
+        },
+        "step_03": {
+          "type": "process_step",
+          "settings": {
+            "heading": "",
+            "number": "03",
+            "title": "Early Access",
+            "subtitle": "Be First In Line",
+            "description": "<p>Co-creators get early access to the product before it goes public. You helped make it. You get it first.</p>"
+          }
+        },
+        "step_04": {
+          "type": "process_step",
+          "settings": {
+            "heading": "",
+            "number": "04",
+            "title": "Your Reward",
+            "subtitle": "20% Off. Because You Built This.",
+            "description": "<p>Every survey respondent gets an exclusive 20% off the new product at launch. No codes to hunt. No hoops. Just yours.</p>"
+          }
+        },
+        "cta_02": {
+          "type": "cta_banner",
+          "settings": {}
+        },
+        "testimonial_01": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "200+ people shaped our first product. Their stories changed our formulas, our language, and our thinking. We don't build for people — we build with them.",
+            "attribution": "Pillowta Founders"
+          }
+        },
+        "spotlight_01": {
+          "type": "spotlight_cta",
+          "settings": {
+            "image": "",
+            "badge_icon": "🎁",
+            "badge_title": "20% off",
+            "badge_subtext": "Locked in when you complete the survey.",
+            "benefit_line_1": "10 minutes.",
+            "benefit_line_2": "20% off.",
+            "benefit_line_3": "A product shaped by you.",
+            "closing_text": "<p>Fill the survey, tell us what you want, and lock in your discount before the second product launches.</p>",
+            "secondary_link_text": "Read the FAQs first",
+            "secondary_link_url": "#cocreate-faq"
+          }
+        },
+        "privacy_01": {
+          "type": "privacy_item",
+          "settings": {
+            "heading": "Privacy, safety & boundaries",
+            "subheading": "Your privacy is non-negotiable.",
+            "icon": "🔒",
+            "title": "Secure & private",
+            "text": "<p>Your survey answers and details are stored securely and never shared with third parties.</p>"
+          }
+        },
+        "privacy_02": {
+          "type": "privacy_item",
+          "settings": {
+            "heading": "",
+            "subheading": "",
+            "icon": "🪞",
+            "title": "Your identity, your terms",
+            "text": "<p>You decide what name, pronouns, and details you're comfortable sharing. Always.</p>"
+          }
+        },
+        "privacy_03": {
+          "type": "privacy_item",
+          "settings": {
+            "heading": "",
+            "subheading": "",
+            "icon": "🚫",
+            "title": "Zero media requests",
+            "text": "<p>We never ask for photos, videos, or anything explicit. Ever. Full stop.</p>"
+          }
+        },
+        "privacy_04": {
+          "type": "privacy_item",
+          "settings": {
+            "heading": "",
+            "subheading": "",
+            "icon": "🚪",
+            "title": "Always optional",
+            "text": "<p>You can stop at any point. Filling the survey doesn't commit you to anything beyond the discount.</p>"
+          }
+        },
+        "cta_03": {
+          "type": "cta_banner",
+          "settings": {}
+        },
+        "faq_01": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Frequently asked questions",
+            "question": "What happened with the first 200 co-creators?",
+            "answer": "<p>Over 200 people joined, shared their experiences, and gave us feedback that shaped every part of our first product — the formula, the scent, the ritual around it. Now we're doing it again for Product 2.</p>"
+          }
+        },
+        "faq_02": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "",
+            "question": "What is the survey about?",
+            "answer": "<p>Your desires, needs, and what's missing from what's currently out there — scents, textures, rituals, and the moments around intimacy that nobody's designing for yet. There are no right answers, just honest ones.</p>"
+          }
+        },
+        "faq_03": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "",
+            "question": "When do I get the 20% off?",
+            "answer": "<p>Your discount locks in as soon as you complete the survey, and it's automatically ready to use when Product 2 launches.</p>"
+          }
+        },
+        "faq_04": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "",
+            "question": "Who can participate?",
+            "answer": "<p>Everyone — women, men, non-binary and queer folks, couples and solo explorers. This space is for anyone curious about their own pleasure and intimacy.</p>"
+          }
+        },
+        "faq_05": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "",
+            "question": "Do I have to buy anything to fill the survey?",
+            "answer": "<p>No. Filling the survey is free and doesn't commit you to a purchase — it just unlocks your 20% off for whenever you decide to buy.</p>"
+          }
+        },
+        "faq_06": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "",
+            "question": "Will my answers be shared publicly?",
+            "answer": "<p>No. Your answers are used internally to shape the product and are never shared publicly or with third parties.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "statement_01",
+        "cta_01",
+        "value_01",
+        "value_02",
+        "value_03",
+        "step_01",
+        "step_02",
+        "step_03",
+        "step_04",
+        "cta_02",
+        "testimonial_01",
+        "spotlight_01",
+        "privacy_01",
+        "privacy_02",
+        "privacy_03",
+        "privacy_04",
+        "cta_03",
+        "faq_01",
+        "faq_02",
+        "faq_03",
+        "faq_04",
+        "faq_05",
+        "faq_06"
+      ],
+      "settings": {
+        "eyebrow": "co-create with us",
+        "heading": "You helped us build the first one. Help us build what's next.",
+        "subtext": "<p>Over 200 people shaped our first product — their honesty, their bodies, their feedback. Now we're starting the second one. This time, we want you in the room from day one.</p>",
+        "stat_number": "200+",
+        "stat_label": "people shaped our first product",
+        "stat_caption": "Product 2 is in the making. Your answers shape it.",
+        "survey_button_text": "Take the Survey → Get 20% Off",
+        "survey_link": "",
+        "background_color": "",
+        "heading_color": "",
+        "text_color": "",
+        "accent_color": "",
+        "content_max_width": 1080,
+        "block_gap": 64,
+        "section_padding_top": 64,
+        "section_padding_bottom": 64,
+        "font_override": "inherit"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -584,6 +584,86 @@
         }
       }
     },
+    "cocreate-content": {
+      "name": "Co-create campaign content",
+      "hero_header": "Hero",
+      "eyebrow": { "label": "Eyebrow" },
+      "heading": { "label": "Heading" },
+      "subtext": { "label": "Subtext" },
+      "stat_header": "Statistic",
+      "stat_number": { "label": "Number", "info": "e.g. \"200+\" — animates counting up to this value when scrolled into view." },
+      "stat_label": { "label": "Label" },
+      "stat_caption": { "label": "Caption" },
+      "survey_header": "Survey link",
+      "survey_button_text": { "label": "Button text", "info": "Used by every CTA button/banner on this page — edit once, updates everywhere." },
+      "survey_link": { "label": "Button link" },
+      "colors_header": "Colors",
+      "background_color": { "label": "Background color" },
+      "heading_color": { "label": "Heading color" },
+      "text_color": { "label": "Text color" },
+      "accent_color": { "label": "Accent color" },
+      "layout_header": "Layout & spacing",
+      "content_max_width": { "label": "Content width" },
+      "block_gap": { "label": "Space between blocks" },
+      "section_padding_top": { "label": "Section padding top" },
+      "section_padding_bottom": { "label": "Section padding bottom" },
+      "blocks": {
+        "intro_statement": {
+          "name": "Statement",
+          "heading": { "label": "Heading" },
+          "body": { "label": "Body text" }
+        },
+        "value_prop": {
+          "name": "Value prop",
+          "icon": { "label": "Icon", "info": "Emoji or short glyph." },
+          "lead": { "label": "Lead-in phrase" },
+          "text": { "label": "Description" }
+        },
+        "process_step": {
+          "name": "Process step",
+          "heading": { "label": "Section heading", "info": "Only shown above the first step — leave blank on the rest." },
+          "number": { "label": "Number" },
+          "title": { "label": "Title" },
+          "subtitle": { "label": "Subtitle" },
+          "description": { "label": "Description" }
+        },
+        "testimonial": {
+          "name": "Testimonial",
+          "quote": { "label": "Quote" },
+          "attribution": { "label": "Attribution" }
+        },
+        "spotlight_cta": {
+          "name": "Spotlight CTA (image + badge)",
+          "image": { "label": "Image" },
+          "badge_icon": { "label": "Badge icon", "info": "Emoji shown on the floating badge over the image." },
+          "badge_title": { "label": "Badge title" },
+          "badge_subtext": { "label": "Subtext" },
+          "benefit_line_1": { "label": "Benefit tag 1" },
+          "benefit_line_2": { "label": "Benefit tag 2" },
+          "benefit_line_3": { "label": "Benefit tag 3" },
+          "closing_text": { "label": "Closing text" },
+          "secondary_link_text": { "label": "Secondary link text" },
+          "secondary_link_url": { "label": "Secondary link URL" }
+        },
+        "privacy_item": {
+          "name": "Icon grid item",
+          "heading": { "label": "Section heading", "info": "Only shown above the first item — leave blank on the rest." },
+          "subheading": { "label": "Section subheading" },
+          "icon": { "label": "Icon", "info": "Emoji or short glyph." },
+          "title": { "label": "Title" },
+          "text": { "label": "Description" }
+        },
+        "faq_item": {
+          "name": "FAQ item",
+          "heading": { "label": "Section heading", "info": "Only shown above the first question — leave blank on the rest." },
+          "question": { "label": "Question" },
+          "answer": { "label": "Answer" }
+        },
+        "cta_banner": {
+          "name": "CTA banner"
+        }
+      }
+    },
     "main-collection": {
       "name": "Collection grid",
       "columns_desktop": { "label": "Columns (desktop)" },

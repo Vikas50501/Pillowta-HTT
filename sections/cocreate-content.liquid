@@ -1,0 +1,1335 @@
+{% comment %}
+  Reusable long-form campaign/landing section for content-heavy marketing
+  pages (built for "Co-Create With Us", reusable for any future survey/
+  community campaign page). Deliberately different visual patterns from
+  story-content.liquid's timeline/chapter treatment: an asymmetric hero
+  with an animated count-up statistic, a horizontal connected process
+  flow, a left-aligned value-prop list, a simple centered testimonial, a
+  layered image+badge spotlight CTA, an icon-card privacy grid, and a
+  native accordion FAQ - each its own block type so merchants can add,
+  remove, and reorder freely. A single `cta_banner` block type re-shows
+  the section-level survey button wherever the content called for a
+  repeated CTA, without retyping the link every time.
+{% endcomment %}
+<div
+  id="shopify-section-{{ section.id }}"
+  class="cocreate{% if section.settings.font_override != 'inherit' %} cocreate--font-{{ section.settings.font_override }}{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="cocreate"
+  style="
+    {%- if section.settings.background_color != blank -%}--cocreate-bg: {{ section.settings.background_color }};{%- endif -%}
+    {%- if section.settings.heading_color != blank -%}--cocreate-heading-color: {{ section.settings.heading_color }};{%- endif -%}
+    {%- if section.settings.text_color != blank -%}--cocreate-text-color: {{ section.settings.text_color }};{%- endif -%}
+    {%- if section.settings.accent_color != blank -%}--cocreate-accent-color: {{ section.settings.accent_color }};{%- endif -%}
+    --cocreate-padding-top: {{ section.settings.section_padding_top }}px;
+    --cocreate-padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    --cocreate-block-gap: {{ section.settings.block_gap }}px;
+    --cocreate-content-width: {{ section.settings.content_max_width }}px;
+  "
+>
+  <div class="cocreate__inner page-width">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="cocreate__hero" data-scroll-reveal>
+        <div class="cocreate__hero-text">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="cocreate__eyebrow">{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h1 class="cocreate__heading">{{ section.settings.heading }}</h1>
+          {%- endif -%}
+          {%- if section.settings.subtext != blank -%}
+            <div class="cocreate__subtext">{{ section.settings.subtext }}</div>
+          {%- endif -%}
+          {%- if section.settings.survey_button_text != blank -%}
+            <a href="{{ section.settings.survey_link | default: '#' }}" class="action action--primary cocreate__cta">
+              {{ section.settings.survey_button_text }}
+            </a>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.stat_number != blank -%}
+          <div class="cocreate__stat">
+            <span class="cocreate__stat-number" data-cocreate-stat="{{ section.settings.stat_number }}">{{ section.settings.stat_number }}</span>
+            {%- if section.settings.stat_label != blank -%}
+              <p class="cocreate__stat-label">{{ section.settings.stat_label }}</p>
+            {%- endif -%}
+            {%- if section.settings.stat_caption != blank -%}
+              <p class="cocreate__stat-caption">{{ section.settings.stat_caption }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign prev_type = ''
+        assign next_type = ''
+        assign prev_index = forloop.index0 | minus: 1
+        if forloop.index0 > 0
+          assign prev_block = section.blocks[prev_index]
+          assign prev_type = prev_block.type
+        endif
+        if forloop.index < section.blocks.size
+          assign next_block = section.blocks[forloop.index]
+          assign next_type = next_block.type
+        endif
+      -%}
+      {%- case block.type -%}
+
+        {%- when 'intro_statement' -%}
+          <div class="cocreate__statement" data-scroll-reveal {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h2 class="cocreate__statement-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="cocreate__statement-body">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+
+        {%- when 'value_prop' -%}
+          {%- if prev_type != 'value_prop' -%}<div class="cocreate__values" data-scroll-reveal>{%- endif -%}
+            <div class="cocreate__value" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <span class="cocreate__value-icon" aria-hidden="true">{{ block.settings.icon }}</span>
+              {%- endif -%}
+              <div class="cocreate__value-copy">
+                {%- if block.settings.lead != blank -%}
+                  <span class="cocreate__value-lead">{{ block.settings.lead }}</span>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="cocreate__value-text">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- if next_type != 'value_prop' -%}</div>{%- endif -%}
+
+        {%- when 'process_step' -%}
+          {%- if prev_type != 'process_step' -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="cocreate__section-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            <div class="cocreate__process">
+          {%- endif -%}
+            <div class="cocreate__step" data-scroll-reveal {{ block.shopify_attributes }}>
+              {%- if block.settings.number != blank -%}
+                <span class="cocreate__step-number">{{ block.settings.number }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <p class="cocreate__step-title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="cocreate__step-subtitle">{{ block.settings.subtitle }}</p>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <div class="cocreate__step-description">{{ block.settings.description }}</div>
+              {%- endif -%}
+            </div>
+          {%- if next_type != 'process_step' -%}</div>{%- endif -%}
+
+        {%- when 'testimonial' -%}
+          <blockquote class="cocreate__testimonial" data-scroll-reveal {{ block.shopify_attributes }}>
+            {%- if block.settings.quote != blank -%}
+              <p class="cocreate__testimonial-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+            {%- endif -%}
+            {%- if block.settings.attribution != blank -%}
+              <cite class="cocreate__testimonial-attribution">{{ block.settings.attribution }}</cite>
+            {%- endif -%}
+          </blockquote>
+
+        {%- when 'spotlight_cta' -%}
+          <div class="cocreate__spotlight{% if block.settings.image == blank %} cocreate__spotlight--no-image{% endif %}" data-scroll-reveal {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="cocreate__spotlight-media">
+                {{ block.settings.image | image_url: width: 900 | image_tag: widths: '450,700,900', alt: block.settings.badge_title | default: '', loading: 'lazy' }}
+                {%- if block.settings.badge_icon != blank -%}
+                  <span class="cocreate__spotlight-badge">
+                    <span class="cocreate__spotlight-badge-icon" aria-hidden="true">{{ block.settings.badge_icon }}</span>
+                    {%- if block.settings.badge_title != blank -%}
+                      <span class="cocreate__spotlight-badge-title">{{ block.settings.badge_title }}</span>
+                    {%- endif -%}
+                  </span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+            <div class="cocreate__spotlight-content">
+              {%- if block.settings.badge_subtext != blank -%}
+                <p class="cocreate__spotlight-subtext">{{ block.settings.badge_subtext }}</p>
+              {%- endif -%}
+              {%- if block.settings.benefit_line_1 != blank or block.settings.benefit_line_2 != blank or block.settings.benefit_line_3 != blank -%}
+                <ul class="cocreate__spotlight-benefits">
+                  {%- if block.settings.benefit_line_1 != blank -%}<li>{{ block.settings.benefit_line_1 }}</li>{%- endif -%}
+                  {%- if block.settings.benefit_line_2 != blank -%}<li>{{ block.settings.benefit_line_2 }}</li>{%- endif -%}
+                  {%- if block.settings.benefit_line_3 != blank -%}<li>{{ block.settings.benefit_line_3 }}</li>{%- endif -%}
+                </ul>
+              {%- endif -%}
+              {%- if block.settings.closing_text != blank -%}
+                <div class="cocreate__spotlight-closing">{{ block.settings.closing_text }}</div>
+              {%- endif -%}
+              <div class="cocreate__spotlight-actions">
+                {%- if section.settings.survey_button_text != blank -%}
+                  <a href="{{ section.settings.survey_link | default: '#' }}" class="action action--primary">
+                    {{ section.settings.survey_button_text }}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.secondary_link_text != blank -%}
+                  <a href="{{ block.settings.secondary_link_url | default: '#' }}" class="cocreate__spotlight-secondary-link">
+                    {{ block.settings.secondary_link_text }}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+
+        {%- when 'privacy_item' -%}
+          {%- if prev_type != 'privacy_item' -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="cocreate__section-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.subheading != blank -%}
+              <p class="cocreate__section-subheading">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+            <div class="cocreate__privacy-grid" data-scroll-reveal>
+          {%- endif -%}
+            <div class="cocreate__privacy-item" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <span class="cocreate__privacy-icon" aria-hidden="true">{{ block.settings.icon }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <p class="cocreate__privacy-title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="cocreate__privacy-text">{{ block.settings.text }}</div>
+              {%- endif -%}
+            </div>
+          {%- if next_type != 'privacy_item' -%}</div>{%- endif -%}
+
+        {%- when 'faq_item' -%}
+          {%- if prev_type != 'faq_item' -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="cocreate__section-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            <div class="cocreate__faq">
+          {%- endif -%}
+            <details class="cocreate__faq-item" {{ block.shopify_attributes }}>
+              <summary class="cocreate__faq-question">
+                {{ block.settings.question }}
+                <span class="cocreate__faq-toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="cocreate__faq-answer">{{ block.settings.answer }}</div>
+            </details>
+          {%- if next_type != 'faq_item' -%}</div>{%- endif -%}
+
+        {%- when 'cta_banner' -%}
+          {%- if section.settings.survey_button_text != blank -%}
+            <div class="cocreate__cta-banner" data-scroll-reveal {{ block.shopify_attributes }}>
+              <a href="{{ section.settings.survey_link | default: '#' }}" class="action action--primary">
+                {{ section.settings.survey_button_text }}
+              </a>
+            </div>
+          {%- endif -%}
+
+      {%- endcase -%}
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .cocreate {
+    padding-top: var(--cocreate-padding-top, var(--section-spacing));
+    padding-bottom: var(--cocreate-padding-bottom, var(--section-spacing));
+    background-color: var(--cocreate-bg, transparent);
+    color: var(--cocreate-text-color, inherit);
+  }
+
+  .cocreate__inner {
+    max-width: var(--cocreate-content-width, 67.5rem);
+  }
+
+  .cocreate .action--primary {
+    margin-top: 1.5rem;
+  }
+
+  /* ---- Hero ---- */
+  .cocreate__hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3rem;
+    margin-bottom: var(--cocreate-block-gap, 4rem);
+  }
+
+  .cocreate__hero-text {
+    flex: 1;
+    max-width: 34rem;
+  }
+
+  .cocreate__eyebrow {
+    font-size: var(--font-size-small);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--cocreate-accent-color, rgb(var(--color-accent)));
+    margin: 0 0 .75rem;
+  }
+
+  .cocreate__heading {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h1);
+    color: var(--cocreate-heading-color, rgb(var(--color-heading)));
+    margin: 0 0 1rem;
+  }
+
+  .cocreate__subtext {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-base);
+    color: rgba(var(--color-text), .75);
+  }
+
+  .cocreate__cta {
+    display: inline-flex;
+  }
+
+  .cocreate__stat {
+    flex: 0 0 auto;
+    text-align: right;
+    padding-left: 2rem;
+    border-left: 1px solid rgb(var(--color-border));
+  }
+
+  .cocreate__stat-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--cocreate-accent-color, rgb(var(--color-accent)));
+  }
+
+  .cocreate__stat-label {
+    font-size: var(--font-size-small);
+    max-width: 12rem;
+    margin: .5rem 0 0;
+  }
+
+  .cocreate__stat-caption {
+    font-size: var(--font-size-caption);
+    color: rgba(var(--color-text), .6);
+    max-width: 12rem;
+    margin: .5rem 0 0;
+  }
+
+  /* ---- Statement ---- */
+  .cocreate__statement {
+    text-align: center;
+    max-width: 40rem;
+    margin: 0 auto var(--cocreate-block-gap, 4rem);
+  }
+
+  .cocreate__statement-heading {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h2);
+    color: var(--cocreate-heading-color, rgb(var(--color-heading)));
+    margin: 0 0 1rem;
+  }
+
+  .cocreate__statement-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-base);
+    color: rgba(var(--color-text), .75);
+  }
+
+  /* ---- Value props ---- */
+  .cocreate__values {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: var(--cocreate-block-gap, 4rem);
+  }
+
+  .cocreate__value {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: rgb(var(--color-background-alt));
+  }
+
+  .cocreate__value-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: rgb(var(--color-background));
+    font-size: 1.25rem;
+  }
+
+  .cocreate__value-lead {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h3);
+    margin-bottom: .375rem;
+  }
+
+  .cocreate__value-text {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-base);
+    color: rgba(var(--color-text), .75);
+  }
+
+  /* ---- Process flow ---- */
+  .cocreate__section-heading {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h2);
+    color: var(--cocreate-heading-color, rgb(var(--color-heading)));
+    margin: 0 0 2rem;
+  }
+
+  .cocreate__section-subheading {
+    text-align: center;
+    font-size: var(--font-size-body);
+    color: rgba(var(--color-text), .75);
+    max-width: 34rem;
+    margin: -1rem auto 2rem;
+  }
+
+  .cocreate__process {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: var(--cocreate-block-gap, 4rem);
+  }
+
+  .cocreate__step {
+    position: relative;
+    padding: 1.75rem 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgb(var(--color-border));
+  }
+
+  .cocreate__step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 2.25rem;
+    right: -1.75rem;
+    width: 1.25rem;
+    height: 1px;
+    background: rgb(var(--color-border));
+  }
+
+  .cocreate__step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    border: 1px solid var(--cocreate-accent-color, rgb(var(--color-accent)));
+    color: var(--cocreate-accent-color, rgb(var(--color-accent)));
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-small);
+  }
+
+  .cocreate__step-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h3);
+    margin: 0 0 .375rem;
+  }
+
+  .cocreate__step-subtitle {
+    font-size: var(--font-size-small);
+    color: var(--cocreate-accent-color, rgb(var(--color-accent)));
+    margin: 0 0 .75rem;
+  }
+
+  .cocreate__step-description {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-base);
+    color: rgba(var(--color-text), .75);
+  }
+
+  /* ---- Testimonial ---- */
+  .cocreate__testimonial {
+    text-align: center;
+    max-width: 42rem;
+    margin: 0 auto var(--cocreate-block-gap, 4rem);
+    padding: 3rem 2rem;
+    background: rgba(var(--color-accent), .06);
+    border-radius: var(--radius-lg);
+  }
+
+  .cocreate__testimonial-quote {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h2);
+    line-height: 1.4;
+    margin: 0 0 1rem;
+  }
+
+  .cocreate__testimonial-attribution {
+    display: block;
+    font-style: normal;
+    font-size: var(--font-size-caption);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: rgba(var(--color-text), .6);
+  }
+
+  /* ---- Spotlight CTA ---- */
+  .cocreate__spotlight {
+    display: grid;
+    grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: center;
+    margin-bottom: var(--cocreate-block-gap, 4rem);
+  }
+
+  .cocreate__spotlight--no-image {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .cocreate__spotlight-media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .cocreate__spotlight-media img {
+    width: 100%;
+    display: block;
+  }
+
+  .cocreate__spotlight-badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .625rem 1rem;
+    background: rgb(var(--color-background));
+    border-radius: var(--radius-full);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .12);
+  }
+
+  .cocreate__spotlight-badge-icon {
+    font-size: 1.1rem;
+  }
+
+  .cocreate__spotlight-badge-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-small);
+  }
+
+  .cocreate__spotlight-subtext {
+    font-size: var(--font-size-small);
+    color: rgba(var(--color-text), .7);
+    margin: 0 0 1rem;
+  }
+
+  .cocreate__spotlight-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0 0 1rem;
+  }
+
+  .cocreate__spotlight-benefits li {
+    padding: .375rem .875rem;
+    border-radius: var(--radius-full);
+    border: 1px solid rgb(var(--color-border));
+    font-size: var(--font-size-caption);
+  }
+
+  .cocreate__spotlight--no-image .cocreate__spotlight-benefits {
+    justify-content: center;
+  }
+
+  .cocreate__spotlight-closing {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-h3);
+    line-height: 1.4;
+    margin: 0 0 .5rem;
+  }
+
+  .cocreate__spotlight-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .cocreate__spotlight--no-image .cocreate__spotlight-actions {
+    justify-content: center;
+  }
+
+  .cocreate__spotlight-secondary-link {
+    font-size: var(--font-size-small);
+    text-decoration: underline;
+    color: rgba(var(--color-text), .7);
+  }
+
+  /* ---- Privacy grid ---- */
+  .cocreate__privacy-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: var(--cocreate-block-gap, 4rem);
+  }
+
+  .cocreate__privacy-item {
+    text-align: center;
+    padding: 1.75rem 1.25rem;
+  }
+
+  .cocreate__privacy-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    background: rgb(var(--color-background-alt));
+    font-size: 1.4rem;
+  }
+
+  .cocreate__privacy-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-small);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin: 0 0 .5rem;
+  }
+
+  .cocreate__privacy-text {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-base);
+    color: rgba(var(--color-text), .7);
+  }
+
+  /* ---- FAQ ---- */
+  .cocreate__faq {
+    max-width: 42rem;
+    margin: 0 auto var(--cocreate-block-gap, 4rem);
+  }
+
+  .cocreate__faq-item {
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .cocreate__faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-size-body);
+  }
+
+  .cocreate__faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .cocreate__faq-toggle {
+    flex-shrink: 0;
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .cocreate__faq-toggle::before,
+  .cocreate__faq-toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: currentColor;
+    transition: transform var(--transition-fast);
+  }
+
+  .cocreate__faq-toggle::before {
+    width: 100%;
+    height: 1px;
+    transform: translate(-50%, -50%);
+  }
+
+  .cocreate__faq-toggle::after {
+    width: 1px;
+    height: 100%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cocreate__faq-item[open] .cocreate__faq-toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .cocreate__faq-answer {
+    padding-bottom: 1.25rem;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-base);
+    color: rgba(var(--color-text), .75);
+  }
+
+  /* ---- Standalone CTA banner ---- */
+  .cocreate__cta-banner {
+    text-align: center;
+    margin-bottom: var(--cocreate-block-gap, 4rem);
+  }
+
+  @media screen and (max-width: 59.99em) {
+    .cocreate__hero {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .cocreate__stat {
+      text-align: left;
+      padding-left: 0;
+      border-left: 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgb(var(--color-border));
+    }
+
+    .cocreate__heading {
+      font-size: var(--font-size-h1-mobile);
+    }
+
+    .cocreate__process,
+    .cocreate__privacy-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cocreate__step::after {
+      display: none;
+    }
+
+    .cocreate__spotlight {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media screen and (max-width: 34.99em) {
+    .cocreate__process,
+    .cocreate__privacy-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('[data-cocreate-stat]').forEach(function (el) {
+      var target = el.dataset.cocreateStat || '';
+      var numericMatch = target.match(/[\d,]+/);
+      if (!numericMatch || prefersReducedMotion) return;
+
+      var targetNumber = parseInt(numericMatch[0].replace(/,/g, ''), 10);
+      if (!targetNumber) return;
+
+      var prefix = target.slice(0, numericMatch.index);
+      var suffix = target.slice(numericMatch.index + numericMatch[0].length);
+      var hasAnimated = false;
+
+      var animate = function () {
+        if (hasAnimated) return;
+        hasAnimated = true;
+        var startTime = null;
+        var duration = 1200;
+        var step = function (timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          var current = Math.floor(progress * targetNumber);
+          el.textContent = prefix + current + suffix;
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            el.textContent = target;
+          }
+        };
+        window.requestAnimationFrame(step);
+      };
+
+      var observer = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          animate();
+          observer.disconnect();
+        }
+      });
+      observer.observe(el);
+    });
+
+    document.querySelectorAll('.cocreate__faq').forEach(function (container) {
+      var items = Array.prototype.slice.call(container.querySelectorAll('details.cocreate__faq-item'));
+      items.forEach(function (details) {
+        details.addEventListener('toggle', function () {
+          if (details.open) {
+            items.forEach(function (other) {
+              if (other !== details) other.removeAttribute('open');
+            });
+          }
+        });
+      });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.cocreate-content.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.cocreate-content.hero_header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.cocreate-content.eyebrow.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.cocreate-content.heading.label"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "t:sections.cocreate-content.subtext.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.cocreate-content.stat_header"
+    },
+    {
+      "type": "text",
+      "id": "stat_number",
+      "label": "t:sections.cocreate-content.stat_number.label",
+      "info": "t:sections.cocreate-content.stat_number.info"
+    },
+    {
+      "type": "text",
+      "id": "stat_label",
+      "label": "t:sections.cocreate-content.stat_label.label"
+    },
+    {
+      "type": "text",
+      "id": "stat_caption",
+      "label": "t:sections.cocreate-content.stat_caption.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.cocreate-content.survey_header"
+    },
+    {
+      "type": "text",
+      "id": "survey_button_text",
+      "label": "t:sections.cocreate-content.survey_button_text.label",
+      "info": "t:sections.cocreate-content.survey_button_text.info"
+    },
+    {
+      "type": "url",
+      "id": "survey_link",
+      "label": "t:sections.cocreate-content.survey_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.cocreate-content.colors_header"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:sections.cocreate-content.background_color.label"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.cocreate-content.heading_color.label"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.cocreate-content.text_color.label"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "t:sections.cocreate-content.accent_color.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.cocreate-content.layout_header"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 640,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 1080,
+      "label": "t:sections.cocreate-content.content_max_width.label"
+    },
+    {
+      "type": "range",
+      "id": "block_gap",
+      "min": 24,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64,
+      "label": "t:sections.cocreate-content.block_gap.label"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64,
+      "label": "t:sections.cocreate-content.section_padding_top.label"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64,
+      "label": "t:sections.cocreate-content.section_padding_bottom.label"
+    },
+    {
+      "type": "select",
+      "id": "font_override",
+      "options": [
+        { "value": "inherit", "label": "t:sections.common.font.inherit" },
+        { "value": "heading", "label": "t:sections.common.font.heading" },
+        { "value": "body", "label": "t:sections.common.font.body" },
+        { "value": "accent", "label": "t:sections.common.font.accent" }
+      ],
+      "default": "inherit",
+      "label": "t:sections.common.font.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "intro_statement",
+      "name": "t:sections.cocreate-content.blocks.intro_statement.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.cocreate-content.blocks.intro_statement.heading.label"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "t:sections.cocreate-content.blocks.intro_statement.body.label"
+        }
+      ]
+    },
+    {
+      "type": "value_prop",
+      "name": "t:sections.cocreate-content.blocks.value_prop.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "t:sections.cocreate-content.blocks.value_prop.icon.label",
+          "info": "t:sections.cocreate-content.blocks.value_prop.icon.info"
+        },
+        {
+          "type": "text",
+          "id": "lead",
+          "label": "t:sections.cocreate-content.blocks.value_prop.lead.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.cocreate-content.blocks.value_prop.text.label"
+        }
+      ]
+    },
+    {
+      "type": "process_step",
+      "name": "t:sections.cocreate-content.blocks.process_step.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.cocreate-content.blocks.process_step.heading.label",
+          "info": "t:sections.cocreate-content.blocks.process_step.heading.info"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "t:sections.cocreate-content.blocks.process_step.number.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.cocreate-content.blocks.process_step.title.label"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "t:sections.cocreate-content.blocks.process_step.subtitle.label"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "t:sections.cocreate-content.blocks.process_step.description.label"
+        }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "t:sections.cocreate-content.blocks.testimonial.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "t:sections.cocreate-content.blocks.testimonial.quote.label"
+        },
+        {
+          "type": "text",
+          "id": "attribution",
+          "label": "t:sections.cocreate-content.blocks.testimonial.attribution.label"
+        }
+      ]
+    },
+    {
+      "type": "spotlight_cta",
+      "name": "t:sections.cocreate-content.blocks.spotlight_cta.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.image.label"
+        },
+        {
+          "type": "text",
+          "id": "badge_icon",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.badge_icon.label"
+        },
+        {
+          "type": "text",
+          "id": "badge_title",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.badge_title.label"
+        },
+        {
+          "type": "text",
+          "id": "badge_subtext",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.badge_subtext.label"
+        },
+        {
+          "type": "text",
+          "id": "benefit_line_1",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.benefit_line_1.label"
+        },
+        {
+          "type": "text",
+          "id": "benefit_line_2",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.benefit_line_2.label"
+        },
+        {
+          "type": "text",
+          "id": "benefit_line_3",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.benefit_line_3.label"
+        },
+        {
+          "type": "richtext",
+          "id": "closing_text",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.closing_text.label"
+        },
+        {
+          "type": "text",
+          "id": "secondary_link_text",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.secondary_link_text.label"
+        },
+        {
+          "type": "url",
+          "id": "secondary_link_url",
+          "label": "t:sections.cocreate-content.blocks.spotlight_cta.secondary_link_url.label"
+        }
+      ]
+    },
+    {
+      "type": "privacy_item",
+      "name": "t:sections.cocreate-content.blocks.privacy_item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.cocreate-content.blocks.privacy_item.heading.label",
+          "info": "t:sections.cocreate-content.blocks.privacy_item.heading.info"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "t:sections.cocreate-content.blocks.privacy_item.subheading.label"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "t:sections.cocreate-content.blocks.privacy_item.icon.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.cocreate-content.blocks.privacy_item.title.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.cocreate-content.blocks.privacy_item.text.label"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "t:sections.cocreate-content.blocks.faq_item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.cocreate-content.blocks.faq_item.heading.label",
+          "info": "t:sections.cocreate-content.blocks.faq_item.heading.info"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.cocreate-content.blocks.faq_item.question.label"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.cocreate-content.blocks.faq_item.answer.label"
+        }
+      ]
+    },
+    {
+      "type": "cta_banner",
+      "name": "t:sections.cocreate-content.blocks.cta_banner.name"
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "t:sections.cocreate-content.name",
+      "settings": {
+        "eyebrow": "co-create with us",
+        "heading": "You helped us build the first one. Help us build what's next.",
+        "subtext": "<p>Over 200 people shaped our first product — their honesty, their bodies, their feedback. Now we're starting the second one. This time, we want you in the room from day one.</p>",
+        "stat_number": "200+",
+        "stat_label": "people shaped our first product",
+        "stat_caption": "Product 2 is in the making. Your answers shape it.",
+        "survey_button_text": "Take the Survey → Get 20% Off"
+      },
+      "blocks": [
+        {
+          "type": "intro_statement",
+          "settings": {
+            "heading": "This isn't a waitlist. It's a workshop.",
+            "body": "<p>Most brands build in silence, then ask for reviews. We do it differently. You tell us what's missing, what you actually want, and what nobody is making yet. We build it. You get it first — at 20% off, because you helped make it.</p>"
+          }
+        },
+        {
+          "type": "cta_banner"
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🤝",
+            "lead": "Co-create, don't just consume",
+            "text": "<p>Your stories and feedback shape our final formulas, scents, and rituals.</p>"
+          }
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🌈",
+            "lead": "Safe, inclusive space",
+            "text": "<p>Open to women, men, non-binary and queer folks, couples and solo explorers.</p>"
+          }
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🪽",
+            "lead": "Beyond \"perfect\" moments",
+            "text": "<p>We're interested in tenderness, awkwardness, healing, and rediscovering pleasure on your own terms.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "heading": "How the co-creation works",
+            "number": "01",
+            "title": "Your Voice",
+            "subtitle": "Tell Us What You Actually Want",
+            "description": "<p>Fill a short survey about your desires, needs, and what's missing. No right answers. Just real ones. Takes under 10 minutes.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "number": "02",
+            "title": "You Shape It",
+            "subtitle": "Your Answers Influence the Product",
+            "description": "<p>We read every response. The patterns you reveal — scents, textures, rituals, gaps — directly inform what we create next.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "number": "03",
+            "title": "Early Access",
+            "subtitle": "Be First In Line",
+            "description": "<p>Co-creators get early access to the product before it goes public. You helped make it. You get it first.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "number": "04",
+            "title": "Your Reward",
+            "subtitle": "20% Off. Because You Built This.",
+            "description": "<p>Every survey respondent gets an exclusive 20% off the new product at launch. No codes to hunt. No hoops. Just yours.</p>"
+          }
+        },
+        {
+          "type": "cta_banner"
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "200+ people shaped our first product. Their stories changed our formulas, our language, and our thinking. We don't build for people — we build with them.",
+            "attribution": "Pillowta Founders"
+          }
+        },
+        {
+          "type": "spotlight_cta",
+          "settings": {
+            "badge_icon": "🎁",
+            "badge_title": "20% off",
+            "badge_subtext": "Locked in when you complete the survey.",
+            "benefit_line_1": "10 minutes.",
+            "benefit_line_2": "20% off.",
+            "benefit_line_3": "A product shaped by you.",
+            "closing_text": "<p>Fill the survey, tell us what you want, and lock in your discount before the second product launches.</p>",
+            "secondary_link_text": "Read the FAQs first",
+            "secondary_link_url": "#"
+          }
+        },
+        {
+          "type": "privacy_item",
+          "settings": {
+            "heading": "Privacy, safety & boundaries",
+            "subheading": "Your privacy is non-negotiable.",
+            "icon": "🔒",
+            "title": "Secure & private",
+            "text": "<p>Your survey answers and details are stored securely and never shared with third parties.</p>"
+          }
+        },
+        {
+          "type": "privacy_item",
+          "settings": {
+            "icon": "🪞",
+            "title": "Your identity, your terms",
+            "text": "<p>You decide what name, pronouns, and details you're comfortable sharing. Always.</p>"
+          }
+        },
+        {
+          "type": "privacy_item",
+          "settings": {
+            "icon": "🚫",
+            "title": "Zero media requests",
+            "text": "<p>We never ask for photos, videos, or anything explicit. Ever. Full stop.</p>"
+          }
+        },
+        {
+          "type": "privacy_item",
+          "settings": {
+            "icon": "🚪",
+            "title": "Always optional",
+            "text": "<p>You can stop at any point. Filling the survey doesn't commit you to anything beyond the discount.</p>"
+          }
+        },
+        {
+          "type": "cta_banner"
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Frequently asked questions",
+            "question": "What happened with the first 200 co-creators?",
+            "answer": "<p>Over 200 people joined, shared their experiences, and gave us feedback that shaped every part of our first product — the formula, the scent, the ritual around it. Now we're doing it again for Product 2.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the survey about?",
+            "answer": "<p>Your desires, needs, and what's missing from what's currently out there — scents, textures, rituals, and the moments around intimacy that nobody's designing for yet. There are no right answers, just honest ones.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "When do I get the 20% off?",
+            "answer": "<p>Your discount locks in as soon as you complete the survey, and it's automatically ready to use when Product 2 launches.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Who can participate?",
+            "answer": "<p>Everyone — women, men, non-binary and queer folks, couples and solo explorers. This space is for anyone curious about their own pleasure and intimacy.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I have to buy anything to fill the survey?",
+            "answer": "<p>No. Filling the survey is free and doesn't commit you to a purchase — it just unlocks your 20% off for whenever you decide to buy.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will my answers be shared publicly?",
+            "answer": "<p>No. Your answers are used internally to shape the product and are never shared publicly or with third parties.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
