@@ -60,6 +60,7 @@
         },
         "quote_cta_02": {
           "type": "quote_cta",
+          "disabled": true,
           "settings": {
             "quote": "Our ancestors had answers. We're just translating them.",
             "attribution": "Pillowta Founders",
